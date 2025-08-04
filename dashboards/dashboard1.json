@@ -145,7 +145,7 @@
       "targets": [
         {
           "expr": "prometheus_sd_kuma_fetch_failures_total",
-          "refId": "B"
+          "refId": "A"
         }
       ],
       "title": "Kuma SD Fetch Failures",
