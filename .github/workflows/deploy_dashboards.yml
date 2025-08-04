@@ -29,10 +29,22 @@ jobs:
             title = "CI Dashboards"
           } | ConvertTo-Json -Compress
 
-          Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
-            Authorization = "Bearer $ApiToken"
-            "Content-Type" = "application/json"
-          } -Body $folderPayload -ErrorAction SilentlyContinue
+      
+          try {
+            Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$FolderUID" -Headers @{
+              Authorization = "Bearer $ApiToken"
+              "Content-Type" = "application/json"
+            } -Method Get -ErrorAction Stop
+
+            Write-Host "Folder '$FolderUID' already exists, skipping creation."
+          }
+          catch {
+            Write-Host "Folder '$FolderUID' not found, creating..."
+            Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
+              Authorization = "Bearer $ApiToken"
+              "Content-Type" = "application/json"
+            } -Body $folderPayload -ErrorAction Stop
+          }
 
           Get-ChildItem -Path ".\dashboards" -Filter "*.json" | ForEach-Object {
             $json = Get-Content $_.FullName -Raw
