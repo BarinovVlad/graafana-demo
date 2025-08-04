@@ -96,7 +96,7 @@
           "refId": "A"
         }
       ],
-      "title": "HTTP Requests Total v2",
+      "title": "HTTP Requests Total v3",
       "type": "bargauge"
     },
     {
