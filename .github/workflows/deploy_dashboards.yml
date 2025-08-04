@@ -15,8 +15,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Upload dashboards to Grafana
-        shell: pwsh
+           - name: Upload dashboards to Grafana
+        shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
 
@@ -51,4 +51,3 @@ jobs:
               "Content-Type" = "application/json"
             } -Body $payload
           }
-
