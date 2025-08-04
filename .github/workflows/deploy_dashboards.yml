@@ -1,1 +1,55 @@
+name: Deploy Grafana Dashboards
+
+on:
+  push:
+    paths:
+      - 'dashboards/**'
+    branches:
+      - main  # или другая твоя основная ветка
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Upload dashboards to Grafana
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $GrafanaURL = "http://localhost:3000"  # Замени, если порт другой
+          $ApiToken = "${{ secrets.GRAFANA_API_TOKEN }}"
+          $FolderUID = "auto-folder"
+
+          # Создаём папку (если не существует)
+          $folderPayload = @{
+            uid = $FolderUID
+            title = "CI Dashboards"
+          } | ConvertTo-Json -Compress
+
+          Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
+            Authorization = "Bearer $ApiToken"
+            Content-Type = "application/json"
+          } -Body $folderPayload -ErrorAction SilentlyContinue
+
+          # Загружаем каждый JSON-дэшборд
+          Get-ChildItem -Path ".\dashboards" -Filter "*.json" | ForEach-Object {
+            $json = Get-Content $_.FullName -Raw
+            $dashboard = $json | ConvertFrom-Json
+            $dashboard.uid = $dashboard.uid  # UID обязателен
+            $payload = @{
+              dashboard = $dashboard
+              folderUid = $FolderUID
+              overwrite = $true
+            } | ConvertTo-Json -Depth 10
+
+            Write-Host "Uploading $($_.Name)..."
+
+            Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/db" -Method Post -Headers @{
+              Authorization = "Bearer $ApiToken"
+              Content-Type = "application/json"
+            } -Body $payload
+          }
 
