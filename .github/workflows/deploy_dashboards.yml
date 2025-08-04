@@ -24,13 +24,12 @@ jobs:
           $ApiToken = "${{ secrets.GRAFANA_API_TOKEN }}"
           $FolderUID = "auto-folder"
 
-          # Создаём папку, если нет
+          # Проверяем и создаём папку, если нужно
           try {
             Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$FolderUID" -Headers @{
               Authorization = "Bearer $ApiToken"
               "Content-Type" = "application/json"
             } -Method Get -ErrorAction Stop
-
             Write-Host "Folder '$FolderUID' already exists, skipping creation."
           }
           catch {
@@ -42,7 +41,7 @@ jobs:
             } -Body $folderPayload -ErrorAction Stop
           }
 
-          # Собираем локальные uid дашбордов
+          # Собираем UID локальных дашбордов и одновременно заливаем их
           $localDashboards = @()
           Get-ChildItem -Path ".\dashboards" -Filter "*.json" | ForEach-Object {
             $json = Get-Content $_.FullName -Raw
@@ -62,23 +61,23 @@ jobs:
             } | ConvertTo-Json -Depth 10
 
             Write-Host "Uploading $($_.Name)..."
-
             Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/db" -Method Post -Headers @{
               Authorization = "Bearer $ApiToken"
               "Content-Type" = "application/json"
             } -Body $payload
           }
 
-          # Получаем список дашбордов из Grafana в папке по FolderUID
+          # Получаем id папки для поиска дашбордов
           $folder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$FolderUID" -Headers @{
             Authorization = "Bearer $ApiToken"
           }
 
-          $grafanaDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?folderIds=$($folder.id)" -Headers @{
+          # Получаем список дашбордов из папки (тип dash-db — только дашборды)
+          $grafanaDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?folderIds=$($folder.id)&type=dash-db" -Headers @{
             Authorization = "Bearer $ApiToken"
           }
 
-          # Определяем дашборды, которых нет в локальных файлах
+          # Определяем дашборды, отсутствующие локально (удалённые из гита)
           $toDelete = $grafanaDashboards | Where-Object { $localDashboards -notcontains $_.uid }
 
           foreach ($dash in $toDelete) {
