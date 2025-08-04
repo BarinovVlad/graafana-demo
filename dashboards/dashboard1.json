@@ -93,7 +93,7 @@
       "targets": [
         {
           "expr": "prometheus_http_requests_total",
-          "refId": "B"
+          "refId": "A"
         }
       ],
       "title": "HTTP Requests Total",
@@ -145,7 +145,7 @@
       "targets": [
         {
           "expr": "prometheus_sd_kuma_fetch_failures_total",
-          "refId": "C"
+          "refId": "A"
         }
       ],
       "title": "Kuma SD Fetch Failures",
