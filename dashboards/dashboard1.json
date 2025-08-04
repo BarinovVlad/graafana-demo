@@ -41,7 +41,7 @@
           "refId": "A"
         }
       ],
-      "title": "GC Cycles Total",
+      "title": "GC Cycles Total v2",
       "type": "timeseries"
     },
     {
