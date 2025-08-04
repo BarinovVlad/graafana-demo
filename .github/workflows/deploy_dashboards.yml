@@ -37,7 +37,6 @@ jobs:
           Get-ChildItem -Path ".\dashboards" -Filter "*.json" | ForEach-Object {
             $json = Get-Content $_.FullName -Raw
             $dashboard = $json | ConvertFrom-Json
-            $dashboard.uid = $dashboard.uid
             $payload = @{
               dashboard = $dashboard
               folderUid = $FolderUID
