@@ -5,7 +5,7 @@ on:
     paths:
       - 'dashboards/**'
     branches:
-      - main  # или другая твоя основная ветка
+      - main
 
 jobs:
   deploy:
@@ -16,14 +16,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Upload dashboards to Grafana
+        shell: pwsh
         run: |
           $ErrorActionPreference = "Stop"
 
-          $GrafanaURL = "http://localhost:3000"  # Замени, если порт другой
+          $GrafanaURL = "http://localhost:3000"
           $ApiToken = "${{ secrets.GRAFANA_API_TOKEN }}"
           $FolderUID = "auto-folder"
 
-          # Создаём папку (если не существует)
           $folderPayload = @{
             uid = $FolderUID
             title = "CI Dashboards"
@@ -31,14 +31,13 @@ jobs:
 
           Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
             Authorization = "Bearer $ApiToken"
-            Content-Type = "application/json"
+            "Content-Type" = "application/json"
           } -Body $folderPayload -ErrorAction SilentlyContinue
 
-          # Загружаем каждый JSON-дэшборд
           Get-ChildItem -Path ".\dashboards" -Filter "*.json" | ForEach-Object {
             $json = Get-Content $_.FullName -Raw
             $dashboard = $json | ConvertFrom-Json
-            $dashboard.uid = $dashboard.uid  # UID обязателен
+            $dashboard.uid = $dashboard.uid
             $payload = @{
               dashboard = $dashboard
               folderUid = $FolderUID
@@ -49,7 +48,6 @@ jobs:
 
             Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/db" -Method Post -Headers @{
               Authorization = "Bearer $ApiToken"
-              Content-Type = "application/json"
+              "Content-Type" = "application/json"
             } -Body $payload
           }
-
