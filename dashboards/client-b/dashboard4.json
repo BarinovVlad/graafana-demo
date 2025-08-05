@@ -56,7 +56,7 @@
           "refId": "A"
         }
       ],
-      "title": "Time Series: buck_hash_sys_bytes v2",
+      "title": "Time Series: buck_hash_sys_bytes",
       "type": "timeseries"
     },
     {
