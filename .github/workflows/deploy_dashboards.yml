@@ -24,7 +24,7 @@ jobs:
           $ApiToken = "${{ secrets.GRAFANA_API_TOKEN }}"
           $FolderUID = "auto-folder"
 
-         
+          # Check if folder exists, create if not
           try {
             Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$FolderUID" -Headers @{
               Authorization = "Bearer $ApiToken"
@@ -41,14 +41,14 @@ jobs:
             } -Body $folderPayload -ErrorAction Stop
           }
 
-         
+          # Load and track local dashboards
           $localDashboards = @()
           Get-ChildItem -Path ".\dashboards" -Filter "*.json" | ForEach-Object {
             $json = Get-Content $_.FullName -Raw
             $dashboard = $json | ConvertFrom-Json
 
             if (-not $dashboard.uid) {
-              Write-Error "Dashboard file $($_.Name) has no uid! Add a unique uid field."
+              Write-Error "Dashboard file $($_.Name) has no uid! Please add a unique uid field."
               exit 1
             }
 
@@ -67,31 +67,37 @@ jobs:
             } -Body $payload
           }
 
-         
+          # Get folder ID
           $folder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$FolderUID" -Headers @{
             Authorization = "Bearer $ApiToken"
           }
 
-         
+          # Get dashboards in folder (type dash-db)
           $grafanaDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?folderIds=$($folder.id)&type=dash-db" -Headers @{
             Authorization = "Bearer $ApiToken"
           }
 
-          Write-Host "=== Local dashboard UIDs ==="
+          Write-Host "=== Local dashboard UIDs (from repo) ==="
           $localDashboards | ForEach-Object { Write-Host " - $_" }
 
           Write-Host "=== Dashboards in Grafana ==="
-          $grafanaDashboards | ForEach-Object { Write-Host " - $($_.uid)" }
+          $grafanaDashboards | ForEach-Object { Write-Host " - $($_.uid) ($($_.title))" }
 
-          
+          # Find dashboards to delete (present in Grafana but not locally)
           $toDelete = $grafanaDashboards | Where-Object { $localDashboards -notcontains $_.uid }
 
           Write-Host "=== Dashboards to delete ==="
-          $toDelete | ForEach-Object { Write-Host " - $($_.uid)" }
+          if ($toDelete.Count -eq 0) {
+            Write-Host "No dashboards to delete."
+          } else {
+            $toDelete | ForEach-Object { Write-Host " - $($_.uid) ($($_.title))" }
+          }
 
+          # Delete dashboards
           foreach ($dash in $toDelete) {
-            Write-Host "Deleting dashboard $($dash.title) with uid $($dash.uid)..."
+            Write-Host "Deleting dashboard '$($dash.title)' with uid '$($dash.uid)'..."
             Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dash.uid)" -Method Delete -Headers @{
               Authorization = "Bearer $ApiToken"
             }
+            Write-Host "Dashboard '$($dash.title)' deleted."
           }
