@@ -1,4 +1,17 @@
-
+{
+  "annotations": {
+    "list": []
+  },
+  "editable": true,
+  "gnetId": null,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "thresholds"
           },
           "thresholds": {
@@ -60,6 +73,6 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "Simple Up Metric Dashboard v2",
-  "uid": "simple-up-dashboard002",
+  "uid": "simple-up-dashboard-v2",
   "version": 1
 }
