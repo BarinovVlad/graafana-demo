@@ -1,0 +1,47 @@
+{
+  "uid": "prometheus-internal-dashboard002",
+  "title": "Prometheus Internal Metrics",
+  "tags": ["prometheus", "internal"],
+  "timezone": "browser",
+  "schemaVersion": 30,
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Query Log Enabled",
+      "id": 1,
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "prometheus_engine_query_log_enabled",
+          "legendFormat": "Query Log",
+          "refId": "A"
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "type": "graph",
+      "title": "Scrape Series Added",
+      "id": 2,
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "rate(scrape_series_added[1m])",
+          "legendFormat": "Series Added",
+          "refId": "B"
+        }
+      ]
+    }
+  ]
+}
