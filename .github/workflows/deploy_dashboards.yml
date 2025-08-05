@@ -81,23 +81,24 @@ jobs:
               Authorization = "Bearer $ApiToken"
             }
 
-            Write-Host "Local UIDs in $clientName:"
+            Write-Host "Local UIDs in ${clientName}:"
             $localUids | ForEach-Object { Write-Host " - $_" }
 
-            Write-Host "Grafana UIDs in $clientName:"
+            Write-Host "Grafana UIDs in ${clientName}:"
             $grafanaDashboards | ForEach-Object { Write-Host " - $($_.uid)" }
 
             $toDelete = $grafanaDashboards | Where-Object { $localUids -notcontains $_.uid }
 
             if ($toDelete.Count -eq 0) {
-              Write-Host "No dashboards to delete for $clientName."
+              Write-Host "No dashboards to delete for ${clientName}."
             } else {
-              Write-Host "Deleting dashboards for $clientName:"
+              Write-Host "Deleting dashboards for ${clientName}:"
               foreach ($dash in $toDelete) {
                 Write-Host "Deleting dashboard '$($dash.title)' with uid '$($dash.uid)'..."
                 Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dash.uid)" -Method Delete -Headers @{
                   Authorization = "Bearer $ApiToken"
                 }
+                Write-Host "Dashboard '$($dash.title)' deleted."
               }
             }
           }
