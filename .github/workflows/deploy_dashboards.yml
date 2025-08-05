@@ -24,7 +24,7 @@ jobs:
           $ApiToken = "${{ secrets.GRAFANA_API_TOKEN }}"
           $FolderUID = "auto-folder"
 
-          # Проверяем и создаём папку, если нужно
+          
           try {
             Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$FolderUID" -Headers @{
               Authorization = "Bearer $ApiToken"
@@ -41,7 +41,7 @@ jobs:
             } -Body $folderPayload -ErrorAction Stop
           }
 
-          # Собираем UID локальных дашбордов и одновременно заливаем их
+          
           $localDashboards = @()
           Get-ChildItem -Path ".\dashboards" -Filter "*.json" | ForEach-Object {
             $json = Get-Content $_.FullName -Raw
@@ -67,18 +67,28 @@ jobs:
             } -Body $payload
           }
 
-          # Получаем id папки для поиска дашбордов
+          
           $folder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$FolderUID" -Headers @{
             Authorization = "Bearer $ApiToken"
           }
 
-          # Получаем список дашбордов из папки (тип dash-db — только дашборды)
-          $grafanaDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?folderIds=$($folder.id)&type=dash-db" -Headers @{
+          
+          $grafanaDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?folderIds=$($folder.id)" -Headers @{
             Authorization = "Bearer $ApiToken"
           }
 
-          # Определяем дашборды, отсутствующие локально (удалённые из гита)
+        
+          Write-Host "=== Local dashboard UIDs ==="
+          $localDashboards | ForEach-Object { Write-Host " - $_" }
+
+          Write-Host "=== Dashboards in Grafana ==="
+          $grafanaDashboards | ForEach-Object { Write-Host " - $($_.uid)" }
+
+         
           $toDelete = $grafanaDashboards | Where-Object { $localDashboards -notcontains $_.uid }
+
+          Write-Host "=== Dashboards to delete ==="
+          $toDelete | ForEach-Object { Write-Host " - $($_.uid)" }
 
           foreach ($dash in $toDelete) {
             Write-Host "Deleting dashboard $($dash.title) with uid $($dash.uid)..."
