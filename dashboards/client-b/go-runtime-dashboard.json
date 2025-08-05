@@ -1,5 +1,5 @@
 {
-  "uid": "go-runtime-dashboard",
+  "uid": "go-runtime-dashboard001",
   "title": "Go Runtime Metrics",
   "tags": ["prometheus", "go"],
   "timezone": "browser",
@@ -35,3 +35,4 @@
     }
   ]
 }
+
