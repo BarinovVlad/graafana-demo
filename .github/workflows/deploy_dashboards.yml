@@ -15,90 +15,103 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy all client dashboards
+      - name: Deploy all client dashboards with cleanup
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
           $GrafanaURL = "http://localhost:3000"
           $ApiToken = "${{ secrets.GRAFANA_API_TOKEN }}"
 
-          $clients = Get-ChildItem -Path "./dashboards" -Directory
+          # Get folders from Git (dashboards/)
+          $gitFolders = Get-ChildItem -Path "./dashboards" -Directory
+          $gitFolderNames = $gitFolders.Name.ToLower()
 
-          foreach ($client in $clients) {
-            $clientName = $client.Name
-            $clientPath = $client.FullName
+          # Get folders from Grafana
+          $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{ Authorization = "Bearer $ApiToken" }
+
+          # Process each folder from Git
+          foreach ($folder in $gitFolders) {
+            $clientName = $folder.Name
             $folderUid = $clientName.ToLower()
+            $clientPath = $folder.FullName
 
-            Write-Host "`n=== Processing client: $clientName (folderUid: $folderUid) ==="
+            Write-Host "`n=== Processing client: $clientName ==="
 
-            # Ensure folder exists in Grafana
+            # Ensure folder exists
             try {
-              $folder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{
-                Authorization = "Bearer $ApiToken"
-                "Content-Type" = "application/json"
-              } -Method Get
-              Write-Host "Folder '$folderUid' exists."
-            }
-            catch {
+              $grafanaFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{ Authorization = "Bearer $ApiToken" }
+              Write-Host "Folder '$folderUid' exists in Grafana."
+            } catch {
               Write-Host "Creating folder '$folderUid'..."
-              $folderPayload = @{ uid = $folderUid; title = $clientName } | ConvertTo-Json -Compress
-              $folder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
+              $payload = @{ uid = $folderUid; title = $clientName } | ConvertTo-Json -Compress
+              $grafanaFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
                 Authorization = "Bearer $ApiToken"
                 "Content-Type" = "application/json"
-              } -Body $folderPayload
+              } -Body $payload
             }
 
-            $folderId = $folder.id
-
-            # Upload local dashboards
             $localUids = @()
             Get-ChildItem -Path $clientPath -Filter "*.json" | ForEach-Object {
               $json = Get-Content $_.FullName -Raw
               $dashboard = $json | ConvertFrom-Json
 
               if (-not $dashboard.uid) {
-                Write-Error "Dashboard $($_.Name) in $clientName has no 'uid'."
+                Write-Error "Dashboard '$($_.Name)' missing 'uid'."
                 exit 1
               }
 
               $localUids += $dashboard.uid
 
-              $payload = @{
+              $uploadPayload = @{
                 dashboard = $dashboard
                 folderUid = $folderUid
                 overwrite = $true
               } | ConvertTo-Json -Depth 10
 
-              Write-Host "Uploading dashboard: $($_.Name)..."
+              Write-Host "Uploading dashboard: $($_.Name)"
               Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/db" -Method Post -Headers @{
                 Authorization = "Bearer $ApiToken"
                 "Content-Type" = "application/json"
-              } -Body $payload
+              } -Body $uploadPayload
             }
 
-            # Get existing dashboards in Grafana for this folder
-            $grafanaDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?folderIds=$folderId&type=dash-db" -Headers @{
+            # Delete dashboards not present locally
+            $folderDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?folderIds=$($grafanaFolder.id)&type=dash-db" -Headers @{
               Authorization = "Bearer $ApiToken"
             }
 
-            Write-Host "Local UIDs in ${clientName}:"
-            $localUids | ForEach-Object { Write-Host " - $_" }
+            $toDelete = $folderDashboards | Where-Object { $localUids -notcontains $_.uid }
 
-            Write-Host "Grafana UIDs in ${clientName}:"
-            $grafanaDashboards | ForEach-Object { Write-Host " - $($_.uid)" }
+            foreach ($dash in $toDelete) {
+              Write-Host "Deleting dashboard '$($dash.title)' (uid: $($dash.uid))..."
+              Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dash.uid)" -Method Delete -Headers @{
+                Authorization = "Bearer $ApiToken"
+              }
+            }
+          }
 
-            $toDelete = $grafanaDashboards | Where-Object { $localUids -notcontains $_.uid }
+          #  Delete folders in Grafana that don't exist in Git
+          foreach ($grafanaFolder in $grafanaFolders) {
+            $uid = $grafanaFolder.uid.ToLower()
+            if ($gitFolderNames -notcontains $uid) {
+              Write-Host "`n Folder '$uid' not found in Git. Deleting..."
+              $dashboardsInFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/search?folderIds=$($grafanaFolder.id)&type=dash-db" -Headers @{
+                Authorization = "Bearer $ApiToken"
+              }
 
-            if ($toDelete.Count -eq 0) {
-              Write-Host "No dashboards to delete for ${clientName}."
-            } else {
-              Write-Host "Deleting dashboards for ${clientName}:"
-              foreach ($dash in $toDelete) {
-                Write-Host "Deleting dashboard '$($dash.title)' with uid '$($dash.uid)'..."
+              # First delete all dashboards in the folder
+              foreach ($dash in $dashboardsInFolder) {
+                Write-Host "Deleting dashboard '$($dash.title)' (uid: $($dash.uid))..."
                 Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dash.uid)" -Method Delete -Headers @{
                   Authorization = "Bearer $ApiToken"
                 }
-                Write-Host "Dashboard '$($dash.title)' deleted."
               }
+
+              # Then delete the folder
+              Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{
+                Authorization = "Bearer $ApiToken"
+              }
+
+              Write-Host "Folder '$uid' deleted."
             }
           }
