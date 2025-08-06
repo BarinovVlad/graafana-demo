@@ -26,7 +26,10 @@ jobs:
           $gitFolders = Get-ChildItem -Path "./dashboards" -Directory
           $gitFolderNames = $gitFolders.Name.ToLower()
 
-          # Process each folder from Git
+          # Get folders from Grafana
+          $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{ Authorization = "Bearer $ApiToken" }
+
+          # === PROCESS CLIENT FOLDERS ===
           foreach ($folder in $gitFolders) {
             $clientName = $folder.Name
             $folderUid = $clientName.ToLower()
@@ -46,9 +49,6 @@ jobs:
                 "Content-Type" = "application/json"
               } -Body $payload
             }
-
-            # Always refresh folder info to get correct ID
-            $grafanaFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{ Authorization = "Bearer $ApiToken" }
 
             # Upload dashboards
             $localUids = @()
@@ -76,16 +76,15 @@ jobs:
               } -Body $uploadPayload
             }
 
-            # Get dashboards currently in Grafana for this folder
-            Write-Host "Getting existing dashboards in Grafana folder '$($grafanaFolder.title)' (ID: $($grafanaFolder.id))"
-            $folderDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?folderIds=$($grafanaFolder.id)&type=dash-db" -Headers @{
+            # 🔄 Re-fetch folder to get updated folderId
+            $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{ Authorization = "Bearer $ApiToken" }
+
+            Write-Host "Getting existing dashboards in Grafana folder '$($updatedFolder.title)' (ID: $($updatedFolder.id))"
+            $folderDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?folderIds=$($updatedFolder.id)&type=dash-db" -Headers @{
               Authorization = "Bearer $ApiToken"
             }
 
-            if (-not $folderDashboards) {
-              Write-Host "No dashboards found in Grafana for folder '$($grafanaFolder.title)'"
-            }
-
+            # Delete dashboards not present locally
             $toDelete = $folderDashboards | Where-Object { $localUids -notcontains $_.uid }
 
             foreach ($dash in $toDelete) {
@@ -96,10 +95,7 @@ jobs:
             }
           }
 
-          # Get all folders from Grafana again for deletion check
-          $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{ Authorization = "Bearer $ApiToken" }
-
-          # Delete folders in Grafana not in Git
+          # === DELETE UNUSED FOLDERS ===
           foreach ($grafanaFolder in $grafanaFolders) {
             $uid = $grafanaFolder.uid.ToLower()
             if ($gitFolderNames -notcontains $uid) {
@@ -116,7 +112,6 @@ jobs:
                 }
               }
 
-              # Then delete the folder
               Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{
                 Authorization = "Bearer $ApiToken"
               }
