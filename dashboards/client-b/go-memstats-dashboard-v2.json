@@ -219,7 +219,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Go Runtime Memory Stats",
+  "title": "Go Runtime Memory Stats v2",
   "uid": "go-memstats-dashboard002",
   "version": 1
 }
