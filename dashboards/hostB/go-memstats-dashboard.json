@@ -168,7 +168,7 @@
           "refId": "A"
         }
       ],
-      "title": "Gauge Panel: buck_hash_sys_bytes",
+      "title": "Gauge Panel: buck_hash_sys_bytes v2",
       "type": "gauge"
     },
     {
