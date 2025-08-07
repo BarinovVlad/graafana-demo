@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - 'dashboards/**'
-      - 'templates/**'
     branches:
       - main
 
@@ -16,73 +15,54 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy dashboards to both Grafana instances
+      - name: Deploy dashboards to all Grafana instances
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Define Grafana instances and their folder roots
-          $grafanaInstances = @(
-            @{ Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}"; Path = "./dashboards/hostA" },
-            @{ Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}"; Path = "./dashboards/hostB" }
-          )
-
-          # Load templates and parse them
-          $templates = @{}
-          Get-ChildItem -Path "./templates" -Filter "*.json" | ForEach-Object {
-            $content = Get-Content $_.FullName -Raw | ConvertFrom-Json
-            foreach ($tag in $content.tags) {
-              if ($tag -like "template:*") {
-                $templateKey = $tag
-                $templates[$templateKey] = $content
-              }
-            }
+          # Map host folders to Grafana instances
+          $grafanaTargets = @{
+            "host1" = @{ Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" }
+            "host2" = @{ Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
           }
 
-          foreach ($instance in $grafanaInstances) {
-            $GrafanaURL = $instance.Url
-            $ApiToken = $instance.Token
-            $RootPath = $instance.Path
+          # Function to deploy a dashboard to a Grafana instance
+          function Deploy-Dashboards {
+            param (
+              [string]$BasePath,
+              [string]$GrafanaURL,
+              [string]$ApiToken
+            )
 
-            Write-Host "`n===== Deploying to Grafana instance at $GrafanaURL ====="
+            Write-Host "`n=== Deploying from: $BasePath to $GrafanaURL ==="
 
-            # Get all folders from Git for this instance
-            $gitFolders = Get-ChildItem -Path $RootPath -Directory
-            $gitFolderNames = $gitFolders.Name.ToLower()
+            $clientFolders = Get-ChildItem -Path $BasePath -Directory -ErrorAction SilentlyContinue
+            if (-not $clientFolders) {
+              Write-Host "No folders in $BasePath"
+              return
+            }
 
-            # Get all folders from Grafana
-            $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{ Authorization = "Bearer $ApiToken" }
-
-            foreach ($folder in $gitFolders) {
-              $clientName = $folder.Name
-              $folderUid = $clientName.ToLower()
-              $clientPath = $folder.FullName
-
-              Write-Host "`n=== Processing client: $clientName ==="
+            foreach ($folder in $clientFolders) {
+              $folderUid = $folder.Name.ToLower()
 
               try {
                 $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{ Authorization = "Bearer $ApiToken" }
-                Write-Host "Folder '$folderUid' exists."
               } catch {
-                Write-Host "Creating folder '$folderUid'..."
-                $payload = @{ uid = $folderUid; title = $clientName } | ConvertTo-Json -Compress
+                $payload = @{ uid = $folderUid; title = $folder.Name } | ConvertTo-Json -Compress
                 $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
                   Authorization = "Bearer $ApiToken"
                   "Content-Type" = "application/json"
                 } -Body $payload
               }
 
-              $localUids = @()
-              Get-ChildItem -Path $clientPath -Filter "*.json" | ForEach-Object {
+              # Deploy dashboards
+              Get-ChildItem -Path $folder.FullName -Filter "*.json" | ForEach-Object {
                 $json = Get-Content $_.FullName -Raw
                 $dashboard = $json | ConvertFrom-Json
-
                 if (-not $dashboard.uid) {
-                  Write-Error "Dashboard '$($_.Name)' missing 'uid'."
-                  exit 1
+                  Write-Host "Dashboard missing UID: $($_.Name)"
+                  return
                 }
-
-                $localUids += $dashboard.uid
 
                 $uploadPayload = @{
                   dashboard = $dashboard
@@ -90,67 +70,27 @@ jobs:
                   overwrite = $true
                 } | ConvertTo-Json -Depth 10
 
-                Write-Host "Uploading dashboard: $($_.Name)"
+                Write-Host "Uploading dashboard: $($_.Name) to folder: $folderUid"
                 Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/db" -Method Post -Headers @{
                   Authorization = "Bearer $ApiToken"
                   "Content-Type" = "application/json"
                 } -Body $uploadPayload
               }
-
-              # Get all dashboards in folder
-              $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{ Authorization = "Bearer $ApiToken" }
-              $folderDashboards = $allDashboards | Where-Object { $_.folderId -eq $updatedFolder.id }
-
-              # Delete dashboards not in Git
-              $toDelete = $folderDashboards | Where-Object { $localUids -notcontains $_.uid }
-              foreach ($dash in $toDelete) {
-                Write-Host "Deleting dashboard '$($dash.title)' (uid: $($dash.uid))..."
-                Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dash.uid)" -Method Delete -Headers @{ Authorization = "Bearer $ApiToken" }
-              }
             }
+          }
 
-            # Delete folders not in Git
-            foreach ($grafanaFolder in $grafanaFolders) {
-              $uid = $grafanaFolder.uid.ToLower()
-              if ($gitFolderNames -notcontains $uid) {
-                Write-Host "`nFolder '$uid' not found in Git. Deleting..."
-                $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{ Authorization = "Bearer $ApiToken" }
-                $dashboardsInFolder = $allDashboards | Where-Object { $_.folderId -eq $grafanaFolder.id }
+          # Deploy shared dashboards to all instances
+          foreach ($target in $grafanaTargets.GetEnumerator()) {
+            $grafana = $target.Value
+            Write-Host "`n##### Deploying shared dashboards to $($grafana.Url)"
+            Deploy-Dashboards -BasePath "./dashboards/shared" -GrafanaURL $grafana.Url -ApiToken $grafana.Token
+          }
 
-                foreach ($dash in $dashboardsInFolder) {
-                  Write-Host "Deleting dashboard '$($dash.title)' (uid: $($dash.uid))..."
-                  Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dash.uid)" -Method Delete -Headers @{ Authorization = "Bearer $ApiToken" }
-                }
+          # Deploy host-specific dashboards
+          foreach ($host in $grafanaTargets.Keys) {
+            $grafana = $grafanaTargets[$host]
+            $hostPath = "./dashboards/$host"
 
-                Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{ Authorization = "Bearer $ApiToken" }
-                Write-Host "Folder '$uid' deleted."
-              }
-            }
-
-            # === Auto-update dashboards by template tag ===
-            $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{ Authorization = "Bearer $ApiToken" }
-
-            foreach ($dashMeta in $allDashboards) {
-              $dashDetail = Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dashMeta.uid)" -Headers @{ Authorization = "Bearer $ApiToken" }
-              $dash = $dashDetail.dashboard
-              foreach ($tag in $dash.tags) {
-                if ($tag -like "template:*" -and $templates.ContainsKey($tag)) {
-                  Write-Host "Updating dashboard '$($dash.title)' by template tag '$tag'"
-                  $updatedDash = $templates[$tag]
-                  $updatedDash.uid = $dash.uid
-                  $updatedDash.title = $dash.title
-
-                  $uploadPayload = @{
-                    dashboard = $updatedDash
-                    folderId = $dashMeta.folderId
-                    overwrite = $true
-                  } | ConvertTo-Json -Depth 10
-
-                  Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/db" -Method Post -Headers @{
-                    Authorization = "Bearer $ApiToken"
-                    "Content-Type" = "application/json"
-                  } -Body $uploadPayload
-                }
-              }
-            }
+            Write-Host "`n##### Deploying $host dashboards to $($grafana.Url)"
+            Deploy-Dashboards -BasePath $hostPath -GrafanaURL $grafana.Url -ApiToken $grafana.Token
           }
