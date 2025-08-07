@@ -1,6 +1,6 @@
 {
   "uid": "go-runtime-dashboard001",
-  "title": "Go Runtime Metrics",
+  "title": "Go Runtime Metrics v2",
   "tags": ["prometheus", "go"],
   "timezone": "browser",
   "schemaVersion": 30,
