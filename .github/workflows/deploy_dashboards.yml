@@ -3,7 +3,7 @@ name: Deploy Grafana Dashboards
 on:
   push:
     paths:
-      - 'dashboards/**'
+      - 'hostA/**'
     branches:
       - main
 
@@ -22,8 +22,7 @@ jobs:
 
           # Define both Grafana instances
           $grafanaInstances = @(
-            @{ Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
-            @{ Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
+            @{ Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" }
           )
 
           # Get Git folders
