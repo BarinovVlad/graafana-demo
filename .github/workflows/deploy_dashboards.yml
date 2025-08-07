@@ -87,9 +87,10 @@ jobs:
           }
 
           # Deploy host-specific dashboards
-          foreach ($host in $grafanaTargets.Keys) {
-            $grafana = $grafanaTargets[$host]
-            $hostPath = "./dashboards/$host"
+          foreach ($hostKey in $grafanaTargets.Keys) {
+              $grafana = $grafanaTargets[$hostKey]
+              $hostPath = "./dashboards/$hostKey"
+
 
             Write-Host "`n##### Deploying $host dashboards to $($grafana.Url)"
             Deploy-Dashboards -BasePath $hostPath -GrafanaURL $grafana.Url -ApiToken $grafana.Token
