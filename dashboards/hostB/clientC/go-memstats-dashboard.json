@@ -220,6 +220,6 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "Go Runtime Memory Stats",
-  "uid": "go-memstats-dashboard001",
+  "uid": "go-memstats-dashboard000",
   "version": 1
 }
