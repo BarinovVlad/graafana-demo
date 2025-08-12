@@ -9,7 +9,7 @@
   "panels": [
     {
       "type": "graph",
-      "title": "Go GC Pause Count",
+      "title": "Go GC Pause Count v2",
       "id": 1,
       "datasource": "prometheus",
       "targets": [
