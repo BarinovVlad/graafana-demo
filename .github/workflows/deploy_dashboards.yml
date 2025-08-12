@@ -20,23 +20,29 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Define both Grafana instances
-          $grafanaInstances = @(
-            @{ Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
-            @{ Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
+          # Define each host with its dashboard folder and Grafana settings
+          $grafanaTargets = @(
+            @{ Folder = "hostA"; Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
+            @{ Folder = "hostB"; Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
           )
 
-          # Get Git folders
-          $gitFolders = Get-ChildItem -Path "./dashboards" -Directory
-          $gitFolderNames = $gitFolders.Name.ToLower()
+          foreach ($target in $grafanaTargets) {
+            $baseFolder = "./dashboards/$($target.Folder)"
+            $GrafanaURL = $target.Url
+            $ApiToken = $target.Token
 
-          foreach ($instance in $grafanaInstances) {
-            $GrafanaURL = $instance.Url
-            $ApiToken = $instance.Token
+            Write-Host "n===== Deploying to Grafana at $GrafanaURL from folder $baseFolder ====="
 
-            Write-Host "n===== Deploying to Grafana instance at $GrafanaURL ====="
+            # Get client folders (each client is a folder inside hostA or hostB)
+            $gitFolders = Get-ChildItem -Path $baseFolder -Directory -ErrorAction SilentlyContinue
+            if (-not $gitFolders) {
+              Write-Host "No folders found in $baseFolder"
+              continue
+            }
 
-            # Get folders from Grafana
+            $gitFolderNames = $gitFolders.Name.ToLower()
+
+            # Get folders already in Grafana
             $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{
               Authorization = "Bearer $ApiToken"
             }
@@ -52,7 +58,6 @@ jobs:
                 $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{
                   Authorization = "Bearer $ApiToken"
                 }
-                Write-Host "Folder '$folderUid' exists in Grafana."
               } catch {
                 Write-Host "Creating folder '$folderUid'..."
                 $payload = @{ uid = $folderUid; title = $clientName } | ConvertTo-Json -Compress
@@ -88,15 +93,11 @@ jobs:
                 } -Body $uploadPayload
               }
 
-              # Get all dashboards and filter by folder
-              Write-Host "Getting dashboards from folder '$($updatedFolder.title)' (ID: $($updatedFolder.id))"
+              # Remove dashboards in Grafana that are not in Git
               $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
                 Authorization = "Bearer $ApiToken"
               }
-
               $folderDashboards = $allDashboards | Where-Object { $_.folderId -eq $updatedFolder.id }
-
-              # Delete dashboards not in Git
               $toDelete = $folderDashboards | Where-Object { $localUids -notcontains $_.uid }
 
               foreach ($dash in $toDelete) {
@@ -107,7 +108,7 @@ jobs:
               }
             }
 
-            # Delete folders that no longer exist in Git
+            # Delete folders in Grafana that no longer exist in Git
             foreach ($grafanaFolder in $grafanaFolders) {
               $uid = $grafanaFolder.uid.ToLower()
               if ($gitFolderNames -notcontains $uid) {
@@ -126,7 +127,6 @@ jobs:
                   }
                 }
 
-                # Delete folder
                 Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{
                   Authorization = "Bearer $ApiToken"
                 }
