@@ -20,7 +20,7 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Хосты, папки и токены
+          # Определяем хосты и их настройки
           $grafanaTargets = @(
             @{ Folder = "hostA"; Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
             @{ Folder = "hostB"; Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
@@ -33,6 +33,7 @@ jobs:
 
             Write-Host "`n===== Deploying to Grafana at $GrafanaURL from folder $baseFolder ====="
 
+            # Папки клиентов
             $gitFolders = Get-ChildItem -Path $baseFolder -Directory -ErrorAction SilentlyContinue
             if (-not $gitFolders) {
               Write-Host "No folders found in $baseFolder"
@@ -41,6 +42,7 @@ jobs:
 
             $gitFolderNames = $gitFolders.Name.ToLower()
 
+            # Папки в Grafana
             $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{
               Authorization = "Bearer $ApiToken"
             }
@@ -65,6 +67,7 @@ jobs:
                 } -Body $payload
               }
 
+              # Загрузка дашбордов
               $localUids = @()
               Get-ChildItem -Path $clientPath -Filter "*.json" | ForEach-Object {
                 $json = Get-Content $_.FullName -Raw
@@ -75,9 +78,15 @@ jobs:
                   exit 1
                 }
 
-                # Делаем уникальный UID на основе хоста и клиента
+                # Генерируем уникальный UID
                 $originalUid = $dashboard.uid
-                $dashboard.uid = "$($target.Folder)-$clientName-$originalUid"
+                $newUid = "$($target.Folder)-$clientName-$originalUid"
+
+                if ($dashboard.uid -ne $newUid) {
+                  $dashboard.uid = $newUid
+                  $dashboard.id = $null  # сбрасываем id, чтобы Grafana создала новый
+                }
+
                 $localUids += $dashboard.uid
 
                 $uploadPayload = @{
@@ -93,6 +102,7 @@ jobs:
                 } -Body $uploadPayload
               }
 
+              # Удаляем дашборды, которых нет в Git
               $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
                 Authorization = "Bearer $ApiToken"
               }
@@ -107,6 +117,7 @@ jobs:
               }
             }
 
+            # Удаляем папки, которых нет в Git
             foreach ($grafanaFolder in $grafanaFolders) {
               $uid = $grafanaFolder.uid.ToLower()
               if ($gitFolderNames -notcontains $uid) {
