@@ -9,7 +9,7 @@ OUTPUT_DIR = "exported_dashboards"     # Where dashboards will be saved
 # ==================
 
 HEADERS = {
-    "Authorization": f"Bearer {API_TOKEN}",
+    "Authorization": f"Bearer {GRAFANA_API_TOKEN}",
     "Content-Type": "application/json"
 }
 
