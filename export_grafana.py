@@ -3,9 +3,9 @@ import requests
 import json
 
 # ==== SETTINGS ====
-GRAFANA_URL = "http://localhost:3000"  
-API_TOKEN = os.environ.get("GRAFANA_API_TOKEN")         
-OUTPUT_DIR = "exported_dashboards"     
+GRAFANA_URL = "http://localhost:3000"           # Your Grafana URL
+API_TOKEN = os.getenv("GRAFANA_API_TOKEN")      # Token from environment variable
+OUTPUT_DIR = "exported_dashboards"              # Directory to save JSON files
 # ==================
 
 HEADERS = {
@@ -17,67 +17,53 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # 1. Get all folders
 folders_resp = requests.get(f"{GRAFANA_URL}/api/folders", headers=HEADERS)
-try:
+folders_list = []
+
+if folders_resp.status_code == 200:
     folders_list = folders_resp.json()
-except json.JSONDecodeError:
-    print("Error decoding folders response")
-    folders_list = []
+else:
+    print(f"Unexpected folders response: {folders_resp.json()}")
 
-# Ensure response is a list
-if not isinstance(folders_list, list):
-    print("Unexpected folders response:", folders_list)
-    folders_list = []
+# Add "General" folder for dashboards without a folder
+folders_list.insert(0, {"uid": "", "title": "General"})
 
-# Add root "General" folder
-folders_list = [{"id": 0, "uid": "", "title": "General"}] + folders_list
-
-# 2. For each folder, export dashboards
+# 2. Loop through each folder
 for folder in folders_list:
-    folder_title = folder['title']
-    folder_uid = folder['uid'] if folder['uid'] else ""
-    folder_path = os.path.join(OUTPUT_DIR, folder_title.replace(" ", "_"))
+    folder_name = folder['title']
+    folder_uid = folder['uid']
+    folder_path = os.path.join(OUTPUT_DIR, folder_name.replace(" ", "_"))
     os.makedirs(folder_path, exist_ok=True)
 
     # Get dashboards in the folder
-    search_resp = requests.get(
-        f"{GRAFANA_URL}/api/search?folderIds={folder_uid}&query=&type=dash-db",
-        headers=HEADERS
-    )
-    try:
-        dashboards_list = search_resp.json()
-    except json.JSONDecodeError:
-        print(f"Error decoding dashboards for folder {folder_title}")
-        dashboards_list = []
+    search_url = f"{GRAFANA_URL}/api/search?type=dash-db&folderIds={folder_uid}&limit=1000"
+    search_resp = requests.get(search_url, headers=HEADERS)
 
-    if not isinstance(dashboards_list, list):
-        print(f"Unexpected dashboards response for folder {folder_title}:", dashboards_list)
-        dashboards_list = []
+    dashboards = []
+    if search_resp.status_code == 200:
+        dashboards = search_resp.json()
+    else:
+        print(f"Unexpected dashboards response for folder {folder_name}: {search_resp.json()}")
 
-    for dash in dashboards_list:
+    # Export each dashboard
+    for dash in dashboards:
         dash_uid = dash.get('uid')
-        dash_title = dash.get('title', 'unknown_dashboard')
+        dash_title = dash.get('title', 'NoTitle')
 
         if not dash_uid:
-            print(f"Skipping dashboard without UID in folder {folder_title}")
             continue
 
-        dash_resp = requests.get(
-            f"{GRAFANA_URL}/api/dashboards/uid/{dash_uid}",
-            headers=HEADERS
-        )
-        try:
-            dash_json = dash_resp.json()['dashboard']
-        except (json.JSONDecodeError, KeyError):
-            print(f"Error fetching dashboard {dash_title}")
+        dash_resp = requests.get(f"{GRAFANA_URL}/api/dashboards/uid/{dash_uid}", headers=HEADERS)
+        if dash_resp.status_code != 200:
+            print(f"Failed to fetch dashboard {dash_title}: {dash_resp.json()}")
             continue
 
-        # Remove id to allow re-import
-        dash_json['id'] = None
+        dash_json = dash_resp.json().get('dashboard', {})
+        dash_json['id'] = None  # Remove ID for import
 
         filename = os.path.join(folder_path, f"{dash_title.replace(' ', '_')}.json")
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(dash_json, f, indent=2, ensure_ascii=False)
 
-        print(f"Saved dashboard: {folder_title}/{dash_title}")
+        print(f"Saved dashboard: {folder_name}/{dash_title}")
 
 print("\n✅ Export completed!")
