@@ -4,7 +4,7 @@ import json
 
 # ==== SETTINGS ====
 GRAFANA_URL = "http://localhost:3000"  # Grafana URL
-API_TOKEN = "YOUR_API_TOKEN_HERE"      # вставь сюда реальный API токен
+API_TOKEN = os.getenv("GRAFANA_API_TOKEN")
 OUTPUT_DIR = "exported_dashboards"     # папка для сохранения JSON
 # ==================
 
