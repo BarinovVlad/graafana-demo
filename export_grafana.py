@@ -19,11 +19,11 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 folders_resp = requests.get(f"{GRAFANA_URL}/api/folders", headers=HEADERS)
 folders_data = folders_resp.json()
 
-# Проверяем, что это список, если это словарь с ключом "folders" — берем его
-if isinstance(folders_data, dict) and "folders" in folders_data:
-    folders_list = folders_data["folders"]
-elif isinstance(folders_data, list):
+# Проверяем формат ответа
+if isinstance(folders_data, list):
     folders_list = folders_data
+elif isinstance(folders_data, dict) and "folders" in folders_data:
+    folders_list = folders_data["folders"]
 else:
     folders_list = []
 
@@ -32,8 +32,8 @@ folders_list = [{"uid": "", "title": "General"}] + folders_list
 
 # 2. Для каждой папки получаем дашборды
 for folder in folders_list:
-    folder_name = folder['title']
-    folder_uid = folder['uid'] if folder['uid'] else "general"
+    folder_name = folder.get('title', 'Unnamed')
+    folder_uid = folder.get('uid', '') or "general"
     folder_path = os.path.join(OUTPUT_DIR, folder_name.replace(" ", "_"))
     os.makedirs(folder_path, exist_ok=True)
 
@@ -44,14 +44,24 @@ for folder in folders_list:
         search_url = f"{GRAFANA_URL}/api/search?folderIds={folder_uid}&type=dash-db"
 
     search_resp = requests.get(search_url, headers=HEADERS)
-    dashboards = search_resp.json()
+    dashboards_data = search_resp.json()
 
-    for dash in dashboards:
-        dash_uid = dash['uid']
-        dash_title = dash['title']
+    # dashboards_data может быть None или пустым списком
+    if not dashboards_data:
+        continue
+
+    for dash in dashboards_data:
+        # Иногда dash может быть строкой, проверяем тип
+        if not isinstance(dash, dict):
+            continue
+        dash_uid = dash.get('uid')
+        dash_title = dash.get('title', 'Untitled')
+
+        if not dash_uid:
+            continue
 
         dash_resp = requests.get(f"{GRAFANA_URL}/api/dashboards/uid/{dash_uid}", headers=HEADERS)
-        dash_json = dash_resp.json()['dashboard']
+        dash_json = dash_resp.json().get('dashboard', {})
 
         # Убираем id, чтобы Grafana создавала новый при импорте
         dash_json['id'] = None
