@@ -4,7 +4,7 @@ import json
 
 # ==== SETTINGS ====
 GRAFANA_URL = "http://localhost:3000"  # Grafana URL
-API_TOKEN = "GRAFANA_API_TOKEN"           # Ваш API токен
+API_TOKEN = "YOUR_API_TOKEN"           # Ваш API токен
 OUTPUT_DIR = "exported_dashboards"     # Папка для сохранения JSON
 # ==================
 
@@ -17,7 +17,15 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # 1. Получаем список всех папок
 folders_resp = requests.get(f"{GRAFANA_URL}/api/folders", headers=HEADERS)
-folders_list = folders_resp.json()
+folders_data = folders_resp.json()
+
+# Проверяем, что это список, если это словарь с ключом "folders" — берем его
+if isinstance(folders_data, dict) and "folders" in folders_data:
+    folders_list = folders_data["folders"]
+elif isinstance(folders_data, list):
+    folders_list = folders_data
+else:
+    folders_list = []
 
 # Добавляем корневую папку "General"
 folders_list = [{"uid": "", "title": "General"}] + folders_list
