@@ -4,12 +4,12 @@ import json
 
 # ==== SETTINGS ====
 GRAFANA_URL = "http://localhost:3000"  # Grafana URL
-API_TOKEN = "YOUR_API_TOKEN"           # Your Grafana API key
+API_TOKEN = "GRAFANA_API_TOKEN"           # Your Grafana API key
 OUTPUT_DIR = "exported_dashboards"     # Where dashboards will be saved
 # ==================
 
 HEADERS = {
-    "Authorization": f"Bearer {GRAFANA_API_TOKEN}",
+    "Authorization": f"Bearer {API_TOKEN}",
     "Content-Type": "application/json"
 }
 
