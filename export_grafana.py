@@ -1,60 +1,67 @@
 import os
-import requests
 import json
+import requests
 
-# ==== SETTINGS ====
+# Config
 GRAFANA_URL = "http://localhost:3000"
-API_TOKEN = os.getenv("GRAFANA_API_TOKEN")
-OUTPUT_DIR = "exported_dashboards"
-# ==================
-
-if not API_TOKEN:
-    raise ValueError("Environment variable GRAFANA_API_TOKEN is not set!")
+API_TOKEN = os.getenv("GRAFANA_API_TOKEN")  # Токен берём из переменной окружения
 
 HEADERS = {
     "Authorization": f"Bearer {API_TOKEN}",
     "Content-Type": "application/json"
 }
 
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+EXPORT_DIR = "exported_dashboards"
 
-# 1. Get all folders from Grafana
+# Создаём директорию для экспорта
+os.makedirs(EXPORT_DIR, exist_ok=True)
+
+# Получаем список всех папок
 folders_resp = requests.get(f"{GRAFANA_URL}/api/folders", headers=HEADERS)
-folders_list = folders_resp.json() if folders_resp.status_code == 200 else []
-
-if not folders_list:
-    print("No folders found in Grafana")
+if folders_resp.status_code != 200:
+    print("Unexpected folders response:", folders_resp.json())
+    folders_list = []
 else:
-    for folder in folders_list:
-        folder_id = folder["id"]
-        folder_name = folder["title"]
-        folder_path = os.path.join(OUTPUT_DIR, folder_name.replace(" ", "_"))
-        os.makedirs(folder_path, exist_ok=True)
+    folders_list = folders_resp.json()
 
-        # 2. Get dashboards in this folder
-        search_resp = requests.get(f"{GRAFANA_URL}/api/search?type=dash-db&folderIds={folder_id}", headers=HEADERS)
-        dashboards = search_resp.json() if search_resp.status_code == 200 else []
+# Экспорт дашбордов по каждой папке
+for folder in folders_list:
+    folder_uid = folder['uid']
+    folder_title = folder['title']
+    folder_dir = os.path.join(EXPORT_DIR, folder_title)
+    os.makedirs(folder_dir, exist_ok=True)
 
-        if not dashboards:
-            print(f"No dashboards found in folder {folder_name}")
+    # Получаем дашборды в папке по UID
+    search_resp = requests.get(
+        f"{GRAFANA_URL}/api/search?type=dash-db&folderIds={folder_uid}",
+        headers=HEADERS
+    )
+
+    if search_resp.status_code != 200:
+        print(f"Unexpected dashboards response for folder {folder_title}:", search_resp.json())
+        continue
+
+    dashboards = search_resp.json()
+    if not dashboards:
+        print(f"No dashboards found in folder {folder_title}")
+        continue
+
+    for dash in dashboards:
+        dash_uid = dash['uid']
+        dash_title = dash['title']
+        dash_resp = requests.get(f"{GRAFANA_URL}/api/dashboards/uid/{dash_uid}", headers=HEADERS)
+
+        if dash_resp.status_code != 200:
+            print(f"Failed to get dashboard {dash_title} ({dash_uid})")
             continue
 
-        for dash in dashboards:
-            dash_uid = dash["uid"]
-            dash_title = dash["title"]
+        dash_data = dash_resp.json()
+        # Сохраняем только поле "dashboard"
+        dashboard_json = dash_data.get("dashboard", {})
+        file_name = f"{dash_title}.json".replace("/", "_")  # на случай если есть слэши
+        file_path = os.path.join(folder_dir, file_name)
 
-            dash_resp = requests.get(f"{GRAFANA_URL}/api/dashboards/uid/{dash_uid}", headers=HEADERS)
-            if dash_resp.status_code != 200:
-                print(f"Error fetching dashboard {dash_title}")
-                continue
-
-            dash_json = dash_resp.json()["dashboard"]
-            dash_json["id"] = None  # remove id for import
-
-            filename = os.path.join(folder_path, f"{dash_title.replace(' ', '_')}.json")
-            with open(filename, "w", encoding="utf-8") as f:
-                json.dump(dash_json, f, indent=2, ensure_ascii=False)
-
-            print(f"Saved dashboard: {folder_name}/{dash_title}")
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(dashboard_json, f, indent=2)
 
 print("\n✅ Export completed!")
