@@ -3,10 +3,9 @@ import requests
 import json
 
 # ==== SETTINGS ====
-GRAFANA_URL = "http://localhost:3000"       # your Grafana URL
-API_TOKEN = "GRAFANA_API_TOKEN"               # replace with your API key
-OUTPUT_DIR = "exported_dashboards"         # folder to save JSON dashboards
-PROVISIONING_FILE = "provisioning/dashboards.yaml"
+GRAFANA_URL = "http://localhost:3000"   # Grafana URL
+API_TOKEN = "YOUR_API_TOKEN"            # Insert your API token here
+OUTPUT_DIR = "exported_dashboards"      # Directory to save dashboards
 # ==================
 
 HEADERS = {
@@ -14,26 +13,19 @@ HEADERS = {
     "Content-Type": "application/json"
 }
 
-# Create output folders
 os.makedirs(OUTPUT_DIR, exist_ok=True)
-os.makedirs(os.path.dirname(PROVISIONING_FILE), exist_ok=True)
 
-# 1. Get folders from Grafana
+# 1. Get all folders
 folders_resp = requests.get(f"{GRAFANA_URL}/api/folders", headers=HEADERS)
-folders = folders_resp.json()
-if not isinstance(folders, list):
-    folders = []
+folders_list = folders_resp.json()
 
-# Add root "General" folder
-folders.insert(0, {"uid": "", "title": "General"})
+# Add root folder (General)
+folders_list.insert(0, {"uid": "", "title": "General"})
 
-# Prepare provisioning entries
-provisioning_entries = []
-
-# 2. Export dashboards
-for folder in folders:
-    folder_name = folder['title']
-    folder_uid = folder['uid'] if folder['uid'] else "general"
+# 2. Loop through each folder
+for folder in folders_list:
+    folder_name = folder.get('title', 'Unknown')
+    folder_uid = folder.get('uid', '') if folder.get('uid') else "general"
     folder_path = os.path.join(OUTPUT_DIR, folder_name.replace(" ", "_"))
     os.makedirs(folder_path, exist_ok=True)
 
@@ -44,10 +36,21 @@ for folder in folders:
     )
     dashboards = search_resp.json()
 
-    for dash in dashboards:
-        dash_uid = dash['uid']
-        dash_title = dash['title']
+    print(f"DEBUG: dashboards in folder '{folder_name}': {dashboards}")
 
+    for dash in dashboards:
+        if not isinstance(dash, dict):
+            print(f"Skipping invalid dashboard entry: {dash}")
+            continue
+
+        dash_uid = dash.get('uid')
+        dash_title = dash.get('title')
+
+        if not dash_uid or not dash_title:
+            print(f"Skipping dashboard with missing uid/title: {dash}")
+            continue
+
+        # Get full dashboard JSON
         dash_resp = requests.get(
             f"{GRAFANA_URL}/api/dashboards/uid/{dash_uid}",
             headers=HEADERS
@@ -63,26 +66,4 @@ for folder in folders:
 
         print(f"Saved dashboard: {folder_name}/{dash_title}")
 
-    # Add entry to provisioning
-    provisioning_entries.append({
-        "name": folder_name,
-        "folder": folder_name if folder_name != "General" else "",
-        "type": "file",
-        "options": {
-            "path": os.path.abspath(folder_path)
-        }
-    })
-
-# 3. Write provisioning file
-with open(PROVISIONING_FILE, "w", encoding="utf-8") as f:
-    f.write("apiVersion: 1\n")
-    f.write("providers:\n")
-    for entry in provisioning_entries:
-        f.write(f"  - name: '{entry['name']}'\n")
-        f.write(f"    folder: '{entry['folder']}'\n")
-        f.write(f"    type: {entry['type']}\n")
-        f.write(f"    options:\n")
-        f.write(f"      path: {entry['options']['path']}\n")
-
 print("\n✅ Export completed!")
-print(f"Provisioning file created: {PROVISIONING_FILE}")
