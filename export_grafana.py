@@ -17,7 +17,16 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # 1. Get all folders
 folders_resp = requests.get(f"{GRAFANA_URL}/api/folders", headers=HEADERS)
-folders_list = folders_resp.json()
+folders_json = folders_resp.json()
+
+# Ensure we have a list of folders
+if isinstance(folders_json, dict):
+    # Some Grafana versions return dict with key 'folders'
+    folders_list = folders_json.get('folders', [])
+elif isinstance(folders_json, list):
+    folders_list = folders_json
+else:
+    folders_list = []
 
 # Add root folder (General)
 folders_list.insert(0, {"uid": "", "title": "General"})
@@ -36,28 +45,21 @@ for folder in folders_list:
     )
     dashboards = search_resp.json()
 
-    print(f"DEBUG: dashboards in folder '{folder_name}': {dashboards}")
-
     for dash in dashboards:
         if not isinstance(dash, dict):
-            print(f"Skipping invalid dashboard entry: {dash}")
             continue
 
         dash_uid = dash.get('uid')
         dash_title = dash.get('title')
 
         if not dash_uid or not dash_title:
-            print(f"Skipping dashboard with missing uid/title: {dash}")
             continue
 
-        # Get full dashboard JSON
         dash_resp = requests.get(
             f"{GRAFANA_URL}/api/dashboards/uid/{dash_uid}",
             headers=HEADERS
         )
         dash_json = dash_resp.json()['dashboard']
-
-        # Remove id to allow import as new dashboard
         dash_json['id'] = None
 
         filename = os.path.join(folder_path, f"{dash_title.replace(' ', '_')}.json")
