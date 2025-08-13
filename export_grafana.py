@@ -3,8 +3,8 @@ import requests
 import json
 
 # ==== SETTINGS ====
-GRAFANA_URL = "http://localhost:3000"           # Your Grafana URL
-API_TOKEN = os.getenv("GRAFANA_API_TOKEN")      # Token from environment variable
+GRAFANA_URL = "http://localhost:3000"           # Grafana URL
+API_TOKEN = os.getenv("GRAFANA_API_TOKEN")      # API token from environment variable
 OUTPUT_DIR = "exported_dashboards"              # Directory to save JSON files
 # ==================
 
@@ -24,9 +24,6 @@ if folders_resp.status_code == 200:
 else:
     print(f"Unexpected folders response: {folders_resp.json()}")
 
-# Add "General" folder for dashboards without a folder
-folders_list.insert(0, {"uid": "", "title": "General"})
-
 # 2. Loop through each folder
 for folder in folders_list:
     folder_name = folder['title']
@@ -44,26 +41,25 @@ for folder in folders_list:
     else:
         print(f"Unexpected dashboards response for folder {folder_name}: {search_resp.json()}")
 
-    # Export each dashboard
+    # Export each dashboard using UID
     for dash in dashboards:
         dash_uid = dash.get('uid')
-        dash_title = dash.get('title', 'NoTitle')
-
         if not dash_uid:
             continue
 
         dash_resp = requests.get(f"{GRAFANA_URL}/api/dashboards/uid/{dash_uid}", headers=HEADERS)
         if dash_resp.status_code != 200:
-            print(f"Failed to fetch dashboard {dash_title}: {dash_resp.json()}")
+            print(f"Failed to fetch dashboard UID {dash_uid}: {dash_resp.json()}")
             continue
 
         dash_json = dash_resp.json().get('dashboard', {})
         dash_json['id'] = None  # Remove ID for import
 
-        filename = os.path.join(folder_path, f"{dash_title.replace(' ', '_')}.json")
+        # Save file as uid.json
+        filename = os.path.join(folder_path, f"{dash_uid}.json")
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(dash_json, f, indent=2, ensure_ascii=False)
 
-        print(f"Saved dashboard: {folder_name}/{dash_title}")
+        print(f"Saved dashboard UID {dash_uid} in folder {folder_name}")
 
 print("\n✅ Export completed!")
