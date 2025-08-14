@@ -18,7 +18,6 @@ HEADERS = {
 EXPORT_DIR = "exported_dashboards"
 os.makedirs(EXPORT_DIR, exist_ok=True)
 
-# === UTILS ===
 def sanitize_filename(name):
     return re.sub(r'[\\/*?:"<>|]', "_", name)
 
@@ -31,8 +30,6 @@ else:
     folders_list = folders_resp.json()
 
 # === EXPORT DASHBOARDS ===
-exported_uids = set()
-
 for folder in folders_list:
     folder_id = folder["id"]
     folder_title = folder["title"]
@@ -41,11 +38,11 @@ for folder in folders_list:
     if folder_title.lower() == "general":
         print("⏭️ Skipping 'General' folder")
         continue
-
     safe_folder_title = sanitize_filename(folder_title)
     folder_dir = os.path.join(EXPORT_DIR, safe_folder_title)
     os.makedirs(folder_dir, exist_ok=True)
 
+    # ✅ Используем folderId, а не uid
     search_url = f"{GRAFANA_URL}/api/search?type=dash-db&folderIds={folder_id}"
     search_resp = requests.get(search_url, headers=HEADERS)
 
@@ -62,9 +59,6 @@ for folder in folders_list:
         dash_uid = dash["uid"]
         dash_title = sanitize_filename(dash["title"])
 
-        if dash_uid in exported_uids:
-            continue  # Skip already exported dashboards
-
         dash_resp = requests.get(f"{GRAFANA_URL}/api/dashboards/uid/{dash_uid}", headers=HEADERS)
         if dash_resp.status_code != 200:
             print(f"❌ Failed to fetch dashboard '{dash_title}' ({dash_uid})")
@@ -77,7 +71,6 @@ for folder in folders_list:
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(dashboard_json, f, indent=2)
 
-        exported_uids.add(dash_uid)
         print(f"✅ Exported '{dash_title}' to folder '{folder_title}'")
 
 print("\n🎉 Export completed successfully!")
