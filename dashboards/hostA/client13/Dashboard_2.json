@@ -1,0 +1,42 @@
+{
+  "uid": "134b423a",
+  "title": "Dashboard 2 for client13",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Panel 1",
+      "type": "singlestat",
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Panel 2",
+      "type": "graph",
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Panel 3",
+      "type": "singlestat",
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "uid": "466d5ab7",
+  "title": "Dashboard 1 for client18",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Panel 1",
+      "type": "table",
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Panel 2",
+      "type": "table",
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Panel 3",
+      "type": "table",
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ]
+    }
+  ]
+}

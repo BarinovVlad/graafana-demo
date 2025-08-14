@@ -1,0 +1,30 @@
+{
+  "uid": "cf2812b2",
+  "title": "Dashboard 3 for client7",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Panel 1",
+      "type": "table",
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Panel 2",
+      "type": "singlestat",
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ]
+    }
+  ]
+}

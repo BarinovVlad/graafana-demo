@@ -1,0 +1,30 @@
+{
+  "uid": "a3ef2fe3",
+  "title": "Dashboard 1 for client17",
+  "panels": [
+    {
+      "id": 1,
+      "title": "Panel 1",
+      "type": "singlestat",
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Panel 2",
+      "type": "table",
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ]
+    }
+  ]
+}
