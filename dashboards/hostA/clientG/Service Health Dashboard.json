@@ -86,7 +86,7 @@
           "refId": "A"
         }
       ],
-      "title": "Total Services Up",
+      "title": "Total Services Up v2",
       "type": "stat"
     },
     {
@@ -187,4 +187,5 @@
   "title": "Service Health Dashboard",
   "uid": "service-health001",
   "version": 1
+
 }
