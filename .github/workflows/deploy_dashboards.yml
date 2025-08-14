@@ -15,12 +15,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy dashboards to both Grafana instances
+      - name: Deploy dashboards to Grafana instances
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Define each host with its dashboard folder and Grafana settings
+          # Define Grafana instances
           $grafanaTargets = @(
             @{ Folder = "hostA"; Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
             @{ Folder = "hostB"; Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
@@ -33,7 +33,7 @@ jobs:
 
             Write-Host "n===== Deploying to Grafana at $GrafanaURL from folder $baseFolder ====="
 
-            # Get client folders (each client is a folder inside hostA or hostB)
+            # Get client folders inside hostA or hostB
             $gitFolders = Get-ChildItem -Path $baseFolder -Directory -ErrorAction SilentlyContinue
             if (-not $gitFolders) {
               Write-Host "No folders found in $baseFolder"
@@ -55,24 +55,17 @@ jobs:
               Write-Host "n=== Processing client: $clientName ==="
 
               try {
-                # Try to get existing folder
                 $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{
                   Authorization = "Bearer $ApiToken"
                 }
                 Write-Host "Folder '$folderUid' exists in Grafana."
               } catch {
-                # Folder does not exist, create it
                 Write-Host "Creating folder '$folderUid'..."
                 $payload = @{ uid = $folderUid; title = $clientName } | ConvertTo-Json -Compress
-                Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
+                $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
                   Authorization = "Bearer $ApiToken"
                   "Content-Type" = "application/json"
                 } -Body $payload
-
-                # Fetch folder again to get full details (including id)
-                $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{
-                  Authorization = "Bearer $ApiToken"
-                }
               }
 
               # Upload dashboards
@@ -85,6 +78,10 @@ jobs:
                   Write-Error "Dashboard '$($_.Name)' missing 'uid'."
                   exit 1
                 }
+
+                # Remove id and version before upload
+                if ($dashboard.PSObject.Properties.Name -contains 'id') { $dashboard.PSObject.Properties.Remove('id') }
+                if ($dashboard.PSObject.Properties.Name -contains 'version') { $dashboard.PSObject.Properties.Remove('version') }
 
                 $localUids += $dashboard.uid
 
@@ -136,7 +133,6 @@ jobs:
                   }
                 }
 
-                # Delete folder itself
                 Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{
                   Authorization = "Bearer $ApiToken"
                 }
