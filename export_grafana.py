@@ -33,7 +33,7 @@ for folder in folders_list:
 
     
     search_resp = requests.get(
-        f"{GRAFANA_URL}/api/search?type=dash-db&folderIds={folder_uid}",
+       f"{GRAFANA_URL}/api/search?type=dash-db&folderIds={folder_uid}",
         headers=HEADERS
     )
 
@@ -56,9 +56,9 @@ for folder in folders_list:
             continue
 
         dash_data = dash_resp.json()
-        # Сохраняем только поле "dashboard"
+       
         dashboard_json = dash_data.get("dashboard", {})
-        file_name = f"{dash_title}.json".replace("/", "_")  # на случай если есть слэши
+        file_name = f"{dash_title}.json".replace("/", "_")  
         file_path = os.path.join(folder_dir, file_name)
 
         with open(file_path, "w", encoding="utf-8") as f:
