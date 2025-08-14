@@ -55,16 +55,24 @@ jobs:
               Write-Host "n=== Processing client: $clientName ==="
 
               try {
+                # Try to get existing folder
                 $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{
                   Authorization = "Bearer $ApiToken"
                 }
+                Write-Host "Folder '$folderUid' exists in Grafana."
               } catch {
+                # Folder does not exist, create it
                 Write-Host "Creating folder '$folderUid'..."
                 $payload = @{ uid = $folderUid; title = $clientName } | ConvertTo-Json -Compress
-                $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
+                Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
                   Authorization = "Bearer $ApiToken"
                   "Content-Type" = "application/json"
                 } -Body $payload
+
+                # Fetch folder again to get full details (including id)
+                $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{
+                  Authorization = "Bearer $ApiToken"
+                }
               }
 
               # Upload dashboards
@@ -97,6 +105,7 @@ jobs:
               $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
                 Authorization = "Bearer $ApiToken"
               }
+
               $folderDashboards = $allDashboards | Where-Object { $_.folderId -eq $updatedFolder.id }
               $toDelete = $folderDashboards | Where-Object { $localUids -notcontains $_.uid }
 
@@ -127,6 +136,7 @@ jobs:
                   }
                 }
 
+                # Delete folder itself
                 Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{
                   Authorization = "Bearer $ApiToken"
                 }
