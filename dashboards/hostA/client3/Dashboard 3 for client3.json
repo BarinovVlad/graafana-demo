@@ -1,0 +1,44 @@
+{
+  "id": 197,
+  "panels": [
+    {
+      "datasource": "prometheus",
+      "id": 1,
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ],
+      "title": "Panel 1",
+      "type": "table"
+    },
+    {
+      "datasource": "prometheus",
+      "id": 2,
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ],
+      "title": "Panel 2",
+      "type": "table"
+    },
+    {
+      "datasource": "prometheus",
+      "id": 3,
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ],
+      "title": "Panel 3",
+      "type": "graph"
+    }
+  ],
+  "title": "Dashboard 3 for client3",
+  "uid": "dc5af3e0",
+  "version": 1
+}
