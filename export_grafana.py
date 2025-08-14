@@ -30,19 +30,20 @@ if folders_resp.status_code != 200:
 else:
     folders_list = folders_resp.json()
 
-# Add default "General" folder manually
-folders_list.append({
-    "id": 0,
-    "title": "General"
-})
-
 # === EXPORT DASHBOARDS ===
 exported_uids = set()
 
 for folder in folders_list:
     folder_id = folder["id"]
-    folder_title = sanitize_filename(folder["title"])
-    folder_dir = os.path.join(EXPORT_DIR, folder_title)
+    folder_title = folder["title"]
+
+    # ❌ Пропускаем папку General
+    if folder_title.lower() == "general":
+        print("⏭️ Skipping 'General' folder")
+        continue
+
+    safe_folder_title = sanitize_filename(folder_title)
+    folder_dir = os.path.join(EXPORT_DIR, safe_folder_title)
     os.makedirs(folder_dir, exist_ok=True)
 
     search_url = f"{GRAFANA_URL}/api/search?type=dash-db&folderIds={folder_id}"
@@ -56,6 +57,7 @@ for folder in folders_list:
     if not dashboards:
         print(f"ℹ️ No dashboards found in folder '{folder_title}'")
         continue
+
     for dash in dashboards:
         dash_uid = dash["uid"]
         dash_title = sanitize_filename(dash["title"])
@@ -76,6 +78,6 @@ for folder in folders_list:
             json.dump(dashboard_json, f, indent=2)
 
         exported_uids.add(dash_uid)
-        print(f"✅ Exported '{dash_title}' to '{folder_title}'")
+        print(f"✅ Exported '{dash_title}' to folder '{folder_title}'")
 
 print("\n🎉 Export completed successfully!")
