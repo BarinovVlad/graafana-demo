@@ -4,7 +4,7 @@ import requests
 
 # Config
 GRAFANA_URL = "http://localhost:3000"
-API_TOKEN = os.getenv("GRAFANA_API_TOKEN")  # Токен берём из переменной окружения
+API_TOKEN = os.getenv("GRAFANA_API_TOKEN")  
 
 HEADERS = {
     "Authorization": f"Bearer {API_TOKEN}",
@@ -13,10 +13,10 @@ HEADERS = {
 
 EXPORT_DIR = "exported_dashboards"
 
-# Создаём директорию для экспорта
+
 os.makedirs(EXPORT_DIR, exist_ok=True)
 
-# Получаем список всех папок
+
 folders_resp = requests.get(f"{GRAFANA_URL}/api/folders", headers=HEADERS)
 if folders_resp.status_code != 200:
     print("Unexpected folders response:", folders_resp.json())
@@ -24,14 +24,14 @@ if folders_resp.status_code != 200:
 else:
     folders_list = folders_resp.json()
 
-# Экспорт дашбордов по каждой папке
+
 for folder in folders_list:
     folder_uid = folder['uid']
     folder_title = folder['title']
     folder_dir = os.path.join(EXPORT_DIR, folder_title)
     os.makedirs(folder_dir, exist_ok=True)
 
-    # Получаем дашборды в папке по UID
+    
     search_resp = requests.get(
         f"{GRAFANA_URL}/api/search?type=dash-db&folderIds={folder_uid}",
         headers=HEADERS
