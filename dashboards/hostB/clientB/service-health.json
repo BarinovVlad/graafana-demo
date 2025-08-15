@@ -11,7 +11,7 @@
   "panels": [
     {
       "id": 1,
-      "title": "Service Up Status",
+      "title": "Service Up Status test vc",
       "type": "table",
       "datasource": "prometheus",
       "targets": [
