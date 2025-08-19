@@ -9,7 +9,7 @@
   "panels": [
     {
       "type": "stat",
-      "title": "Query Log Enabled",
+      "title": "Query Log Enabled v2",
       "id": 1,
       "datasource": "prometheus",
       "targets": [
