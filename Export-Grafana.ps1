@@ -1,34 +1,44 @@
 $ErrorActionPreference = "Stop"
 
+# Grafana settings
 $GrafanaURL = "http://localhost:3000"   # Update if needed
-$ApiToken = $env:GRAFANA_API_TOKEN
+$ApiToken = $env:GRAFANA_API_TOKEN      
 
-# Export directory
-$exportDir = "./library-panels"
-if (-not (Test-Path $exportDir)) {
-  New-Item -ItemType Directory -Path $exportDir | Out-Null
+# Base export directory
+$exportBaseDir = "./library-panels"
+if (-not (Test-Path $exportBaseDir)) {
+    New-Item -ItemType Directory -Path $exportBaseDir | Out-Null
 }
 
 Write-Host "Fetching all library panels from Grafana..."
 
 # Get all library panels
 $libraryPanels = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Headers @{
-  Authorization = "Bearer $ApiToken"
+    Authorization = "Bearer $ApiToken"
 }
 
 foreach ($panel in $libraryPanels) {
-  # Get detailed info for each panel
-  $panelDetail = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Headers @{
-    Authorization = "Bearer $ApiToken"
-  }
+    # Get detailed info for each panel
+    $panelDetail = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Headers @{
+        Authorization = "Bearer $ApiToken"
+    }
 
-  # File name based on UID
-  $fileName = Join-Path $exportDir "LibraryPanel-$($panel.uid).json"
+    # Determine folder name from panel metadata
+    $folderName = if ($panelDetail.meta.folderName) { $panelDetail.meta.folderName } else { "default" }
 
-  # Save JSON to file
-  $panelDetail | ConvertTo-Json -Depth 20 | Out-File -FilePath $fileName -Encoding utf8
+    # Create folder if it doesn't exist
+    $folderPath = Join-Path $exportBaseDir $folderName
+    if (-not (Test-Path $folderPath)) {
+        New-Item -ItemType Directory -Path $folderPath | Out-Null
+    }
 
-  Write-Host "Exported library panel: $fileName"
+    # File name based on UID
+    $fileName = Join-Path $folderPath "LibraryPanel-$($panelDetail.uid).json"
+
+    # Save JSON to file
+    $panelDetail | ConvertTo-Json -Depth 20 | Out-File -FilePath $fileName -Encoding utf8
+
+    Write-Host "Exported library panel: $fileName"
 }
 
-Write-Host "Export complete. Panels saved in $exportDir"
+Write-Host "Export complete. Panels saved in $exportBaseDir"
