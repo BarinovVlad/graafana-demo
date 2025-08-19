@@ -17,7 +17,7 @@ $libraryPanels = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Head
 }
 
 foreach ($panel in $libraryPanels) {
-    # Используем весь объект модели панели
+
     $panelData = $panel.model
 
     # File name based on UID
