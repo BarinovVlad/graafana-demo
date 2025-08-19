@@ -22,15 +22,16 @@ foreach ($panel in $libraryPanels) {
         Authorization = "Bearer $ApiToken"
     }
 
-    # File name based on UID and optional title
+    # File name based on UID and title
     $safeTitle = if ($panelDetail.title) { ($panelDetail.title -replace '[\\\/:*?"<>|]', '-') } else { "Panel" }
     $fileName = Join-Path $exportDir "$safeTitle-$($panel.uid).json"
 
-    # Save JSON to file
-    $panelDetail | ConvertTo-Json -Depth 20 | Out-File -FilePath $fileName -Encoding utf8
+    # Save JSON to file — каждый объект отдельно
+    $panelDetail | ConvertTo-Json -Depth 20 -Compress | Out-File -FilePath $fileName -Encoding utf8
 
     Write-Host "Exported library panel: $fileName"
 }
 
 Write-Host "Export complete. Panels saved in $exportDir"
+
 
