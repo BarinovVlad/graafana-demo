@@ -140,7 +140,7 @@ jobs:
                   Write-Host "Folder '$uid' deleted."
                 } catch {
                   if ($_.ErrorDetails.Message -match "Folder could not be deleted because it contains library elements in use") {
-                    Write-Host "Skip deleting folder '$uid' — contains library elements in use."
+                    Write-Host "Skip deleting folder '$uid' - contains library elements in use."
                   } else {
                     throw
                   }
