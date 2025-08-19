@@ -1,7 +1,8 @@
 $ErrorActionPreference = "Stop"
 
 $GrafanaURL = "http://localhost:3000"   # Update if needed
-$ApiToken   = "${{ secrets.GRAFANA_API_TOKEN }}" # Or replace with your token
+$ApiToken = $env:GRAFANA_API_TOKEN
+ # Or replace with your token
 
 # Export directory
 $exportDir = "./library-panels"
