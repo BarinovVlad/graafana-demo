@@ -1,41 +1,74 @@
 {
-  "id": 67,
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 23,
+  "links": [],
   "panels": [
     {
-      "datasource": "prometheus",
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
       "id": 1,
-      "targets": [
-        {
-          "expr": "increase(go_gc_pauses_seconds_count[5m])",
-          "legendFormat": "GC Pauses (5m)",
-          "refId": "A"
-        }
-      ],
+      "libraryPanel": {
+        "name": "Go GC Pause Count",
+        "uid": "beuap3vvuzuo0b"
+      },
       "title": "Go GC Pause Count",
-      "type": "graph"
+      "type": "library-panel-ref"
     },
     {
-      "datasource": "prometheus",
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 3
+      },
       "id": 2,
-      "targets": [
-        {
-          "expr": "go_memstats_heap_alloc_bytes",
-          "legendFormat": "Heap Alloc",
-          "refId": "B"
-        }
-      ],
+      "libraryPanel": {
+        "name": "Heap Allocation test vc",
+        "uid": "beuapltlrka9sc"
+      },
       "title": "Heap Allocation test vc",
-      "type": "graph"
+      "type": "library-panel-ref"
     }
   ],
+  "preload": false,
   "refresh": "30s",
-  "schemaVersion": 30,
+  "schemaVersion": 41,
   "tags": [
     "prometheus",
     "go"
   ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
   "timezone": "browser",
   "title": "Go Runtime Metrics",
   "uid": "go-runtime-dashboard001",
-  "version": 3
+  "version": 20
 }
