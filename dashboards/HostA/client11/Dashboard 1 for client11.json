@@ -1,0 +1,66 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 158,
+  "links": [],
+  "panels": [
+    {
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "libraryPanel": {
+        "name": "Panel 1",
+        "uid": "feuaurpgadgqof"
+      },
+      "title": "Panel 1",
+      "type": "library-panel-ref"
+    },
+    {
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 3
+      },
+      "id": 2,
+      "libraryPanel": {
+        "name": "Panel 2",
+        "uid": "feuauqhiqnv9cc"
+      },
+      "title": "Panel 2",
+      "type": "library-panel-ref"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Dashboard 1 for client11",
+  "uid": "25851cc3",
+  "version": 18
+}
