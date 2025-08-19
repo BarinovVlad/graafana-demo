@@ -1,6 +1,6 @@
 $ErrorActionPreference = "Stop"
 
-$GrafanaURL = "http://localhost:3000"   # Update if needed
+$GrafanaURL = "http://localhost:3000"
 $ApiToken = $env:GRAFANA_API_TOKEN
 
 # Export directory
@@ -17,16 +17,17 @@ $libraryPanels = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Head
 }
 
 foreach ($panel in $libraryPanels) {
-    # Extract the main panel object (libraryPanel inside model)
-    $libraryPanelData = $panel.model.libraryPanel
+    # Используем весь объект модели панели
+    $panelData = $panel.model
 
-    # Create a file name based on UID
-    $fileName = Join-Path $exportDir "$($libraryPanelData.uid)-$($libraryPanelData.name).json"
+    # File name based on UID
+    $fileName = Join-Path $exportDir "$($panel.uid)-$($panel.name).json"
 
     # Save JSON to file
-    $libraryPanelData | ConvertTo-Json -Depth 20 | Out-File -FilePath $fileName -Encoding utf8
+    $panelData | ConvertTo-Json -Depth 20 | Out-File -FilePath $fileName -Encoding utf8
 
     Write-Host "Exported library panel: $fileName"
 }
 
 Write-Host "Export complete. Panels saved in $exportDir"
+
