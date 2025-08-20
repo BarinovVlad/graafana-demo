@@ -1,40 +1,35 @@
 $ErrorActionPreference = "Stop"
 
-$GrafanaURL = "http://localhost:3000"
+$GrafanaURL = "http://localhost:3000"   # URL Grafana
 $ApiToken = $env:GRAFANA_API_TOKEN
 
+# Директория для сохранения панелей
 $exportDir = "./library-panels"
-if (-not (Test-Path $exportDir)) { New-Item -ItemType Directory -Path $exportDir | Out-Null }
+if (-not (Test-Path $exportDir)) {
+    New-Item -ItemType Directory -Path $exportDir | Out-Null
+}
 
-Write-Host "Fetching library panels..."
+Write-Host "Fetching all library panels from Grafana..."
 
-$response = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Headers @{
+# Получаем список всех библиотечных панелей
+$libraryPanels = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Headers @{
     Authorization = "Bearer $ApiToken"
 }
 
-# Determine if response is an array or object
-$panels = @()
-if ($response -is [System.Collections.IEnumerable] -and $response.Count -gt 0) {
-    $panels = $response
-} elseif ($response.elements -ne $null) {
-    $panels = $response.elements
-} else {
-    Write-Host "No library panels found."
-    exit
-}
-
-foreach ($panel in $panels) {
-    if (-not $panel.uid) { Write-Warning "Skipping a panel with no UID"; continue }
-
+foreach ($panel in $libraryPanels) {
+    # Получаем детальную информацию по каждой панели
     $panelDetail = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Headers @{
         Authorization = "Bearer $ApiToken"
     }
 
-    $safeName = ($panel.name -replace '[\\/:*?"<>|]', '_')
-    $fileName = Join-Path $exportDir "LibraryPanel-$safeName-$($panel.uid).json"
+    # Создаем уникальное имя файла для каждой панели
+    $safeName = ($panelDetail.title -replace '[^\w\d_-]', '_')  # заменяем запрещенные символы
+    $fileName = Join-Path $exportDir "$safeName-$($panel.uid).json"
 
+    # Сохраняем JSON в отдельный файл
     $panelDetail | ConvertTo-Json -Depth 20 | Out-File -FilePath $fileName -Encoding utf8
-    Write-Host "Exported: $fileName"
+
+    Write-Host "Exported library panel: $fileName"
 }
 
-Write-Host "Done. Panels saved in $exportDir"
+Write-Host "Export complete. Panels saved in $exportDir"
