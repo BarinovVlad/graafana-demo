@@ -1,9 +1,10 @@
-name: Deploy Grafana Dashboards
+name: Deploy Grafana Dashboards and Library Panels
 
 on:
   push:
     paths:
       - 'dashboards/**'
+      - 'provisioning/library_panels/**'
     branches:
       - main
 
@@ -15,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy dashboards to Grafana instances
+      - name: Deploy dashboards and library panels
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
@@ -33,7 +34,48 @@ jobs:
 
             Write-Host "n===== Deploying to Grafana at $GrafanaURL from folder $baseFolder ====="
 
-            # Get client folders inside hostA or hostB
+            # === Deploy library panels ===
+            $libraryPanelsFile = "./provisioning/library_panels/library-panels.json"
+
+            if (Test-Path $libraryPanelsFile) {
+                Write-Host "`n=== Deploying library panels from $libraryPanelsFile ==="
+                $panelsArray = Get-Content $libraryPanelsFile -Raw | ConvertFrom-Json
+
+                foreach ($panel in $panelsArray) {
+                    if (-not $panel.uid) {
+                        Write-Host "Skipping panel with missing UID"
+                        continue
+                    }
+
+                    # Remove id and version if present
+                    if ($panel.PSObject.Properties.Name -contains 'id') { $panel.PSObject.Properties.Remove('id') }
+                    if ($panel.PSObject.Properties.Name -contains 'version') { $panel.PSObject.Properties.Remove('version') }
+
+                    $uploadPayload = $panel | ConvertTo-Json -Depth 20
+
+                    try {
+                        # Update panel by UID
+                        Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Method Put -Headers @{
+                            Authorization = "Bearer $ApiToken"
+                            "Content-Type"  = "application/json"
+                        } -Body $uploadPayload
+
+                        Write-Host "Updated library panel: $($panel.uid)"
+                    } catch {
+                        # Create if not exists
+                        Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
+                            Authorization = "Bearer $ApiToken"
+                            "Content-Type"  = "application/json"
+                        } -Body $uploadPayload
+
+                        Write-Host "Created library panel: $($panel.uid)"
+                    }
+                }
+            } else {
+                Write-Host "No library panels file found at $libraryPanelsFile"
+            }
+
+            # === Deploy dashboards ===
             $gitFolders = Get-ChildItem -Path $baseFolder -Directory -ErrorAction SilentlyContinue
             if (-not $gitFolders) {
               Write-Host "No folders found in $baseFolder"
@@ -42,7 +84,6 @@ jobs:
 
             $gitFolderNames = $gitFolders.Name.ToLower()
 
-            # Get folders already in Grafana
             $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{
               Authorization = "Bearer $ApiToken"
             }
