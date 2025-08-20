@@ -25,12 +25,14 @@ foreach ($panel in $libraryPanels) {
     Authorization = "Bearer $ApiToken"
   }
 
-  # Each panel in its own file
+  # Extract the actual panel object (first element of result array)
+  $panelObj = $panelDetail.result[0]
+
+  # File per panel
   $fileName = Join-Path $exportDir "$name-$uid.json"
 
-  # Save JSON for THIS panel only
-  $json = $panelDetail | ConvertTo-Json -Depth 20 -Compress
-  Set-Content -Path $fileName -Value $json -Encoding utf8
+  # Save JSON nicely formatted
+  $panelObj | ConvertTo-Json -Depth 20 | Set-Content -Path $fileName -Encoding utf8
 
   Write-Host "Exported: $fileName"
 }
