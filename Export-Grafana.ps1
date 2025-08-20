@@ -12,7 +12,15 @@ if (-not (Test-Path $exportDir)) {
 # Читаем массив панелей
 $allPanels = Get-Content $libraryFile -Raw | ConvertFrom-Json
 
-foreach ($panel in $allPanels) {
+foreach ($panelObj in $allPanels) {
+    # Проверяем, есть ли объект libraryPanel
+    if (-not $panelObj.model.libraryPanel) {
+        Write-Warning "Panel missing libraryPanel field, skipping"
+        continue
+    }
+
+    $panel = $panelObj.model.libraryPanel
+
     if (-not $panel.uid) {
         Write-Warning "Panel missing uid, skipping"
         continue
