@@ -1,35 +1,42 @@
 $ErrorActionPreference = "Stop"
 
-$GrafanaURL = "http://localhost:3000"   # URL Grafana
+$GrafanaURL = "http://localhost:3000"
 $ApiToken = $env:GRAFANA_API_TOKEN
 
-# Директория для сохранения панелей
-$exportDir = "./library-panels"
-if (-not (Test-Path $exportDir)) {
-    New-Item -ItemType Directory -Path $exportDir | Out-Null
+# Путь к JSON с библиотечными панелями
+$libraryPanelsFile = "./provisioning/library_panels/library-panels.json"
+
+if (-not (Test-Path $libraryPanelsFile)) {
+    Write-Error "Library panels file not found: $libraryPanelsFile"
+    exit 1
 }
 
-Write-Host "Fetching all library panels from Grafana..."
+# Читаем все панели из одного файла
+$allPanels = Get-Content $libraryPanelsFile -Raw | ConvertFrom-Json
 
-# Получаем список всех библиотечных панелей
-$libraryPanels = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Headers @{
-    Authorization = "Bearer $ApiToken"
-}
-
-foreach ($panel in $libraryPanels) {
-    # Получаем детальную информацию по каждой панели
-    $panelDetail = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Headers @{
-        Authorization = "Bearer $ApiToken"
+foreach ($panel in $allPanels) {
+    # Проверяем наличие uid
+    if (-not $panel.uid) {
+        Write-Warning "Panel missing uid, skipping"
+        continue
     }
 
-    # Создаем уникальное имя файла для каждой панели
-    $safeName = ($panelDetail.title -replace '[^\w\d_-]', '_')  # заменяем запрещенные символы
-    $fileName = Join-Path $exportDir "$safeName-$($panel.uid).json"
+    # Удаляем id и version чтобы Grafana приняла панель
+    if ($panel.PSObject.Properties.Name -contains 'id') { $panel.PSObject.Properties.Remove('id') }
+    if ($panel.PSObject.Properties.Name -contains 'version') { $panel.PSObject.Properties.Remove('version') }
 
-    # Сохраняем JSON в отдельный файл
-    $panelDetail | ConvertTo-Json -Depth 20 | Out-File -FilePath $fileName -Encoding utf8
+    $payload = @{
+        dashboard = $panel
+        overwrite = $true
+    } | ConvertTo-Json -Depth 20
 
-    Write-Host "Exported library panel: $fileName"
+    # Отправляем на Grafana API
+    Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
+        Authorization = "Bearer $ApiToken"
+        "Content-Type" = "application/json"
+    } -Body $payload
+
+    Write-Host "Deployed library panel: $($panel.title) ($($panel.uid))"
 }
 
-Write-Host "Export complete. Panels saved in $exportDir"
+Write-Host "All library panels deployed successfully."
