@@ -3,45 +3,49 @@ import json
 import requests
 
 # === CONFIG ===
-GRAFANA_URL = "http://localhost:3000"  # change to your Grafana URL
-API_TOKEN = os.getenv("GRAFANA_API_TOKEN")
-EXPORT_DIR = "library-panels"
+GRAFANA_URL = "http://localhost:3000"  # Change to your Grafana URL
+API_TOKEN = os.getenv("GRAFANA_API_TOKEN")  # Make sure this environment variable is set
 
 if not API_TOKEN:
-    raise ValueError("Environment variable GRAFANA_API_TOKEN is not set.")
+    raise ValueError("❌ Environment variable GRAFANA_API_TOKEN is not set.")
+
+EXPORT_DIR = "exported_library_panels"
+os.makedirs(EXPORT_DIR, exist_ok=True)
 
 HEADERS = {
     "Authorization": f"Bearer {API_TOKEN}",
     "Content-Type": "application/json"
 }
 
-os.makedirs(EXPORT_DIR, exist_ok=True)
-
-# === FETCH ALL LIBRARY PANELS ===
+# === EXPORT LIBRARY PANELS ===
 def export_library_panels():
-    url_all = f"{GRAFANA_URL}/api/library-elements"
-    resp = requests.get(url_all, headers=HEADERS)
+    # Step 1: fetch all library panel UIDs
+    url = f"{GRAFANA_URL}/api/library-elements"
+    response = requests.get(url, headers=HEADERS)
 
-    if resp.status_code != 200:
-        raise RuntimeError(f"Failed to fetch library panels: {resp.status_code} - {resp.text}")
+    if response.status_code != 200:
+        raise RuntimeError(f"Failed to fetch library panels: {response.status_code} - {response.text}")
 
-    library_panels = resp.json()
-    print(f"Found {len(library_panels)} library panels")
+    panels = response.json()  # this is a list of panel UIDs
+    print(f"Found {len(panels)} library panels")
 
-    for panel in library_panels:
-        uid = panel["uid"]
-        url_detail = f"{GRAFANA_URL}/api/library-elements/{uid}"
-        detail_resp = requests.get(url_detail, headers=HEADERS)
+    # Step 2: fetch each panel detail and save to file
+    for panel_uid in panels:
+        detail_url = f"{GRAFANA_URL}/api/library-elements/{panel_uid}"
+        detail_resp = requests.get(detail_url, headers=HEADERS)
+
         if detail_resp.status_code != 200:
-            print(f"⚠️ Skipping panel {uid}, failed to fetch details")
+            print(f"⚠️ Skipping panel {panel_uid}, failed to fetch details")
             continue
 
         panel_data = detail_resp.json()
-        file_path = os.path.join(EXPORT_DIR, f"LibraryPanel-{uid}.json")
-        with open(file_path, "w", encoding="utf-8") as f:
+        filename = os.path.join(EXPORT_DIR, f"{panel_uid}.json")
+        with open(filename, "w", encoding="utf-8") as f:
             json.dump(panel_data, f, indent=2)
 
-        print(f"✅ Exported library panel: {file_path}")
+        print(f"✅ Exported library panel -> {filename}")
+
 
 if __name__ == "__main__":
     export_library_panels()
+    print("\n🎉 Export completed successfully!")
