@@ -46,11 +46,14 @@ def export_library_panels():
             print(f"⚠️ Skipping panel {uid}, failed to fetch details: {detail_resp.status_code}")
             continue
 
-        panel_data = detail_resp.json()
+               panel_data = detail_resp.json()
+
+        panel_only = panel_data.get("result", panel_data)
         filename = os.path.join(EXPORT_DIR, f"{sanitize_filename(name)}-{uid}.json")
 
         with open(filename, "w", encoding="utf-8") as f:
-            json.dump(panel_data, f, indent=2)
+            json.dump(panel_only, f, indent=2)
+
 
         print(f"✅ Exported panel: {name} -> {filename}")
 
