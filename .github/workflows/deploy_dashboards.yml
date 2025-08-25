@@ -61,7 +61,7 @@ jobs:
                         } -Body $uploadPayload
                         Write-Host "✅ Updated library panel: $($panel.uid)"
                     } catch {
-                        # If update fails with 404 (not found), create panel
+                        # Only create if error is 404 (not found)
                         if ($_.Exception.Response.StatusCode.Value__ -eq 404) {
                             Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
                                 Authorization = "Bearer $ApiToken"
@@ -69,7 +69,7 @@ jobs:
                             } -Body $uploadPayload
                             Write-Host "✅ Created library panel: $($panel.uid)"
                         } else {
-                            throw $_
+                            Write-Host "⚠️ Failed to update library panel $($panel.uid): $($_.Exception.Message)"
                         }
                     }
                 }
@@ -191,3 +191,4 @@ jobs:
               }
             }
           }
+
