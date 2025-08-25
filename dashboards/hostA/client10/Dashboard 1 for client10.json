@@ -10,7 +10,7 @@
           "format": "time_series"
         }
       ],
-      "title": "Panel 1",
+      "title": "Panel 21",
       "type": "singlestat"
     },
     {
@@ -41,4 +41,5 @@
   "title": "Dashboard 1 for client10",
   "uid": "ec4ebc99",
   "version": 17
+
 }
