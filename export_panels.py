@@ -4,8 +4,9 @@ import requests
 import re
 
 # === CONFIG ===
-GRAFANA_URL = "http://localhost:3000"  # поменяй на свой URL
+GRAFANA_URL = "http://localhost:3000"
 API_TOKEN = os.getenv("GRAFANA_API_TOKEN")
+EXPORT_DIR = "library-panels"
 
 if not API_TOKEN:
     raise ValueError("❌ Environment variable GRAFANA_API_TOKEN is not set.")
@@ -15,10 +16,10 @@ HEADERS = {
     "Content-Type": "application/json"
 }
 
-EXPORT_DIR = "library-panels"
 os.makedirs(EXPORT_DIR, exist_ok=True)
 
 def sanitize_filename(name):
+    """Удаляет запрещённые символы из имени файла"""
     return re.sub(r'[\\/*?:"<>|]', "_", name)
 
 def export_library_panels():
@@ -28,27 +29,38 @@ def export_library_panels():
     if response.status_code != 200:
         raise RuntimeError(f"Failed to fetch library panels: {response.status_code} - {response.text}")
 
-    panels = response.json().get("result", [])
+    data = response.json()
+    panels = data.get("result", {}).get("elements", [])
     print(f"Found {len(panels)} library panels")
 
     for panel in panels:
         uid = panel.get("uid")
         name = panel.get("name", uid)
-
-        detail_resp = requests.get(f"{GRAFANA_URL}/api/library-elements/{uid}", headers=HEADERS)
-        if detail_resp.status_code != 200:
-            print(f"⚠️ Skipping panel {uid}, failed to fetch details")
+        if not uid:
+            print("⚠️ Skipping panel with no UID")
             continue
 
-        panel_data = detail_resp.json()
-        panel_only = panel_data.get("result", panel_data)
+        print(f"Fetching details for panel UID: {uid}")
+        detail_resp = requests.get(f"{GRAFANA_URL}/api/library-elements/{uid}", headers=HEADERS)
+
+        if detail_resp.status_code != 200:
+            print(f"⚠️ Skipping panel {uid}, failed to fetch details: {detail_resp.status_code}")
+            continue
+
+        # Берём только объект конкретной панели, чтобы не сохранять лишние данные
+        panel_data = detail_resp.json().get("result")
+        if not panel_data:
+            print(f"⚠️ Skipping panel {uid}, no data in 'result'")
+            continue
 
         filename = os.path.join(EXPORT_DIR, f"{sanitize_filename(name)}-{uid}.json")
-        with open(filename, "w", encoding="utf-8") as f:
-            json.dump(panel_only, f, indent=2)
 
-        print(f"✅ Exported library panel: {name} -> {filename}")
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(panel_data, f, indent=2)
+
+        print(f"✅ Exported panel: {name} -> {filename}")
+
+    print("\n🎉 Export complete. Panels saved in:", EXPORT_DIR)
 
 if __name__ == "__main__":
     export_library_panels()
-    print("\n🎉 Export completed successfully!")
