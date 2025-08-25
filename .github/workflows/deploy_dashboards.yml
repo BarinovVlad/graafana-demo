@@ -53,21 +53,21 @@ jobs:
 
                     $uploadPayload = $panel | ConvertTo-Json -Depth 20
 
-                    # Check if panel exists
                     try {
+                        # Попытка получить существующую панель
                         $existing = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Headers @{
                             Authorization = "Bearer $ApiToken"
                         }
 
-                        # Exists → update
+                        # Если есть → обновляем через PUT
                         Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Method Put -Headers @{
                             Authorization = "Bearer $ApiToken"
-                            "Content-Type" = "application/json"
+                            "Content-Type"  = "application/json"
                         } -Body $uploadPayload
 
                         Write-Host "✅ Updated library panel: $($panel.uid)"
                     } catch {
-                        # Not found → create
+                        # Если GET не удался → создаём через POST
                         Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
                             Authorization = "Bearer $ApiToken"
                             "Content-Type"  = "application/json"
@@ -194,3 +194,4 @@ jobs:
               }
             }
           }
+
