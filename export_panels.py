@@ -4,7 +4,7 @@ import requests
 
 # === CONFIG ===
 GRAFANA_URL = "http://localhost:3000"   # change to your Grafana URL
-API_TOKEN = "YOUR_API_TOKEN"            # put your Grafana API token here
+API_TOKEN = "GRAFANA_API_TOKEN"            # put your Grafana API token here
 EXPORT_DIR = "git/library-panels"
 
 HEADERS = {
