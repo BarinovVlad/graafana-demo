@@ -21,7 +21,7 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Define Grafana instances
+          # Grafana instances
           $grafanaTargets = @(
             @{ Folder = "hostA"; Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
             @{ Folder = "hostB"; Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
@@ -42,7 +42,7 @@ jobs:
                     $panel = Get-Content $_.FullName -Raw | ConvertFrom-Json
 
                     if (-not $panel.uid) {
-                        Write-Host "Skipping panel with missing UID"
+                        Write-Host "⚠️ Skipping panel with missing UID"
                         return
                     }
 
@@ -50,24 +50,24 @@ jobs:
                     if ($panel.PSObject.Properties.Name -contains 'id') { $panel.PSObject.Properties.Remove('id') }
                     if ($panel.PSObject.Properties.Name -contains 'version') { $panel.PSObject.Properties.Remove('version') }
 
-                    $uploadPayload = $panel | ConvertTo-Json -Depth 20
-
+                    # --- DELETE panel if exists ---
                     try {
-                        # Try update first (PUT)
-                        Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Method Put -Headers @{
+                        Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Method Delete -Headers @{
                             Authorization = "Bearer $ApiToken"
-                            "Content-Type"  = "application/json"
-                        } -Body $uploadPayload
-                        Write-Host "Updated library panel: $($panel.uid)"
+                        }
+                        Write-Host "Deleted existing panel: $($panel.uid)"
                     } catch {
-                        # If PUT fails (404), create via POST
-                        Write-Host "Panel $($panel.uid) not found, creating..."
-                        Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
-                            Authorization = "Bearer $ApiToken"
-                            "Content-Type"  = "application/json"
-                        } -Body $uploadPayload
-                        Write-Host "Created library panel: $($panel.uid)"
+                        Write-Host "Panel $($panel.uid) not found, creating new."
                     }
+
+                    # --- POST new panel ---
+                    $uploadPayload = $panel | ConvertTo-Json -Depth 20
+                    Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
+                        Authorization = "Bearer $ApiToken"
+                        "Content-Type"  = "application/json"
+                    } -Body $uploadPayload
+
+                    Write-Host "✅ Deployed library panel: $($panel.uid)"
                 }
             } else {
                 Write-Host "No library panels folder found at $libraryPanelsDir"
@@ -82,7 +82,6 @@ jobs:
             }
 
             $gitFolderNames = $gitFolders.Name.ToLower()
-
             $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{
               Authorization = "Bearer $ApiToken"
             }
@@ -119,7 +118,6 @@ jobs:
                   exit 1
                 }
 
-                # Remove id and version before upload
                 if ($dashboard.PSObject.Properties.Name -contains 'id') { $dashboard.PSObject.Properties.Remove('id') }
                 if ($dashboard.PSObject.Properties.Name -contains 'version') { $dashboard.PSObject.Properties.Remove('version') }
 
@@ -136,6 +134,53 @@ jobs:
                   Authorization = "Bearer $ApiToken"
                   "Content-Type" = "application/json"
                 } -Body $uploadPayload
+              }
+
+              # Clean up dashboards not in Git
+              $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
+                Authorization = "Bearer $ApiToken"
+              }
+
+              $folderDashboards = $allDashboards | Where-Object { $_.folderId -eq $updatedFolder.id }
+              $toDelete = $folderDashboards | Where-Object { $localUids -notcontains $_.uid }
+
+              foreach ($dash in $toDelete) {
+                Write-Host "Deleting dashboard '$($dash.title)' (uid: $($dash.uid))..."
+                Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dash.uid)" -Method Delete -Headers @{
+                  Authorization = "Bearer $ApiToken"
+                }
+              }
+            }
+
+            # Delete folders no longer in Git
+            foreach ($grafanaFolder in $grafanaFolders) {
+              $uid = $grafanaFolder.uid.ToLower()
+              if ($gitFolderNames -notcontains $uid) {
+                Write-Host "`nFolder '$uid' not found in Git. Deleting..."
+                $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
+                  Authorization = "Bearer $ApiToken"
+                }
+
+                $dashboardsInFolder = $allDashboards | Where-Object { $_.folderId -eq $grafanaFolder.id }
+                foreach ($dash in $dashboardsInFolder) {
+                  Write-Host "Deleting dashboard '$($dash.title)' (uid: $($dash.uid))..."
+                  Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dash.uid)" -Method Delete -Headers @{
+                    Authorization = "Bearer $ApiToken"
+                  }
+                }
+
+                try {
+                  Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{
+                    Authorization = "Bearer $ApiToken"
+                  }
+                  Write-Host "Folder '$uid' deleted."
+                } catch {
+                  if ($_.ErrorDetails.Message -match "Folder could not be deleted because it contains library elements in use") {
+                    Write-Host "Skip deleting folder '$uid' - contains library elements in use."
+                  } else {
+                    throw
+                  }
+                }
               }
             }
           }
