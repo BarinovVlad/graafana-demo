@@ -21,7 +21,6 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Grafana targets
           $grafanaTargets = @(
             @{ Folder = "hostA"; Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
             @{ Folder = "hostB"; Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
@@ -36,71 +35,48 @@ jobs:
             # --- Library Panels ---
             $libraryPanelsDir = "./provisioning/library_panels"
             if (Test-Path $libraryPanelsDir) {
-              Write-Host "Deploying library panels from $libraryPanelsDir"
+              Write-Host "Cleaning all existing library panels..."
+              try {
+                $existingPanels = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Headers @{
+                  Authorization = "Bearer $ApiToken"
+                }
+                foreach ($p in $existingPanels) {
+                  Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($p.uid)" -Method Delete -Headers @{
+                    Authorization = "Bearer $ApiToken"
+                  }
+                  Write-Host "Deleted panel: $($p.uid) ($($p.name))"
+                }
+              } catch {
+                Write-Host "No existing library panels to delete or error fetching them."
+              }
 
+              # --- Deploy new panels ---
               Get-ChildItem -Path $libraryPanelsDir -Filter "*.json" | ForEach-Object {
                 $panel = Get-Content $_.FullName -Raw | ConvertFrom-Json
 
-                if (-not $panel.uid) {
-                  Write-Host "Skipping panel with missing UID"
-                  return
-                }
+                # Генерируем новый UID
+                $panel.uid = [guid]::NewGuid().ToString("N")
 
-                # --- Delete by UID if exists ---
-                try {
-                  Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Method Delete -Headers @{
-                    Authorization = "Bearer $ApiToken"
-                  }
-                  Write-Host "Deleted existing panel by UID: $($panel.uid)"
-                } catch {
-                  Write-Host "Panel $($panel.uid) not found by UID, continuing..."
-                }
-
-                # --- Delete by name if exists (catch duplicate name conflicts) ---
-                try {
-                  $allPanels = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Headers @{
-                    Authorization = "Bearer $ApiToken"
-                  }
-                  $conflict = $allPanels | Where-Object { $_.name -eq $panel.name }
-                  if ($conflict) {
-                    Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($conflict.uid)" -Method Delete -Headers @{
-                      Authorization = "Bearer $ApiToken"
-                    }
-                    Write-Host "Deleted existing panel by name: $($panel.name)"
-                  }
-                } catch {
-                  Write-Host "No name conflict for panel $($panel.name)"
-                }
-
-                # --- Generate new UID to avoid any conflicts ---
-                $newUID = [guid]::NewGuid().ToString("N")
-                $panel.uid = $newUID
-
-                # Remove id/version if exist
+                # Убираем id и version
                 if ($panel.PSObject.Properties.Name -contains 'id') { $panel.PSObject.Properties.Remove('id') }
                 if ($panel.PSObject.Properties.Name -contains 'version') { $panel.PSObject.Properties.Remove('version') }
 
-                # --- Create panel ---
+                # POST в Grafana
                 $payload = $panel | ConvertTo-Json -Depth 20
                 Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
                   Authorization = "Bearer $ApiToken"
                   "Content-Type" = "application/json"
                 } -Body $payload
-                Write-Host "✅ Deployed library panel: $($panel.name) with UID: $newUID"
+                Write-Host "✅ Deployed library panel: $($panel.name) with new UID $($panel.uid)"
               }
             } else {
               Write-Host "No library panels folder found at $libraryPanelsDir"
             }
 
-            # --- Dashboards (обычный процесс, как у тебя было) ---
+            # --- Dashboards ---
             $baseFolder = "./dashboards/$($target.Folder)"
             $gitFolders = Get-ChildItem -Path $baseFolder -Directory -ErrorAction SilentlyContinue
             if ($gitFolders) {
-              $gitFolderNames = $gitFolders.Name.ToLower()
-              $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{
-                Authorization = "Bearer $ApiToken"
-              }
-
               foreach ($folder in $gitFolders) {
                 $folderUid = $folder.Name.ToLower()
                 $clientPath = $folder.FullName
@@ -134,5 +110,4 @@ jobs:
               }
             }
           }
-
 
