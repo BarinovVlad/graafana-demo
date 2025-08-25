@@ -1,0 +1,436 @@
+{
+    "result":  {
+                   "totalCount":  4,
+                   "elements":  [
+                                    {
+                                        "id":  2,
+                                        "orgId":  1,
+                                        "folderId":  223,
+                                        "folderUid":  "aeuaup38hqy2of",
+                                        "uid":  "feuaurpgadgqof",
+                                        "name":  "Panel 1",
+                                        "kind":  1,
+                                        "type":  "stat",
+                                        "description":  "",
+                                        "model":  {
+                                                      "datasource":  {
+                                                                         "type":  "prometheus",
+                                                                         "uid":  "ceu6ho1muemm8a"
+                                                                     },
+                                                      "description":  "",
+                                                      "fieldConfig":  {
+                                                                          "defaults":  {
+                                                                                           "mappings":  [
+
+                                                                                                        ],
+                                                                                           "thresholds":  {
+                                                                                                              "mode":  "absolute",
+                                                                                                              "steps":  [
+                                                                                                                            {
+                                                                                                                                "color":  "green",
+                                                                                                                                "value":  null
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "color":  "red",
+                                                                                                                                "value":  80
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                          }
+                                                                                       },
+                                                                          "overrides":  [
+
+                                                                                        ]
+                                                                      },
+                                                      "id":  1,
+                                                      "libraryPanel":  {
+                                                                           "name":  "Panel 1",
+                                                                           "uid":  "feuaurpgadgqof"
+                                                                       },
+                                                      "options":  {
+                                                                      "colorMode":  "none",
+                                                                      "graphMode":  "none",
+                                                                      "justifyMode":  "auto",
+                                                                      "orientation":  "horizontal",
+                                                                      "percentChangeColorMode":  "standard",
+                                                                      "reduceOptions":  {
+                                                                                            "calcs":  [
+                                                                                                          "mean"
+                                                                                                      ],
+                                                                                            "fields":  "",
+                                                                                            "values":  false
+                                                                                        },
+                                                                      "showPercentChange":  false,
+                                                                      "textMode":  "auto",
+                                                                      "wideLayout":  true
+                                                                  },
+                                                      "pluginVersion":  "12.2.0-16636675413",
+                                                      "targets":  [
+                                                                      {
+                                                                          "datasource":  {
+                                                                                             "type":  "prometheus",
+                                                                                             "uid":  "ceu6ho1muemm8a"
+                                                                                         },
+                                                                          "expr":  "up",
+                                                                          "format":  "time_series",
+                                                                          "refId":  "A"
+                                                                      }
+                                                                  ],
+                                                      "title":  "Panel demo",
+                                                      "type":  "stat"
+                                                  },
+                                        "version":  1,
+                                        "meta":  {
+                                                     "folderName":  "panels",
+                                                     "folderUid":  "aeuaup38hqy2of",
+                                                     "connectedDashboards":  2,
+                                                     "created":  "2025-08-19T08:39:41Z",
+                                                     "updated":  "2025-08-19T08:39:41Z",
+                                                     "createdBy":  {
+                                                                       "id":  1,
+                                                                       "name":  "admin",
+                                                                       "avatarUrl":  "/avatar/46d229b033af06a191ff2267bca9ae56"
+                                                                   },
+                                                     "updatedBy":  {
+                                                                       "id":  1,
+                                                                       "name":  "admin",
+                                                                       "avatarUrl":  "/avatar/46d229b033af06a191ff2267bca9ae56"
+                                                                   }
+                                                 }
+                                    },
+                                    {
+                                        "id":  1,
+                                        "orgId":  1,
+                                        "folderId":  223,
+                                        "folderUid":  "aeuaup38hqy2of",
+                                        "uid":  "feuauqhiqnv9cc",
+                                        "name":  "Panel 2",
+                                        "kind":  1,
+                                        "type":  "table",
+                                        "description":  "",
+                                        "model":  {
+                                                      "datasource":  {
+                                                                         "type":  "prometheus",
+                                                                         "uid":  "ceu6ho1muemm8a"
+                                                                     },
+                                                      "description":  "",
+                                                      "fieldConfig":  {
+                                                                          "defaults":  {
+                                                                                           "custom":  {
+                                                                                                          "align":  "auto",
+                                                                                                          "cellOptions":  {
+                                                                                                                              "type":  "auto"
+                                                                                                                          },
+                                                                                                          "inspect":  false
+                                                                                                      },
+                                                                                           "mappings":  [
+
+                                                                                                        ],
+                                                                                           "thresholds":  {
+                                                                                                              "mode":  "absolute",
+                                                                                                              "steps":  [
+                                                                                                                            {
+                                                                                                                                "color":  "green",
+                                                                                                                                "value":  null
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "color":  "red",
+                                                                                                                                "value":  80
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                          }
+                                                                                       },
+                                                                          "overrides":  [
+
+                                                                                        ]
+                                                                      },
+                                                      "gridPos":  {
+                                                                      "h":  3,
+                                                                      "w":  6,
+                                                                      "x":  0,
+                                                                      "y":  3
+                                                                  },
+                                                      "id":  2,
+                                                      "libraryPanel":  {
+                                                                           "name":  "Panel 2",
+                                                                           "uid":  "feuauqhiqnv9cc"
+                                                                       },
+                                                      "options":  {
+                                                                      "cellHeight":  "sm",
+                                                                      "footer":  {
+                                                                                     "countRows":  false,
+                                                                                     "fields":  "",
+                                                                                     "reducer":  [
+                                                                                                     "sum"
+                                                                                                 ],
+                                                                                     "show":  false
+                                                                                 },
+                                                                      "showHeader":  true
+                                                                  },
+                                                      "pluginVersion":  "12.2.0-16636675413",
+                                                      "targets":  [
+                                                                      {
+                                                                          "datasource":  {
+                                                                                             "type":  "prometheus",
+                                                                                             "uid":  "ceu6ho1muemm8a"
+                                                                                         },
+                                                                          "expr":  "up",
+                                                                          "format":  "time_series",
+                                                                          "refId":  "A"
+                                                                      }
+                                                                  ],
+                                                      "title":  "Panel 2",
+                                                      "type":  "table"
+                                                  },
+                                        "version":  1,
+                                        "meta":  {
+                                                     "folderName":  "panels",
+                                                     "folderUid":  "aeuaup38hqy2of",
+                                                     "connectedDashboards":  2,
+                                                     "created":  "2025-08-19T08:39:18Z",
+                                                     "updated":  "2025-08-19T08:39:18Z",
+                                                     "createdBy":  {
+                                                                       "id":  1,
+                                                                       "name":  "admin",
+                                                                       "avatarUrl":  "/avatar/46d229b033af06a191ff2267bca9ae56"
+                                                                   },
+                                                     "updatedBy":  {
+                                                                       "id":  1,
+                                                                       "name":  "admin",
+                                                                       "avatarUrl":  "/avatar/46d229b033af06a191ff2267bca9ae56"
+                                                                   }
+                                                 }
+                                    },
+                                    {
+                                        "id":  4,
+                                        "orgId":  1,
+                                        "folderId":  226,
+                                        "folderUid":  "feubcpw1hw3r4a",
+                                        "uid":  "ceubcr29v38cgc",
+                                        "name":  "Panel 3",
+                                        "kind":  1,
+                                        "type":  "stat",
+                                        "description":  "",
+                                        "model":  {
+                                                      "datasource":  {
+                                                                         "type":  "prometheus",
+                                                                         "uid":  "ceu6ho1muemm8a"
+                                                                     },
+                                                      "description":  "",
+                                                      "fieldConfig":  {
+                                                                          "defaults":  {
+                                                                                           "mappings":  [
+
+                                                                                                        ],
+                                                                                           "thresholds":  {
+                                                                                                              "mode":  "absolute",
+                                                                                                              "steps":  [
+                                                                                                                            {
+                                                                                                                                "color":  "green",
+                                                                                                                                "value":  null
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "color":  "red",
+                                                                                                                                "value":  80
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                          }
+                                                                                       },
+                                                                          "overrides":  [
+
+                                                                                        ]
+                                                                      },
+                                                      "gridPos":  {
+                                                                      "h":  3,
+                                                                      "w":  6,
+                                                                      "x":  0,
+                                                                      "y":  6
+                                                                  },
+                                                      "id":  3,
+                                                      "libraryPanel":  {
+                                                                           "name":  "Panel 3",
+                                                                           "uid":  "ceubcr29v38cgc"
+                                                                       },
+                                                      "options":  {
+                                                                      "colorMode":  "none",
+                                                                      "graphMode":  "none",
+                                                                      "justifyMode":  "auto",
+                                                                      "orientation":  "horizontal",
+                                                                      "percentChangeColorMode":  "standard",
+                                                                      "reduceOptions":  {
+                                                                                            "calcs":  [
+                                                                                                          "mean"
+                                                                                                      ],
+                                                                                            "fields":  "",
+                                                                                            "values":  false
+                                                                                        },
+                                                                      "showPercentChange":  false,
+                                                                      "textMode":  "auto",
+                                                                      "wideLayout":  true
+                                                                  },
+                                                      "pluginVersion":  "12.2.0-16636675413",
+                                                      "targets":  [
+                                                                      {
+                                                                          "datasource":  {
+                                                                                             "type":  "prometheus",
+                                                                                             "uid":  "ceu6ho1muemm8a"
+                                                                                         },
+                                                                          "expr":  "up",
+                                                                          "format":  "time_series",
+                                                                          "refId":  "A"
+                                                                      }
+                                                                  ],
+                                                      "title":  "Panel 3",
+                                                      "type":  "stat"
+                                                  },
+                                        "version":  1,
+                                        "meta":  {
+                                                     "folderName":  "panels 2",
+                                                     "folderUid":  "feubcpw1hw3r4a",
+                                                     "connectedDashboards":  2,
+                                                     "created":  "2025-08-19T12:06:55Z",
+                                                     "updated":  "2025-08-19T12:06:55Z",
+                                                     "createdBy":  {
+                                                                       "id":  1,
+                                                                       "name":  "admin",
+                                                                       "avatarUrl":  "/avatar/46d229b033af06a191ff2267bca9ae56"
+                                                                   },
+                                                     "updatedBy":  {
+                                                                       "id":  1,
+                                                                       "name":  "admin",
+                                                                       "avatarUrl":  "/avatar/46d229b033af06a191ff2267bca9ae56"
+                                                                   }
+                                                 }
+                                    },
+                                    {
+                                        "id":  3,
+                                        "orgId":  1,
+                                        "folderId":  223,
+                                        "folderUid":  "aeuaup38hqy2of",
+                                        "uid":  "deubcmfqhaqyod",
+                                        "name":  "Up Metric Over Time",
+                                        "kind":  1,
+                                        "type":  "timeseries",
+                                        "description":  "",
+                                        "model":  {
+                                                      "datasource":  "prometheus",
+                                                      "description":  "",
+                                                      "fieldConfig":  {
+                                                                          "defaults":  {
+                                                                                           "color":  {
+                                                                                                         "mode":  "palette-classic"
+                                                                                                     },
+                                                                                           "custom":  {
+                                                                                                          "axisBorderShow":  false,
+                                                                                                          "axisCenteredZero":  false,
+                                                                                                          "axisColorMode":  "text",
+                                                                                                          "axisLabel":  "",
+                                                                                                          "axisPlacement":  "auto",
+                                                                                                          "barAlignment":  0,
+                                                                                                          "barWidthFactor":  0.6,
+                                                                                                          "drawStyle":  "line",
+                                                                                                          "fillOpacity":  0,
+                                                                                                          "gradientMode":  "none",
+                                                                                                          "hideFrom":  {
+                                                                                                                           "legend":  false,
+                                                                                                                           "tooltip":  false,
+                                                                                                                           "viz":  false
+                                                                                                                       },
+                                                                                                          "insertNulls":  false,
+                                                                                                          "lineInterpolation":  "linear",
+                                                                                                          "lineWidth":  1,
+                                                                                                          "pointSize":  5,
+                                                                                                          "scaleDistribution":  {
+                                                                                                                                    "type":  "linear"
+                                                                                                                                },
+                                                                                                          "showPoints":  "auto",
+                                                                                                          "spanNulls":  false,
+                                                                                                          "stacking":  {
+                                                                                                                           "group":  "A",
+                                                                                                                           "mode":  "none"
+                                                                                                                       },
+                                                                                                          "thresholdsStyle":  {
+                                                                                                                                  "mode":  "off"
+                                                                                                                              }
+                                                                                                      },
+                                                                                           "mappings":  [
+
+                                                                                                        ],
+                                                                                           "thresholds":  {
+                                                                                                              "mode":  "absolute",
+                                                                                                              "steps":  [
+                                                                                                                            {
+                                                                                                                                "color":  "green",
+                                                                                                                                "value":  null
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "color":  "red",
+                                                                                                                                "value":  80
+                                                                                                                            }
+                                                                                                                        ]
+                                                                                                          }
+                                                                                       },
+                                                                          "overrides":  [
+
+                                                                                        ]
+                                                                      },
+                                                      "gridPos":  {
+                                                                      "h":  8,
+                                                                      "w":  24,
+                                                                      "x":  0,
+                                                                      "y":  28
+                                                                  },
+                                                      "id":  4,
+                                                      "libraryPanel":  {
+                                                                           "name":  "Up Metric Over Time",
+                                                                           "uid":  "deubcmfqhaqyod"
+                                                                       },
+                                                      "options":  {
+                                                                      "legend":  {
+                                                                                     "calcs":  [
+
+                                                                                               ],
+                                                                                     "displayMode":  "list",
+                                                                                     "placement":  "bottom",
+                                                                                     "showLegend":  true
+                                                                                 },
+                                                                      "tooltip":  {
+                                                                                      "hideZeros":  false,
+                                                                                      "mode":  "multi",
+                                                                                      "sort":  "none"
+                                                                                  }
+                                                                  },
+                                                      "pluginVersion":  "12.2.0-16636675413",
+                                                      "targets":  [
+                                                                      {
+                                                                          "expr":  "up",
+                                                                          "legendFormat":  "{{job}} - {{instance}}",
+                                                                          "refId":  "A"
+                                                                      }
+                                                                  ],
+                                                      "title":  "Up Metric Over Time",
+                                                      "type":  "timeseries"
+                                                  },
+                                        "version":  1,
+                                        "meta":  {
+                                                     "folderName":  "panels",
+                                                     "folderUid":  "aeuaup38hqy2of",
+                                                     "connectedDashboards":  2,
+                                                     "created":  "2025-08-19T12:05:28Z",
+                                                     "updated":  "2025-08-19T12:05:28Z",
+                                                     "createdBy":  {
+                                                                       "id":  1,
+                                                                       "name":  "admin",
+                                                                       "avatarUrl":  "/avatar/46d229b033af06a191ff2267bca9ae56"
+                                                                   },
+                                                     "updatedBy":  {
+                                                                       "id":  1,
+                                                                       "name":  "admin",
+                                                                       "avatarUrl":  "/avatar/46d229b033af06a191ff2267bca9ae56"
+                                                                   }
+                                                 }
+                                    }
+                                ],
+                   "page":  1,
+                   "perPage":  100
+               }
+}
