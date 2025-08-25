@@ -1,10 +1,9 @@
-name: Deploy Grafana Dashboards and Library Panels
+name: Deploy Grafana Dashboards
 
 on:
   push:
     paths:
       - 'dashboards/**'
-      - 'provisioning/library_panels/**'
     branches:
       - main
 
@@ -16,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy dashboards and library panels
+      - name: Deploy dashboards to Grafana instances
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
@@ -28,68 +27,22 @@ jobs:
           )
 
           foreach ($target in $grafanaTargets) {
+            $baseFolder = "./dashboards/$($target.Folder)"
             $GrafanaURL = $target.Url
             $ApiToken = $target.Token
 
-            Write-Host "`n===== Deploying to Grafana at $GrafanaURL ====="
+            Write-Host "n===== Deploying to Grafana at $GrafanaURL from folder $baseFolder ====="
 
-            # === Deploy library panels ===
-            $LibraryPanelsDir = "./provisioning/library_panels"
-            if (Test-Path $LibraryPanelsDir) {
-                Write-Host "`nDeploying library panels from $LibraryPanelsDir"
-
-                # Fetch existing panels
-                try {
-                    $existingPanels = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Headers @{
-                        Authorization = "Bearer $ApiToken"
-                    }
-                } catch {
-                    Write-Host "⚠️ Failed to fetch existing library panels, continuing..."
-                    $existingPanels = @()
-                }
-
-                # Iterate through library panels in Git
-                Get-ChildItem -Path $LibraryPanelsDir -Filter "*.json" | ForEach-Object {
-                    $panel = Get-Content $_.FullName -Raw | ConvertFrom-Json
-
-                    if (-not $panel.uid) {
-                        Write-Host "Skipping panel with missing UID: $($_.Name)"
-                        return
-                    }
-
-                    # Delete panel if UID or name exists
-                    $exists = $existingPanels | Where-Object { $_.uid -eq $panel.uid -or $_.name -eq $panel.name }
-                    if ($exists) {
-                        Write-Host "Deleting existing panel by UID: $($panel.uid)"
-                        Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Method Delete -Headers @{
-                            Authorization = "Bearer $ApiToken"
-                        }
-                    }
-
-                    # Remove id and version
-                    if ($panel.PSObject.Properties.Name -contains 'id') { $panel.PSObject.Properties.Remove('id') }
-                    if ($panel.PSObject.Properties.Name -contains 'version') { $panel.PSObject.Properties.Remove('version') }
-
-                    # Create panel
-                    $uploadPayload = $panel | ConvertTo-Json -Depth 20
-                    Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
-                        Authorization = "Bearer $ApiToken"
-                        "Content-Type"  = "application/json"
-                    } -Body $uploadPayload
-
-                    Write-Host "✅ Deployed library panel: $($panel.uid)"
-                }
-            } else {
-                Write-Host "No library panels folder found at $LibraryPanelsDir"
-            }
-
-            # === Deploy dashboards ===
-            $baseFolder = "./dashboards/$($target.Folder)"
+            # Get client folders inside hostA or hostB
             $gitFolders = Get-ChildItem -Path $baseFolder -Directory -ErrorAction SilentlyContinue
-            if (-not $gitFolders) { Write-Host "No folders found in $baseFolder"; continue }
+            if (-not $gitFolders) {
+              Write-Host "No folders found in $baseFolder"
+              continue
+            }
 
             $gitFolderNames = $gitFolders.Name.ToLower()
 
+            # Get folders already in Grafana
             $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{
               Authorization = "Bearer $ApiToken"
             }
@@ -99,9 +52,8 @@ jobs:
               $folderUid = $clientName.ToLower()
               $clientPath = $folder.FullName
 
-              Write-Host "`n=== Processing client: $clientName ==="
+              Write-Host "n=== Processing client: $clientName ==="
 
-              # Create folder if not exists
               try {
                 $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{
                   Authorization = "Bearer $ApiToken"
@@ -119,16 +71,26 @@ jobs:
               # Upload dashboards
               $localUids = @()
               Get-ChildItem -Path $clientPath -Filter "*.json" | ForEach-Object {
-                $dashboard = Get-Content $_.FullName -Raw | ConvertFrom-Json
+                $json = Get-Content $_.FullName -Raw
+                $dashboard = $json | ConvertFrom-Json
 
-                if (-not $dashboard.uid) { Write-Error "Dashboard '$($_.Name)' missing 'uid'."; exit 1 }
+                if (-not $dashboard.uid) {
+                  Write-Error "Dashboard '$($_.Name)' missing 'uid'."
+                  exit 1
+                }
 
+                # Remove id and version before upload
                 if ($dashboard.PSObject.Properties.Name -contains 'id') { $dashboard.PSObject.Properties.Remove('id') }
                 if ($dashboard.PSObject.Properties.Name -contains 'version') { $dashboard.PSObject.Properties.Remove('version') }
 
                 $localUids += $dashboard.uid
 
-                $uploadPayload = @{ dashboard = $dashboard; folderUid = $folderUid; overwrite = $true } | ConvertTo-Json -Depth 10
+                $uploadPayload = @{
+                  dashboard = $dashboard
+                  folderUid = $folderUid
+                  overwrite = $true
+                } | ConvertTo-Json -Depth 10
+
                 Write-Host "Uploading dashboard: $($_.Name)"
                 Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/db" -Method Post -Headers @{
                   Authorization = "Bearer $ApiToken"
@@ -136,7 +98,7 @@ jobs:
                 } -Body $uploadPayload
               }
 
-              # Remove dashboards not in Git
+              # Remove dashboards in Grafana that are not in Git
               $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
                 Authorization = "Bearer $ApiToken"
               }
@@ -152,17 +114,18 @@ jobs:
               }
             }
 
-            # Delete folders not in Git
+            # Delete folders in Grafana that no longer exist in Git
             foreach ($grafanaFolder in $grafanaFolders) {
               $uid = $grafanaFolder.uid.ToLower()
               if ($gitFolderNames -notcontains $uid) {
-                Write-Host "`nFolder '$uid' not found in Git. Deleting..."
+                Write-Host "nFolder '$uid' not found in Git. Deleting..."
 
                 $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
                   Authorization = "Bearer $ApiToken"
                 }
 
                 $dashboardsInFolder = $allDashboards | Where-Object { $_.folderId -eq $grafanaFolder.id }
+
                 foreach ($dash in $dashboardsInFolder) {
                   Write-Host "Deleting dashboard '$($dash.title)' (uid: $($dash.uid))..."
                   Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dash.uid)" -Method Delete -Headers @{
@@ -170,16 +133,11 @@ jobs:
                   }
                 }
 
-                try {
-                  Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{
-                    Authorization = "Bearer $ApiToken"
-                  }
-                  Write-Host "Folder '$uid' deleted."
-                } catch {
-                  if ($_.ErrorDetails.Message -match "Folder could not be deleted because it contains library elements in use") {
-                    Write-Host "Skip deleting folder '$uid' - contains library elements in use."
-                  } else { throw }
+                Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{
+                  Authorization = "Bearer $ApiToken"
                 }
+
+                Write-Host "Folder '$uid' deleted."
               }
             }
           }
