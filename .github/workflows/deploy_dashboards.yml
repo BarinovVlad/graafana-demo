@@ -32,22 +32,22 @@ jobs:
             $GrafanaURL = $target.Url
             $ApiToken = $target.Token
 
-            Write-Host "n===== Deploying to Grafana at $GrafanaURL from folder $baseFolder ====="
+            Write-Host "`n===== Deploying to Grafana at $GrafanaURL from folder $baseFolder ====="
 
             # === Deploy library panels ===
-            $libraryPanelsFile = "./provisioning/library_panels/library-panels.json"
+            $libraryPanelsDir = "./provisioning/library_panels"
+            if (Test-Path $libraryPanelsDir) {
+                Write-Host "`n=== Deploying library panels from $libraryPanelsDir ==="
 
-            if (Test-Path $libraryPanelsFile) {
-                Write-Host "`n=== Deploying library panels from $libraryPanelsFile ==="
-                $panelsArray = Get-Content $libraryPanelsFile -Raw | ConvertFrom-Json
+                Get-ChildItem -Path $libraryPanelsDir -Filter "*.json" | ForEach-Object {
+                    $panel = Get-Content $_.FullName -Raw | ConvertFrom-Json
 
-                foreach ($panel in $panelsArray) {
                     if (-not $panel.uid) {
                         Write-Host "Skipping panel with missing UID"
-                        continue
+                        return
                     }
 
-                    # Remove id and version if present
+                    # Remove id and version
                     if ($panel.PSObject.Properties.Name -contains 'id') { $panel.PSObject.Properties.Remove('id') }
                     if ($panel.PSObject.Properties.Name -contains 'version') { $panel.PSObject.Properties.Remove('version') }
 
@@ -59,7 +59,6 @@ jobs:
                             Authorization = "Bearer $ApiToken"
                             "Content-Type"  = "application/json"
                         } -Body $uploadPayload
-
                         Write-Host "Updated library panel: $($panel.uid)"
                     } catch {
                         # Create if not exists
@@ -67,12 +66,11 @@ jobs:
                             Authorization = "Bearer $ApiToken"
                             "Content-Type"  = "application/json"
                         } -Body $uploadPayload
-
                         Write-Host "Created library panel: $($panel.uid)"
                     }
                 }
             } else {
-                Write-Host "No library panels file found at $libraryPanelsFile"
+                Write-Host "No library panels folder found at $libraryPanelsDir"
             }
 
             # === Deploy dashboards ===
@@ -93,7 +91,7 @@ jobs:
               $folderUid = $clientName.ToLower()
               $clientPath = $folder.FullName
 
-              Write-Host "n=== Processing client: $clientName ==="
+              Write-Host "`n=== Processing client: $clientName ==="
 
               try {
                 $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{
@@ -159,7 +157,7 @@ jobs:
             foreach ($grafanaFolder in $grafanaFolders) {
               $uid = $grafanaFolder.uid.ToLower()
               if ($gitFolderNames -notcontains $uid) {
-                Write-Host "nFolder '$uid' not found in Git. Deleting..."
+                Write-Host "`nFolder '$uid' not found in Git. Deleting..."
 
                 $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
                   Authorization = "Bearer $ApiToken"
