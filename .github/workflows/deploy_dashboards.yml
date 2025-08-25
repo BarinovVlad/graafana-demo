@@ -21,7 +21,7 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Grafana instances
+          # === Define Grafana instances ===
           $grafanaTargets = @(
             @{ Folder = "hostA"; Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
             @{ Folder = "hostB"; Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
@@ -42,25 +42,35 @@ jobs:
                     $panel = Get-Content $_.FullName -Raw | ConvertFrom-Json
 
                     if (-not $panel.uid) {
-                        Write-Host "⚠️ Skipping panel with missing UID"
+                        Write-Host "Skipping panel with missing UID"
                         return
                     }
 
-                    # Remove id and version
+                    # Remove id and version before upload
                     if ($panel.PSObject.Properties.Name -contains 'id') { $panel.PSObject.Properties.Remove('id') }
                     if ($panel.PSObject.Properties.Name -contains 'version') { $panel.PSObject.Properties.Remove('version') }
 
-                    # --- DELETE panel if exists ---
+                    # === Delete any existing panel conflicts ===
                     try {
                         Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Method Delete -Headers @{
                             Authorization = "Bearer $ApiToken"
                         }
-                        Write-Host "Deleted existing panel: $($panel.uid)"
+                        Write-Host "Deleted existing panel by UID: $($panel.uid)"
                     } catch {
-                        Write-Host "Panel $($panel.uid) not found, creating new."
+                        Write-Host "Panel $($panel.uid) not found by UID, checking by name..."
+                        $allPanels = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Headers @{
+                            Authorization = "Bearer $ApiToken"
+                        }
+                        $existing = $allPanels | Where-Object { $_.name -eq $panel.name }
+                        foreach ($p in $existing) {
+                            Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($p.uid)" -Method Delete -Headers @{
+                                Authorization = "Bearer $ApiToken"
+                            }
+                            Write-Host "Deleted existing panel by name: $($p.name) (UID: $($p.uid))"
+                        }
                     }
 
-                    # --- POST new panel ---
+                    # === Create new panel ===
                     $uploadPayload = $panel | ConvertTo-Json -Depth 20
                     Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
                         Authorization = "Bearer $ApiToken"
@@ -82,6 +92,7 @@ jobs:
             }
 
             $gitFolderNames = $gitFolders.Name.ToLower()
+
             $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{
               Authorization = "Bearer $ApiToken"
             }
@@ -93,6 +104,7 @@ jobs:
 
               Write-Host "`n=== Processing client: $clientName ==="
 
+              # Create folder if missing
               try {
                 $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{
                   Authorization = "Bearer $ApiToken"
@@ -136,7 +148,7 @@ jobs:
                 } -Body $uploadPayload
               }
 
-              # Clean up dashboards not in Git
+              # Remove dashboards in Grafana not present in Git
               $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
                 Authorization = "Bearer $ApiToken"
               }
@@ -152,7 +164,7 @@ jobs:
               }
             }
 
-            # Delete folders no longer in Git
+            # Delete folders in Grafana no longer in Git
             foreach ($grafanaFolder in $grafanaFolders) {
               $uid = $grafanaFolder.uid.ToLower()
               if ($gitFolderNames -notcontains $uid) {
@@ -184,3 +196,4 @@ jobs:
               }
             }
           }
+
