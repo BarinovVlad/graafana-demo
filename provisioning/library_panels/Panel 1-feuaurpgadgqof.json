@@ -62,7 +62,7 @@
           "type": "prometheus",
           "uid": "ceu6ho1muemm8a"
         },
-        "expr": "up",
+        "expr": "go_goroutines",
         "format": "time_series",
         "refId": "A"
       }
@@ -90,6 +90,7 @@
   }
 
 }
+
 
 
 
