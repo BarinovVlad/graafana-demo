@@ -39,21 +39,21 @@
       "uid": "feuaurpgadgqof"
     },
     "options": {
-      "colorMode": "none",
-      "graphMode": "none",
-      "justifyMode": "auto",
-      "orientation": "horizontal",
-      "percentChangeColorMode": "standard",
+      "legend": {
+        "displayMode": "list",
+        "placement": "bottom"
+      },
+      "pieType": "pie",
+      "tooltip": {
+        "mode": "single"
+      },
       "reduceOptions": {
         "calcs": [
           "mean"
         ],
         "fields": "",
         "values": false
-      },
-      "showPercentChange": false,
-      "textMode": "auto",
-      "wideLayout": true
+      }
     },
     "pluginVersion": "12.2.0-16636675413",
     "targets": [
@@ -68,7 +68,7 @@
       }
     ],
     "title": "Panel 1",
-    "type": "stat"
+    "type": "piechart"
   },
   "version": 1,
   "meta": {
@@ -88,7 +88,6 @@
       "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56"
     }
   }
-
 }
 
 
