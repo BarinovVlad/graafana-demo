@@ -1,34 +1,47 @@
-$ErrorActionPreference = "Stop"
+import os
+import json
+import requests
 
-$GrafanaURL = "http://localhost:3000"   # Update if needed
-$ApiToken = $env:GRAFANA_API_TOKEN
+# === CONFIG ===
+GRAFANA_URL = "http://localhost:3000"  # change to your Grafana URL
+API_TOKEN = os.getenv("GRAFANA_API_TOKEN")
+EXPORT_DIR = "library-panels"
 
-# Export directory
-$exportDir = "./library-panels"
-if (-not (Test-Path $exportDir)) {
-  New-Item -ItemType Directory -Path $exportDir | Out-Null
+if not API_TOKEN:
+    raise ValueError("Environment variable GRAFANA_API_TOKEN is not set.")
+
+HEADERS = {
+    "Authorization": f"Bearer {API_TOKEN}",
+    "Content-Type": "application/json"
 }
 
-Write-Host "Fetching all library panels from Grafana..."
+os.makedirs(EXPORT_DIR, exist_ok=True)
 
-# Get all library panels
-$libraryPanels = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Headers @{
-  Authorization = "Bearer $ApiToken"
-}
+# === FETCH ALL LIBRARY PANELS ===
+def export_library_panels():
+    url_all = f"{GRAFANA_URL}/api/library-elements"
+    resp = requests.get(url_all, headers=HEADERS)
 
-foreach ($panel in $libraryPanels) {
-  # Get detailed info for each panel
-  $panelDetail = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Headers @{
-    Authorization = "Bearer $ApiToken"
-  }
+    if resp.status_code != 200:
+        raise RuntimeError(f"Failed to fetch library panels: {resp.status_code} - {resp.text}")
 
-  # File name based on UID
-  $fileName = Join-Path $exportDir "LibraryPanel-$($panel.uid).json"
+    library_panels = resp.json()
+    print(f"Found {len(library_panels)} library panels")
 
-  # Save JSON to file
-  $panelDetail | ConvertTo-Json -Depth 20 | Out-File -FilePath $fileName -Encoding utf8
+    for panel in library_panels:
+        uid = panel["uid"]
+        url_detail = f"{GRAFANA_URL}/api/library-elements/{uid}"
+        detail_resp = requests.get(url_detail, headers=HEADERS)
+        if detail_resp.status_code != 200:
+            print(f"⚠️ Skipping panel {uid}, failed to fetch details")
+            continue
 
-  Write-Host "Exported library panel: $fileName"
-}
+        panel_data = detail_resp.json()
+        file_path = os.path.join(EXPORT_DIR, f"LibraryPanel-{uid}.json")
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(panel_data, f, indent=2)
 
-Write-Host "Export complete. Panels saved in $exportDir"
+        print(f"✅ Exported library panel: {file_path}")
+
+if __name__ == "__main__":
+    export_library_panels()
