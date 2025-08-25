@@ -4,7 +4,7 @@
   "folderId": 223,
   "folderUid": "aeuaup38hqy2of",
   "uid": "feuaurpgadgqof",
-  "name": "Panel 1",
+  "name": "Panel 2",
   "kind": 1,
   "type": "stat",
   "description": "",
@@ -88,4 +88,5 @@
       "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56"
     }
   }
+
 }
