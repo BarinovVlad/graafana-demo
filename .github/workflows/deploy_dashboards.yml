@@ -30,38 +30,44 @@ jobs:
           foreach ($target in $grafanaTargets) {
             $GrafanaURL = $target.Url
             $ApiToken = $target.Token
-            $libraryPanelsDir = "./provisioning/library_panels"
 
             Write-Host "`n===== Deploying to Grafana at $GrafanaURL ====="
 
+            # === Deploy library panels ===
+            $libraryPanelsDir = "./provisioning/library_panels"
             if (Test-Path $libraryPanelsDir) {
                 Write-Host "`n=== Deploying library panels from $libraryPanelsDir ==="
 
-                # 1️⃣ Получаем все существующие панели
-                try {
-                    $existingPanels = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Headers @{ Authorization = "Bearer $ApiToken" }
-                } catch {
-                    Write-Host "Failed to fetch existing library panels: $_"
-                    $existingPanels = @{ elements = @() }
-                }
-
-                # 2️⃣ Удаляем все панели, которые есть в Git
                 Get-ChildItem -Path $libraryPanelsDir -Filter "*.json" | ForEach-Object {
                     $panel = Get-Content $_.FullName -Raw | ConvertFrom-Json
-                    $uid = $panel.uid
-                    $toDelete = $existingPanels.elements | Where-Object { $_.uid -eq $uid }
-                    if ($toDelete) {
-                        Write-Host "Deleting existing library panel: $uid"
-                        Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$uid" -Method Delete -Headers @{ Authorization = "Bearer $ApiToken" }
+
+                    if (-not $panel.uid) {
+                        Write-Host "Skipping panel with missing UID"
+                        return
                     }
 
-                    # 3️⃣ Создаем панель заново
-                    $payload = $panel | ConvertTo-Json -Depth 20
-                    Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
-                        Authorization = "Bearer $ApiToken"
-                        "Content-Type" = "application/json"
-                    } -Body $payload
-                    Write-Host "Created library panel: $uid"
+                    # Remove id and version
+                    if ($panel.PSObject.Properties.Name -contains 'id') { $panel.PSObject.Properties.Remove('id') }
+                    if ($panel.PSObject.Properties.Name -contains 'version') { $panel.PSObject.Properties.Remove('version') }
+
+                    $uploadPayload = $panel | ConvertTo-Json -Depth 20
+
+                    try {
+                        # Try update first (PUT)
+                        Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Method Put -Headers @{
+                            Authorization = "Bearer $ApiToken"
+                            "Content-Type"  = "application/json"
+                        } -Body $uploadPayload
+                        Write-Host "Updated library panel: $($panel.uid)"
+                    } catch {
+                        # If PUT fails (404), create via POST
+                        Write-Host "Panel $($panel.uid) not found, creating..."
+                        Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
+                            Authorization = "Bearer $ApiToken"
+                            "Content-Type"  = "application/json"
+                        } -Body $uploadPayload
+                        Write-Host "Created library panel: $($panel.uid)"
+                    }
                 }
             } else {
                 Write-Host "No library panels folder found at $libraryPanelsDir"
@@ -113,6 +119,7 @@ jobs:
                   exit 1
                 }
 
+                # Remove id and version before upload
                 if ($dashboard.PSObject.Properties.Name -contains 'id') { $dashboard.PSObject.Properties.Remove('id') }
                 if ($dashboard.PSObject.Properties.Name -contains 'version') { $dashboard.PSObject.Properties.Remove('version') }
 
@@ -132,5 +139,3 @@ jobs:
               }
             }
           }
-
-
