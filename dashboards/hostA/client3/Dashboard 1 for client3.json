@@ -1,0 +1,32 @@
+{
+  "id": 195,
+  "panels": [
+    {
+      "datasource": "prometheus",
+      "id": 1,
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ],
+      "title": "Panel 1",
+      "type": "singlestat"
+    },
+    {
+      "datasource": "prometheus",
+      "id": 2,
+      "targets": [
+        {
+          "expr": "up",
+          "format": "time_series"
+        }
+      ],
+      "title": "Panel 2",
+      "type": "table"
+    }
+  ],
+  "title": "Dashboard 1 for client3",
+  "uid": "a3ae6f73",
+  "version": 34
+}
