@@ -92,3 +92,29 @@ if (-not $gitFolders) {
             $dashboard = $json | ConvertFrom-Json
 
             if (-not $dashboard.uid) {
+                Write-Error "Dashboard '$($_.Name)' missing 'uid'."
+                exit 1
+            }
+
+            # Удаляем id и version перед загрузкой
+            if ($dashboard.PSObject.Properties.Name -contains 'id') { $dashboard.PSObject.Properties.Remove('id') }
+            if ($dashboard.PSObject.Properties.Name -contains 'version') { $dashboard.PSObject.Properties.Remove('version') }
+
+            $localUids += $dashboard.uid
+
+            $uploadPayload = @{
+                dashboard = $dashboard
+                folderUid = $folderUid
+                overwrite = $true
+            } | ConvertTo-Json -Depth 10
+
+            Write-Host "Uploading dashboard: $($_.Name)"
+            Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/db" -Method Post -Headers @{
+                Authorization = "Bearer $ApiToken"
+                "Content-Type" = "application/json"
+            } -Body $uploadPayload
+        }
+    }
+}
+
+Write-Host "`n🎉 Deployment completed successfully!"
