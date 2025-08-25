@@ -53,24 +53,27 @@ jobs:
 
                     $uploadPayload = $panel | ConvertTo-Json -Depth 20
 
+                    # Check if panel exists
                     try {
-                        # Try to update existing panel
+                        $existing = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Headers @{
+                            Authorization = "Bearer $ApiToken"
+                        }
+
+                        # Exists → update
                         Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($panel.uid)" -Method Put -Headers @{
+                            Authorization = "Bearer $ApiToken"
+                            "Content-Type" = "application/json"
+                        } -Body $uploadPayload
+
+                        Write-Host "✅ Updated library panel: $($panel.uid)"
+                    } catch {
+                        # Not found → create
+                        Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
                             Authorization = "Bearer $ApiToken"
                             "Content-Type"  = "application/json"
                         } -Body $uploadPayload
-                        Write-Host "✅ Updated library panel: $($panel.uid)"
-                    } catch {
-                        # Only create if error is 404 (not found)
-                        if ($_.Exception.Response.StatusCode.Value__ -eq 404) {
-                            Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
-                                Authorization = "Bearer $ApiToken"
-                                "Content-Type"  = "application/json"
-                            } -Body $uploadPayload
-                            Write-Host "✅ Created library panel: $($panel.uid)"
-                        } else {
-                            Write-Host "⚠️ Failed to update library panel $($panel.uid): $($_.Exception.Message)"
-                        }
+
+                        Write-Host "✅ Created library panel: $($panel.uid)"
                     }
                 }
             } else {
@@ -191,4 +194,3 @@ jobs:
               }
             }
           }
-
