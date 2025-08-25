@@ -61,7 +61,7 @@ jobs:
                         } -Body $uploadPayload
                         Write-Host "✅ Updated library panel: $($panel.uid)"
                     } catch {
-                        # If update fails because panel doesn't exist, create it
+                        # If update fails with 404 (not found), create panel
                         if ($_.Exception.Response.StatusCode.Value__ -eq 404) {
                             Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
                                 Authorization = "Bearer $ApiToken"
@@ -85,6 +85,7 @@ jobs:
             }
 
             $gitFolderNames = $gitFolders.Name.ToLower()
+
             $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{
               Authorization = "Bearer $ApiToken"
             }
@@ -190,4 +191,3 @@ jobs:
               }
             }
           }
-
