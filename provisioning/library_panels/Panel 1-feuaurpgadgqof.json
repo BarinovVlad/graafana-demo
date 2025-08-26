@@ -6,7 +6,7 @@
   "uid": "feuaurpgadgqof",
   "name": "Panel 1",
   "kind": 1,
-  "type": "timeseries",
+  "type": "gauge",
   "description": "",
   "model": {
     "datasource": {
@@ -62,13 +62,13 @@
           "type": "prometheus",
           "uid": "ceu6ho1muemm8a"
         },
-        "expr": "up",
+        "expr": "go_memstats_heap_alloc_bytes",
         "format": "time_series",
         "refId": "A"
       }
     ],
     "title": "Panel 1",
-    "type": "stat"
+    "type": "gauge"
   },
   "version": 1,
   "meta": {
@@ -90,4 +90,5 @@
   }
 
 }
+
 
