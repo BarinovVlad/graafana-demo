@@ -22,6 +22,21 @@
   "links": [],
   "panels": [
     {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "libraryPanel": {
+        "name": "Scrape Series Added",
+        "uid": "aevmykl9w90qof"
+      },
+      "title": "Scrape Series Added",
+      "type": "library-panel-ref"
+    },
+    {
       "datasource": {
         "type": "prometheus",
         "uid": "ceu6ho1muemm8a"
@@ -50,7 +65,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 0
+        "y": 8
       },
       "id": 3,
       "options": {
@@ -169,7 +184,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 16
       },
       "id": 1,
       "options": {
@@ -221,7 +236,5 @@
   "timezone": "browser",
   "title": "New dashboard",
   "uid": "243d824a-af42-413f-979d-373ab4349ab6",
-  "version": 3
-
+  "version": 10
 }
-
