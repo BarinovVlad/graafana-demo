@@ -30,7 +30,7 @@
       },
       "id": 4,
       "libraryPanel": {
-        "name": "Scrape Series Added",
+        "name": "Scrape Series Added v2",
         "uid": "aevmykl9w90qof"
       },
       "title": "Scrape Series Added",
@@ -238,4 +238,5 @@
   "title": "New dashboard",
   "uid": "243d824a-af42-413f-979d-373ab4349ab6",
   "version": 2
+
 }
