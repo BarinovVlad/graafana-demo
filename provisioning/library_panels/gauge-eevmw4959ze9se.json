@@ -125,7 +125,7 @@
       }
     ],
     "title": "Pie chart",
-    "type": "gauge"
+    "type": "stat"
   },
   "version": 8,
   "meta": {
@@ -147,3 +147,4 @@
   }
 
 }
+
