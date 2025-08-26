@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 259,
+  "id": 271,
   "links": [],
   "panels": [
     {
@@ -144,5 +144,5 @@
   "timezone": "browser",
   "title": "Prometheus Internal Metrics",
   "uid": "prometheus-internal-dashboard005",
-  "version": 2
+  "version": 1
 }
