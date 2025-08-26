@@ -127,13 +127,13 @@
     "title": "Pie chart",
     "type": "gauge"
   },
-  "version": 3,
+  "version": 5,
   "meta": {
     "folderName": "clientD",
     "folderUid": "eevmvwghyodfke",
     "connectedDashboards": 4,
     "created": "2025-08-26T09:49:24Z",
-    "updated": "2025-08-26T10:01:56Z",
+    "updated": "2025-08-26T10:20:33Z",
     "createdBy": {
       "id": 1,
       "name": "admin",
