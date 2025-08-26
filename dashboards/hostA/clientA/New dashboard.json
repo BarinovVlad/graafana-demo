@@ -102,7 +102,7 @@
           "useBackend": false
         }
       ],
-      "title": "Panel 1",
+      "title": "Error counter",
       "type": "stat"
     },
     {
@@ -222,4 +222,5 @@
   "title": "New dashboard",
   "uid": "243d824a-af42-413f-979d-373ab4349ab6",
   "version": 3
+
 }
