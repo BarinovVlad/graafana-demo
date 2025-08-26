@@ -6,7 +6,7 @@
   "uid": "feuaurpgadgqof",
   "name": "Panel 1",
   "kind": 1,
-  "type": "gauge",
+  "type": "timeseries",
   "description": "",
   "model": {
     "datasource": {
@@ -90,3 +90,4 @@
   }
 
 }
+
