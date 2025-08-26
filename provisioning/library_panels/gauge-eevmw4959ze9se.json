@@ -38,7 +38,7 @@
     },
     "id": 1,
     "libraryPanel": {
-      "name": "Pie chart",
+      "name": "Pie chart v2",
       "uid": "eevmw4959ze9se"
     },
     "options": {
@@ -147,4 +147,5 @@
   }
 
 }
+
 
