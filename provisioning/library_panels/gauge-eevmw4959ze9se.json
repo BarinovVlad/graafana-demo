@@ -6,7 +6,7 @@
   "uid": "eevmw4959ze9se",
   "name": "gauge",
   "kind": 1,
-  "type": "gauge",
+  "type": "stat",
   "description": "",
   "model": {
     "datasource": {
@@ -145,4 +145,5 @@
       "avatarUrl": "/avatar/3d44473e2f7008f89d41125ce5c4bd65"
     }
   }
+
 }
