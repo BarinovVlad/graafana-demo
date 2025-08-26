@@ -15,167 +15,117 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy library panels to Grafana instances
+      - name: Deploy library panels to Grafana hostA
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Графана-инстансы (как в твоём deploy_dashboards.yml)
-          $grafanaTargets = @(
-            @{ Folder = "hostA"; Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
-            @{ Folder = "hostB"; Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
-          )
+          $GrafanaURL = "http://localhost:3000"
+          $ApiToken   = "${{ secrets.GRAFANA_API_TOKEN }}"
+          $baseFolder = "./provisioning/library_panels"
 
-          foreach ($target in $grafanaTargets) {
-            $baseFolder = Join-Path -Path "." -ChildPath ("provisioning/library_panels/" + $target.Folder)
-            $GrafanaURL = $target.Url.TrimEnd('/')
-            $ApiToken = $target.Token
+          if (-not (Test-Path $baseFolder)) {
+            Write-Host "No library panels folder found. Skipping."
+            exit 0
+          }
 
-            Write-Host "`n===== Deploying LIBRARY PANELS to $GrafanaURL from $baseFolder ====="
+          # Список локальных UID'ов
+          $localUids = @()
 
-            if (-not (Test-Path $baseFolder)) {
-              Write-Host "No library panels folder for $($target.Folder) -> $baseFolder. Skipping."
-              continue
-            }
+          # Обрабатываем все JSON-файлы
+          Get-ChildItem -Path $baseFolder -Filter "*.json" | ForEach-Object {
+            $file = $_
+            $raw  = Get-Content $file.FullName -Raw
+            $item = $raw | ConvertFrom-Json
 
-            # Клиентские папки внутри hostA/hostB
-            $clientFolders = Get-ChildItem -Path $baseFolder -Directory -ErrorAction SilentlyContinue
-            if (-not $clientFolders) {
-              Write-Host "No client folders in $baseFolder"
-              continue
-            }
+            if ($item.result) { $item = $item.result }
 
-            foreach ($client in $clientFolders) {
-              $clientName = $client.Name
-              $folderUid = $clientName.ToLower()
+            if (-not $item.uid)   { throw "Library panel '$($file.Name)' missing 'uid'." }
+            if (-not $item.model) { throw "Library panel '$($file.Name)' missing 'model'." }
 
-              Write-Host "`n=== Processing client (folder): $clientName ==="
+            $panelUid  = $item.uid
+            $panelName = if ($item.name) { $item.name } elseif ($item.model.title) { $item.model.title } else { [System.IO.Path]::GetFileNameWithoutExtension($file.Name) }
+            $localUids += $panelUid
 
-              # Проверяем/создаём папку в Grafana
+            # Проверяем, существует ли панель
+            $existing = $null
+            try {
+              $resp = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Headers @{ Authorization = "Bearer $ApiToken" }
+              $existing = $resp.result
+            } catch {}
+
+            if ($existing) {
+              # PATCH требует текущую версию
+              $version = $existing.version
+              $patch = @{
+                uid     = $panelUid
+                name    = $panelName
+                kind    = 1
+                model   = $item.model
+                version = $version
+              } | ConvertTo-Json -Depth 30
+
               try {
-                $folder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{ Authorization = "Bearer $ApiToken" }
-                Write-Host "Folder '$folderUid' exists."
-              } catch {
-                Write-Host "Creating folder '$folderUid'..."
-                $payload = @{ uid = $folderUid; title = $clientName } | ConvertTo-Json -Compress
-                $folder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
+                Write-Host "Updating library panel '$panelName' (uid: $panelUid)..."
+                Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Method Patch -Headers @{
                   Authorization = "Bearer $ApiToken"
                   "Content-Type" = "application/json"
-                } -Body $payload
-              }
-
-              $folderId = $folder.id
-              $localUids = @()
-
-              # Загружаем/обновляем панели
-              Get-ChildItem -Path $client.FullName -Filter "*.json" | ForEach-Object {
-                $file = $_
-                $raw = Get-Content $file.FullName -Raw
-                $item = $raw | ConvertFrom-Json
-
-                # Если случайно выгрузили полный ответ Grafana ({result:{...}}), нормализуем
-                if ($item.result) { $item = $item.result }
-
-                if (-not $item.uid)    { throw "Library panel '$($file.Name)' missing 'uid'." }
-                if (-not $item.model)  { throw "Library panel '$($file.Name)' missing 'model'." }
-
-                # Позволим переопределять папку прямо в json (опционально). Иначе используем папку клиента.
-                $effectiveFolderUid = if ($item.folderUid) { $item.folderUid } else { $folderUid }
-
-                $panelUid = $item.uid
-                $panelName = if ($item.name) { $item.name } elseif ($item.model.title) { $item.model.title } else { [System.IO.Path]::GetFileNameWithoutExtension($file.Name) }
-
-                $localUids += $panelUid
-
-                # Пытаемся получить существующую панель
-                $existing = $null
-                try {
-                  $resp = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Headers @{ Authorization = "Bearer $ApiToken" }
-                  $existing = $resp.result
-                } catch {}
-
-                if ($existing) {
-                  # PATCH требует текущую версию, иначе 412
-                  $version = $existing.version
-
-                  $patch = @{
-                    uid       = $panelUid
-                    name      = $panelName
-                    folderUid = $effectiveFolderUid
-                    kind      = 1
-                    model     = $item.model
-                    version   = $version
+                } -Body $patch | Out-Null
+              } catch {
+                $status = $_.Exception.Response.StatusCode.value__ 2>$null
+                if ($status -eq 412) {
+                  Write-Host "Version mismatch for $panelUid; refetching..."
+                  $fresh = (Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Headers @{ Authorization = "Bearer $ApiToken" }).result
+                  $patch2 = @{
+                    uid     = $panelUid
+                    name    = $panelName
+                    kind    = 1
+                    model   = $item.model
+                    version = $fresh.version
                   } | ConvertTo-Json -Depth 30
 
-                  try {
-                    Write-Host "Updating library panel '$panelName' (uid: $panelUid)..."
-                    Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Method Patch -Headers @{
-                      Authorization = "Bearer $ApiToken"
-                      "Content-Type" = "application/json"
-                    } -Body $patch | Out-Null
-                  } catch {
-                    # Если словили 412 (version mismatch) — рефетчим и пробуем ещё раз один раз
-                    $status = $_.Exception.Response.StatusCode.value__ 2>$null
-                    if ($status -eq 412) {
-                      Write-Host "Version mismatch for $panelUid; refetching..."
-                      $fresh = (Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Headers @{ Authorization = "Bearer $ApiToken" }).result
-                      $patch2 = @{
-                        uid       = $panelUid
-                        name      = $panelName
-                        folderUid = $effectiveFolderUid
-                        kind      = 1
-                        model     = $item.model
-                        version   = $fresh.version
-                      } | ConvertTo-Json -Depth 30
-
-                      Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Method Patch -Headers @{
-                        Authorization = "Bearer $ApiToken"
-                        "Content-Type" = "application/json"
-                      } -Body $patch2 | Out-Null
-                    } else {
-                      throw
-                    }
-                  }
-                } else {
-                  # Создание
-                  $create = @{
-                    uid       = $panelUid
-                    name      = $panelName
-                    folderUid = $effectiveFolderUid
-                    kind      = 1
-                    model     = $item.model
-                  } | ConvertTo-Json -Depth 30
-
-                  Write-Host "Creating library panel '$panelName' (uid: $panelUid)..."
-                  Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
+                  Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Method Patch -Headers @{
                     Authorization = "Bearer $ApiToken"
                     "Content-Type" = "application/json"
-                  } -Body $create | Out-Null
+                  } -Body $patch2 | Out-Null
+                } else {
+                  throw
                 }
               }
+            } else {
+              # Создание
+              $create = @{
+                uid   = $panelUid
+                name  = $panelName
+                kind  = 1
+                model = $item.model
+              } | ConvertTo-Json -Depth 30
 
-              # Удаляем панели, которых нет в Git и которые не подключены к дашбордам
-              $page = 1; $perPage = 500; $remote = @()
-              do {
-                $res = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements?kind=1&perPage=$perPage&page=$page&folderFilter=$folderId" -Headers @{ Authorization = "Bearer $ApiToken" }
-                $remote += $res.result.elements
-                $page++
-              } while ($remote.Count -lt $res.result.totalCount)
+              Write-Host "Creating library panel '$panelName' (uid: $panelUid)..."
+              Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
+                Authorization = "Bearer $ApiToken"
+                "Content-Type" = "application/json"
+              } -Body $create | Out-Null
+            }
+          }
 
-              $toDelete = @($remote | Where-Object { $localUids -notcontains $_.uid })
+          # Удаляем панели, которых нет в Git и которые не используются
+          $page = 1; $perPage = 500; $remote = @()
+          do {
+            $res = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements?kind=1&perPage=$perPage&page=$page" -Headers @{ Authorization = "Bearer $ApiToken" }
+            $remote += $res.result.elements
+            $page++
+          } while ($remote.Count -lt $res.result.totalCount)
 
-              foreach ($el in $toDelete) {
-                # Если панель где-то используется — Grafana не даст удалить
-                $conn = (Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($el.uid)/connections" -Headers @{ Authorization = "Bearer $ApiToken" }).result
-                if ($conn -and $conn.Count -gt 0) {
-                  Write-Warning "Skip delete '$($el.name)' uid=$($el.uid): in use ($($conn.Count) connections). Unlink in dashboards first."
-                  continue
-                }
+          $toDelete = @($remote | Where-Object { $localUids -notcontains $_.uid })
 
-                Write-Host "Deleting library panel '$($el.name)' uid=$($el.uid)..."
-                Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($el.uid)" -Method Delete -Headers @{ Authorization = "Bearer $ApiToken" } | Out-Null
-              }
+          foreach ($el in $toDelete) {
+            $conn = (Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($el.uid)/connections" -Headers @{ Authorization = "Bearer $ApiToken" }).result
+            if ($conn -and $conn.Count -gt 0) {
+              Write-Warning "Skip delete '$($el.name)' uid=$($el.uid): in use ($($conn.Count) connections)."
+              continue
             }
 
-            # Преднамеренно НЕ удаляем папки Grafana здесь, чтобы ненароком не снести папку, где есть только дашборды без библиотечных панелей.
+            Write-Host "Deleting library panel '$($el.name)' uid=$($el.uid)..."
+            Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($el.uid)" -Method Delete -Headers @{ Authorization = "Bearer $ApiToken" } | Out-Null
           }
