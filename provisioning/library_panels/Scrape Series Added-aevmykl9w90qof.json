@@ -108,13 +108,13 @@
     "title": "Scrape Series Added",
     "type": "timeseries"
   },
-  "version": 2,
+  "version": 4,
   "meta": {
-    "folderName": "clientD",
+    "folderName": "panels",
     "folderUid": "eevmvwghyodfke",
     "connectedDashboards": 3,
     "created": "2025-08-26T10:16:55Z",
-    "updated": "2025-08-26T10:20:33Z",
+    "updated": "2025-08-26T11:29:51Z",
     "createdBy": {
       "id": 1,
       "name": "admin",
