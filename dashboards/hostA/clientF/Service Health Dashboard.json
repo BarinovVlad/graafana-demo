@@ -3,7 +3,7 @@
     "list": []
   },
   "editable": true,
-  "id": 241,
+  "id": 261,
   "panels": [
     {
       "gridPos": {
@@ -201,5 +201,5 @@
   "timezone": "browser",
   "title": "Service Health Dashboard",
   "uid": "service-health005",
-  "version": 4
+  "version": 1
 }

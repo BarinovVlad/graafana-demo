@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 238,
+  "id": 258,
   "links": [],
   "panels": [
     {
@@ -51,5 +51,5 @@
   "timezone": "browser",
   "title": "CPU usage",
   "uid": "fc352bf0-3def-4589-81da-ba824a8f76e7",
-  "version": 8
+  "version": 1
 }

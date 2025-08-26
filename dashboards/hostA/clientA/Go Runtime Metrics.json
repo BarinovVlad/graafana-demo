@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 250,
+  "id": 256,
   "links": [],
   "panels": [
     {
@@ -339,5 +339,5 @@
   "timezone": "browser",
   "title": "Go Runtime Metrics",
   "uid": "go-runtime-dashboard001",
-  "version": 3
+  "version": 1
 }

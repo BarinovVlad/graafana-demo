@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 235,
+  "id": 257,
   "links": [],
   "panels": [
     {
@@ -44,6 +44,9 @@
       "description": "",
       "fieldConfig": {
         "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -69,11 +72,9 @@
       },
       "id": 3,
       "options": {
-        "colorMode": "none",
-        "graphMode": "none",
-        "justifyMode": "auto",
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "horizontal",
-        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "mean"
@@ -81,9 +82,9 @@
           "fields": "",
           "values": false
         },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
       "pluginVersion": "12.2.0-16636675413",
       "targets": [
@@ -118,7 +119,7 @@
         }
       ],
       "title": "Error counter",
-      "type": "stat"
+      "type": "gauge"
     },
     {
       "datasource": {
@@ -236,5 +237,5 @@
   "timezone": "browser",
   "title": "New dashboard",
   "uid": "243d824a-af42-413f-979d-373ab4349ab6",
-  "version": 10
+  "version": 2
 }
