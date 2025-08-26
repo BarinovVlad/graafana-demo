@@ -203,7 +203,7 @@
           "useBackend": false
         }
       ],
-      "title": "New panel",
+      "title": "New  v2",
       "type": "timeseries"
     }
   ],
@@ -224,3 +224,4 @@
   "version": 3
 
 }
+
