@@ -31,7 +31,7 @@ jobs:
             $GrafanaURL = $target.Url
             $ApiToken = $target.Token
 
-            Write-Host "n===== Deploying to Grafana at $GrafanaURL from folder $baseFolder ====="
+            Write-Host "`n===== Deploying to Grafana at $GrafanaURL from folder $baseFolder ====="
 
             # Get client folders inside hostA or hostB
             $gitFolders = Get-ChildItem -Path $baseFolder -Directory -ErrorAction SilentlyContinue
@@ -52,7 +52,7 @@ jobs:
               $folderUid = $clientName.ToLower()
               $clientPath = $folder.FullName
 
-              Write-Host "n=== Processing client: $clientName ==="
+              Write-Host "`n=== Processing client: $clientName ==="
 
               try {
                 $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{
@@ -118,7 +118,7 @@ jobs:
             foreach ($grafanaFolder in $grafanaFolders) {
               $uid = $grafanaFolder.uid.ToLower()
               if ($gitFolderNames -notcontains $uid) {
-                Write-Host "nFolder '$uid' not found in Git. Deleting..."
+                Write-Host "`nFolder '$uid' not found in Git. Deleting..."
 
                 $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
                   Authorization = "Bearer $ApiToken"
@@ -133,11 +133,17 @@ jobs:
                   }
                 }
 
-                Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{
-                  Authorization = "Bearer $ApiToken"
+                try {
+                  Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{
+                    Authorization = "Bearer $ApiToken"
+                  }
+                  Write-Host "Folder '$uid' deleted."
                 }
-
-                Write-Host "Folder '$uid' deleted."
+                catch {
+                  $err = $_.ErrorDetails.Message
+                  Write-Warning "Folder '$uid' could not be deleted. Reason: $err"
+                  # Продолжаем, job не падает
+                }
               }
             }
           }
