@@ -8,6 +8,21 @@
   "refresh": "30s",
   "panels": [
     {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "libraryPanel": {
+        "name": "Pie chart",
+        "uid": "eevmw4959ze9se"
+      },
+      "title": "Pie chart",
+      "type": "library-panel-ref"
+    },
+    {
       "type": "graph",
       "title": "Go GC Pause Count",
       "id": 1,
