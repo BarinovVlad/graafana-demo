@@ -219,13 +219,13 @@
     "title": "XY Chart",
     "type": "xychart"
   },
-  "version": 11,
+  "version": 12,
   "meta": {
     "folderName": "panels",
     "folderUid": "cevndh48kn2f4c",
     "connectedDashboards": 3,
     "created": "2025-08-27T09:19:19Z",
-    "updated": "2025-08-27T11:53:54Z",
+    "updated": "2025-08-27T12:08:01Z",
     "createdBy": {
       "id": 1,
       "name": "admin",
