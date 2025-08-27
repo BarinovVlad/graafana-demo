@@ -46,11 +46,11 @@
           "mode": "absolute",
           "steps": [
             {
-              "color": "yellow",
+              "color": "red",
               "value": null
             },
             {
-              "color": "blue",
+              "color": "red",
               "value": null
             }
           ]
@@ -66,7 +66,7 @@
             {
               "id": "color",
               "value": {
-                "fixedColor": "light-purple",
+                "fixedColor": "blue",
                 "mode": "fixed"
               }
             }
@@ -81,7 +81,7 @@
             {
               "id": "color",
               "value": {
-                "fixedColor": "orange",
+                "fixedColor": "blue",
                 "mode": "fixed"
               }
             }
@@ -96,7 +96,7 @@
             {
               "id": "color",
               "value": {
-                "fixedColor": "light-purple",
+                "fixedColor": "yellow",
                 "mode": "fixed"
               }
             }
@@ -111,7 +111,7 @@
             {
               "id": "color",
               "value": {
-                "fixedColor": "light-orange",
+                "fixedColor": "blue",
                 "mode": "fixed"
               }
             }
@@ -126,7 +126,7 @@
             {
               "id": "color",
               "value": {
-                "fixedColor": "dark-orange",
+                "fixedColor": "yellow",
                 "mode": "fixed"
               }
             }
@@ -239,3 +239,4 @@
   }
 
 }
+
