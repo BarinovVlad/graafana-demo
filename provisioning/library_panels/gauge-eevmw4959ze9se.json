@@ -6,7 +6,7 @@
   "uid": "eevmw4959ze9se",
   "name": "gaugeff",
   "kind": 1,
-  "type": "gauge",
+  "type": "pie chart",
   "description": "",
   "model": {
     "datasource": {
@@ -125,7 +125,7 @@
       }
     ],
     "title": "Pie chart",
-    "type": "gauge"
+    "type": "pie chart"
   },
   "version": 8,
   "meta": {
@@ -147,6 +147,7 @@
   }
 
 }
+
 
 
 
