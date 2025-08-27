@@ -4,7 +4,7 @@
   "folderId": 307,
   "folderUid": "cevndh48kn2f4c",
   "uid": "eevnecuf570n4e",
-  "name": "Gauge metrics",
+  "name": "Gauge metrвics",
   "kind": 1,
   "type": "gauge",
   "description": "",
@@ -114,5 +114,6 @@
   }
 
 }
+
 
 
