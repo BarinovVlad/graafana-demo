@@ -7,66 +7,7 @@
   "version": 1,
   "refresh": "30s",
   "panels": [
-    {
-     "gridPos": {
-        "h": 8,
-        "w": 18,
-        "x": 0,
-        "y": 17
-      },
-      "id": 5,
-      "libraryPanel": {
-        "name": "XY Chart",
-        "uid": "devney21p7x1cf"
-      },
-      "title": "XY Chart",
-      "type": "library-panel-ref"
-    },
-     {
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 8,
-      "libraryPanel": {
-        "name": "Gauge metrics",
-        "uid": "eevnecuf570n4e"
-      },
-      "title": "Gauge metrics",
-      "type": "library-panel-ref"
-    }, 
-     {
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 8,
-      "libraryPanel": {
-        "name": "Gauge metrics",
-        "uid": "eevnecuf570n4e"
-      },
-      "title": "Gauge metrics",
-      "type": "library-panel-ref"
-    }, 
-     {
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 8,
-      "libraryPanel": {
-        "name": "Bar chart pro",
-        "uid": "cevnf4x8ohdfvdff"
-      },
-      "title": "Bar chart pro",
-      "type": "library-panel-ref"
-    },
+
     {
       "type": "stat",
       "title": "Query Log Enabled",
