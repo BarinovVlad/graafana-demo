@@ -51,6 +51,21 @@
       "title": "XY Chart",
       "type": "library-panel-ref"
     },
+     {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "libraryPanel": {
+        "name": "Bar chart pro",
+        "uid": "cevnf4x8ohdfvdff"
+      },
+      "title": "Bar chart pro",
+      "type": "library-panel-ref"
+    },
     {
       "datasource": "prometheus",
       "fieldConfig": {
@@ -364,4 +379,5 @@
   "title": "Go Runtime Memory Stats",
   "uid": "go-memstats-dashboard001",
   "version": 3
+
 }
