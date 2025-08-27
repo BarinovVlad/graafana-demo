@@ -19,20 +19,18 @@ HEADERS = {
 os.makedirs(EXPORT_DIR, exist_ok=True)
 
 def sanitize_filename(name):
-    """Remove invalid characters from filename"""
+    """Remove forbidden characters from filename"""
     return re.sub(r'[\\/*?:"<>|]', "_", name)
 
 def normalize_panel(panel_data):
-    """Convert panel to use datasource by name instead of UID"""
+    """Convert datasource to string 'prometheus' for model and targets"""
     model = panel_data.get("model", {})
 
-    # Normalize main datasource
-    if "datasource" in model:
+    if isinstance(model.get("datasource"), dict):
         model["datasource"] = "prometheus"
 
-    # Normalize datasource in targets
     for target in model.get("targets", []):
-        if "datasource" in target:
+        if isinstance(target.get("datasource"), dict):
             target["datasource"] = "prometheus"
 
     panel_data["model"] = model
@@ -53,19 +51,19 @@ def export_library_panels():
         uid = panel.get("uid")
         name = panel.get("name", uid)
         if not uid:
-            print("Skipping panel with no UID")
+            print("⚠️ Skipping panel with no UID")
             continue
 
         print(f"Fetching details for panel UID: {uid}")
         detail_resp = requests.get(f"{GRAFANA_URL}/api/library-elements/{uid}", headers=HEADERS)
 
         if detail_resp.status_code != 200:
-            print(f"Skipping panel {uid}, failed to fetch details: {detail_resp.status_code}")
+            print(f"⚠️ Skipping panel {uid}, failed to fetch details: {detail_resp.status_code}")
             continue
 
         panel_data = detail_resp.json().get("result")
         if not panel_data:
-            print(f"Skipping panel {uid}, no data in 'result'")
+            print(f"⚠️ Skipping panel {uid}, no data in 'result'")
             continue
 
         # Normalize datasource
@@ -76,9 +74,9 @@ def export_library_panels():
         with open(filename, "w", encoding="utf-8") as f:
             json.dump(panel_data, f, indent=2)
 
-        print(f"Exported & normalized panel: {name} -> {filename}")
+        print(f"✅ Exported panel: {name} -> {filename}")
 
-    print("\nExport complete. Panels saved in:", EXPORT_DIR)
+    print("\n🎉 Export complete. Panels saved in:", EXPORT_DIR)
 
 if __name__ == "__main__":
     export_library_panels()
