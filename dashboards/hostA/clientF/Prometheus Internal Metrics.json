@@ -20,22 +20,7 @@
   "graphTooltip": 0,
   "id": 311,
   "links": [],
-  "panels": [
-     {
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 8,
-      "libraryPanel": {
-        "name": "Additional panel",
-        "uid": "eevnecnhgn6h4dd8"
-      },
-      "title": "Additional panel",
-      "type": "library-panel-ref"
-    }, 
+  "panels": [ 
     {
       "gridPos": {
         "h": 8,
@@ -345,4 +330,5 @@
   "version": 4
 
 }
+
 
