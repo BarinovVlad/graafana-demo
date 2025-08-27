@@ -1,17 +1,11 @@
 {
-  "id": 33,
-  "orgId": 1,
-  "folderId": 307,
-  "folderUid": "cevndh48kn2f4c",
   "uid": "eevnecuf570n4e",
-  "name": "Gauge metrвics",
+  "name": "Gauge metrics",
   "kind": 1,
   "type": "gauge",
   "description": "",
   "model": {
-    "datasource": {
-      "type": "prometheus",
-    },
+    "datasource": "prometheus",
     "description": "",
     "fieldConfig": {
       "defaults": {
@@ -64,31 +58,13 @@
     "pluginVersion": "12.2.0-16636675413",
     "targets": [
       {
-        "disableTextWrap": false,
-        "editorMode": "builder",
         "expr": "go_goroutines",
-        "fullMetaSearch": false,
-        "includeNullMetadata": true,
-        "legendFormat": "__auto",
-        "range": true,
-        "refId": "A",
-        "useBackend": false
+        "refId": "A"
       },
       {
-        "datasource": {
-          "type": "prometheus",
-        },
-        "disableTextWrap": false,
-        "editorMode": "builder",
         "expr": "up",
-        "fullMetaSearch": false,
-        "hide": false,
-        "includeNullMetadata": true,
-        "instant": false,
-        "legendFormat": "__auto",
-        "range": true,
         "refId": "B",
-        "useBackend": false
+        "datasource": "prometheus"
       }
     ],
     "title": "Gauge metrics pro",
@@ -112,8 +88,8 @@
       "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56"
     }
   }
-
 }
+
 
 
 
