@@ -41,7 +41,7 @@ for dash in dashboards:
     dash_title = sanitize_filename(dash["title"])
     folder_id = dash.get("folderId", 0)
 
-    # ❌ Пропускаем General
+   
     if folder_id == 0:
         continue
 
