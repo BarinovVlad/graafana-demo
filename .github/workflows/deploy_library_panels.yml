@@ -56,6 +56,16 @@ jobs:
               $panelName = if ($item.name) { $item.name } elseif ($item.model.title) { $item.model.title } else { [System.IO.Path]::GetFileNameWithoutExtension($file.Name) }
               $localUids += $panelUid
 
+              # 🔹 Преобразуем datasource из UID в строку имени
+              if ($item.model.datasource -and $item.model.datasource.uid) {
+                $item.model.datasource = $item.model.datasource.type
+              }
+              foreach ($t in $item.model.targets) {
+                if ($t.datasource -and $t.datasource.uid) {
+                  $t.datasource = $t.datasource.type
+                }
+              }
+
               # Проверяем, существует ли панель
               $existing = $null
               try {
