@@ -82,7 +82,7 @@
         },
         "disableTextWrap": false,
         "editorMode": "builder",
-        "expr": "node_disk_io_time_seconds_total",
+        "expr": "up",
         "fullMetaSearch": false,
         "hide": false,
         "includeNullMetadata": true,
@@ -116,3 +116,4 @@
   }
 
 }
+
