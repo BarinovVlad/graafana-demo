@@ -4,8 +4,8 @@ import requests
 import re
 
 # === CONFIG ===
-GRAFANA_URL = "http://localhost:3000"
-API_TOKEN = os.getenv("GRAFANA_API_TOKEN")
+GRAFANA_URL = os.environ.get("GRAFANA_URL", "http://localhost:3000")
+API_TOKEN = os.environ.get("GRAFANA_API_TOKEN")
 EXPORT_DIR = "library-panels"
 
 if not API_TOKEN:
@@ -19,64 +19,60 @@ HEADERS = {
 os.makedirs(EXPORT_DIR, exist_ok=True)
 
 def sanitize_filename(name):
-    """Remove forbidden characters from filename"""
     return re.sub(r'[\\/*?:"<>|]', "_", name)
 
-def normalize_panel(panel_data):
-    """Convert datasource to string 'prometheus' for model and targets"""
-    model = panel_data.get("model", {})
+def transform_panel(panel):
+    """Преобразуем панель к push-ready формату"""
+    panel_copy = panel.copy()
+    model = panel_copy.get("model", {})
 
-    if isinstance(model.get("datasource"), dict):
-        model["datasource"] = "prometheus"
+    # Обновляем datasource в targets
+    targets = model.get("targets", [])
+    for t in targets:
+        if isinstance(t.get("datasource"), str):
+            t["datasource"] = {"type": "prometheus", "uid": t["datasource"]}
 
-    for target in model.get("targets", []):
-        if isinstance(target.get("datasource"), dict):
-            target["datasource"] = "prometheus"
+    # Если сам datasource задан строкой, приводим к объекту
+    if isinstance(model.get("datasource"), str):
+        model["datasource"] = {"type": "prometheus", "uid": model["datasource"]}
 
-    panel_data["model"] = model
-    return panel_data
+    panel_copy["model"] = model
+
+    # Удаляем лишние поля
+    for key in ["id", "version", "orgId", "folderId", "meta"]:
+        panel_copy.pop(key, None)
+
+    return panel_copy
 
 def export_library_panels():
     print("Fetching all library panels from Grafana...")
-
-    response = requests.get(f"{GRAFANA_URL}/api/library-elements", headers=HEADERS)
-    if response.status_code != 200:
-        raise RuntimeError(f"Failed to fetch library panels: {response.status_code} - {response.text}")
-
-    data = response.json()
-    panels = data.get("result", {}).get("elements", [])
+    resp = requests.get(f"{GRAFANA_URL}/api/library-elements", headers=HEADERS)
+    resp.raise_for_status()
+    panels = resp.json().get("result", {}).get("elements", [])
     print(f"Found {len(panels)} library panels")
 
     for panel in panels:
         uid = panel.get("uid")
-        name = panel.get("name", uid)
+        name = panel.get("name") or uid
         if not uid:
-            print("⚠️ Skipping panel with no UID")
+            print("Skipping panel with no UID")
             continue
 
         print(f"Fetching details for panel UID: {uid}")
         detail_resp = requests.get(f"{GRAFANA_URL}/api/library-elements/{uid}", headers=HEADERS)
-
-        if detail_resp.status_code != 200:
-            print(f"⚠️ Skipping panel {uid}, failed to fetch details: {detail_resp.status_code}")
-            continue
-
+        detail_resp.raise_for_status()
         panel_data = detail_resp.json().get("result")
         if not panel_data:
-            print(f"⚠️ Skipping panel {uid}, no data in 'result'")
+            print(f"Skipping panel {uid}, no data in 'result'")
             continue
 
-        # Normalize datasource
-        panel_data = normalize_panel(panel_data)
-
+        transformed = transform_panel(panel_data)
         filename = os.path.join(EXPORT_DIR, f"{sanitize_filename(name)}-{uid}.json")
-
         with open(filename, "w", encoding="utf-8") as f:
-            json.dump(panel_data, f, indent=2)
+            json.dump(transformed, f, indent=2)
+        print(f"Exported panel: {name} -> {filename}")
 
-        print(f"✅ Exported panel: {name} -> {filename}")
-
-    print("\n🎉 Export complete. Panels saved in:", EXPORT_DIR)
+    print(f"\nExport complete. Panels saved in: {EXPORT_DIR}")
 
 if __name__ == "__main__":
     export_library_panels()
