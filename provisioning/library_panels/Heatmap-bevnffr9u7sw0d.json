@@ -108,22 +108,22 @@
     "title": "Heatmap",
     "type": "heatmap"
   },
-  "version": 1,
+  "version": 11,
   "meta": {
     "folderName": "panels",
     "folderUid": "cevndh48kn2f4c",
     "connectedDashboards": 1,
     "created": "2025-08-27T09:24:50Z",
-    "updated": "2025-08-27T09:24:50Z",
+    "updated": "2025-08-27T11:53:54Z",
     "createdBy": {
       "id": 1,
       "name": "admin",
       "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56"
     },
     "updatedBy": {
-      "id": 1,
-      "name": "admin",
-      "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56"
+      "id": 2,
+      "name": "sa-1-github-ci",
+      "avatarUrl": "/avatar/3d44473e2f7008f89d41125ce5c4bd65"
     }
   }
 }

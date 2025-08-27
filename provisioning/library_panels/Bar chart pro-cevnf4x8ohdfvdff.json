@@ -1,10 +1,10 @@
 {
-  "id": 35,
+  "id": 38,
   "orgId": 1,
-  "folderId": 307,
-  "folderUid": "cevndh48kn2f4c",
-  "uid": "cevnf4x8ohc74f",
-  "name": "Bar chart",
+  "folderId": 0,
+  "folderUid": "general",
+  "uid": "cevnf4x8ohdfvdff",
+  "name": "Bar chart pro",
   "kind": 1,
   "type": "barchart",
   "description": "",
@@ -120,20 +120,20 @@
         "useBackend": false
       }
     ],
-    "title": "Bar chart",
+    "title": "Bar chart pro",
     "type": "barchart"
   },
-  "version": 13,
+  "version": 4,
   "meta": {
-    "folderName": "panels",
-    "folderUid": "cevndh48kn2f4c",
+    "folderName": "General",
+    "folderUid": "general",
     "connectedDashboards": 1,
-    "created": "2025-08-27T09:21:28Z",
+    "created": "2025-08-27T11:26:47Z",
     "updated": "2025-08-27T11:53:54Z",
     "createdBy": {
-      "id": 1,
-      "name": "admin",
-      "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56"
+      "id": 2,
+      "name": "sa-1-github-ci",
+      "avatarUrl": "/avatar/3d44473e2f7008f89d41125ce5c4bd65"
     },
     "updatedBy": {
       "id": 2,
