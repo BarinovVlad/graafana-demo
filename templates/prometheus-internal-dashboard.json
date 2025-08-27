@@ -14,7 +14,7 @@
       "datasource": "prometheus",
       "targets": [
         {
-          "expr": "prometheus_engine_query_log_enabled",
+          "expr": "node_memory_Inactive_bytes",
           "legendFormat": "Query Log",
           "refId": "A"
         }
@@ -37,7 +37,7 @@
       "datasource": "prometheus",
       "targets": [
         {
-          "expr": "rate(scrape_series_added[1m])",
+          "expr": "up",
           "legendFormat": "Series Added",
           "refId": "B"
         }
