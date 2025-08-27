@@ -20,7 +20,7 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Targets (оба хоста)
+        
           $grafanaTargets = @(
             @{ Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
             @{ Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
@@ -38,10 +38,10 @@ jobs:
 
             Write-Host "`n===== Deploying library panels to $GrafanaURL ====="
 
-            # Список локальных UID'ов
+            
             $localUids = @()
 
-            # Обрабатываем все JSON-файлы
+            
             Get-ChildItem -Path $baseFolder -Filter "*.json" | ForEach-Object {
               $file = $_
               $raw  = Get-Content $file.FullName -Raw
@@ -56,7 +56,7 @@ jobs:
               $panelName = if ($item.name) { $item.name } elseif ($item.model.title) { $item.model.title } else { [System.IO.Path]::GetFileNameWithoutExtension($file.Name) }
               $localUids += $panelUid
 
-              # Проверяем, существует ли панель
+             
               $existing = $null
               try {
                 $resp = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Headers @{ Authorization = "Bearer $ApiToken" }
@@ -64,7 +64,7 @@ jobs:
               } catch {}
 
               if ($existing) {
-                # PATCH требует текущую версию
+               
                 $version = $existing.version
                 $patch = @{
                   uid     = $panelUid
@@ -102,7 +102,7 @@ jobs:
                   }
                 }
               } else {
-                # Создание
+              
                 $create = @{
                   uid   = $panelUid
                   name  = $panelName
@@ -118,7 +118,7 @@ jobs:
               }
             }
 
-            # Удаляем панели, которых нет в Git и которые не используются
+            
             $page = 1; $perPage = 500; $remote = @()
             do {
               $res = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements?kind=1&perPage=$perPage&page=$page" -Headers @{ Authorization = "Bearer $ApiToken" }
