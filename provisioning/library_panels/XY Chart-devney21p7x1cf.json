@@ -4,7 +4,7 @@
   "folderId": 307,
   "folderUid": "cevndh48kn2f4c",
   "uid": "devney21p7x1cf",
-  "name": "XY Chart",
+  "name": "XY Chart v2",
   "kind": 1,
   "type": "xychart",
   "description": "",
@@ -46,12 +46,12 @@
           "mode": "absolute",
           "steps": [
             {
-              "color": "green",
+              "color": "yellow",
               "value": null
             },
             {
-              "color": "red",
-              "value": 80
+              "color": "blue",
+              "value": null
             }
           ]
         }
@@ -237,4 +237,5 @@
       "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56"
     }
   }
+
 }
