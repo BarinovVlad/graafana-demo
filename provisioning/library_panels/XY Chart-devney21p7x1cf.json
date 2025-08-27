@@ -1,240 +1,74 @@
 {
-  "id": 34,
-  "orgId": 1,
-  "folderId": 307,
-  "folderUid": "cevndh48kn2f4c",
   "uid": "devney21p7x1cf",
-  "name": "XY Chart",
-  "kind": 1,
+  "title": "XY Chart",
   "type": "xychart",
-  "description": "",
-  "model": {
-    "datasource": {
-      "type": "prometheus",
-      "uid": "ceu6ho1muemm8a"
-    },
-    "description": "",
-    "fieldConfig": {
-      "defaults": {
-        "color": {
-          "mode": "palette-classic"
-        },
-        "custom": {
-          "axisBorderShow": false,
-          "axisCenteredZero": false,
-          "axisColorMode": "text",
-          "axisLabel": "",
-          "axisPlacement": "auto",
-          "fillOpacity": 50,
-          "hideFrom": {
-            "legend": false,
-            "tooltip": false,
-            "viz": false
-          },
-          "pointShape": "circle",
-          "pointSize": {
-            "fixed": 5
-          },
-          "pointStrokeWidth": 1,
-          "scaleDistribution": {
-            "type": "linear"
-          },
-          "show": "points"
-        },
-        "mappings": [],
-        "thresholds": {
-          "mode": "absolute",
-          "steps": [
-            {
-              "color": "red",
-              "value": null
-            },
-            {
-              "color": "red",
-              "value": null
-            }
-          ]
-        }
-      },
-      "overrides": [
-        {
-          "matcher": {
-            "id": "byName",
-            "options": "{__name__=\"go_memstats_stack_inuse_bytes\", instance=\"node-exporter:9100\", job=\"node\"}"
-          },
-          "properties": [
-            {
-              "id": "color",
-              "value": {
-                "fixedColor": "blue",
-                "mode": "fixed"
-              }
-            }
-          ]
-        },
-        {
-          "matcher": {
-            "id": "byName",
-            "options": "{__name__=\"node_forks_total\", instance=\"node-exporter:9100\", job=\"node\"}"
-          },
-          "properties": [
-            {
-              "id": "color",
-              "value": {
-                "fixedColor": "blue",
-                "mode": "fixed"
-              }
-            }
-          ]
-        },
-        {
-          "matcher": {
-            "id": "byName",
-            "options": "{__name__=\"go_sched_gomaxprocs_threads\", instance=\"node-exporter:9100\", job=\"node\"}"
-          },
-          "properties": [
-            {
-              "id": "color",
-              "value": {
-                "fixedColor": "yellow",
-                "mode": "fixed"
-              }
-            }
-          ]
-        },
-        {
-          "matcher": {
-            "id": "byName",
-            "options": "{__name__=\"scrape_series_added\", instance=\"node-exporter:9100\", job=\"node\"}"
-          },
-          "properties": [
-            {
-              "id": "color",
-              "value": {
-                "fixedColor": "blue",
-                "mode": "fixed"
-              }
-            }
-          ]
-        },
-        {
-          "matcher": {
-            "id": "byName",
-            "options": "{__name__=\"up\", instance=\"node-exporter:9100\", job=\"node\"}"
-          },
-          "properties": [
-            {
-              "id": "color",
-              "value": {
-                "fixedColor": "yellow",
-                "mode": "fixed"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    "gridPos": {
-      "h": 8,
-      "w": 12,
-      "x": 0,
-      "y": 0
-    },
-    "id": 5,
-    "libraryPanel": {
-      "name": "XY Chart",
-      "uid": "devney21p7x1cf"
-    },
-    "options": {
-      "legend": {
-        "calcs": [],
-        "displayMode": "list",
-        "placement": "bottom",
-        "showLegend": true
-      },
-      "mapping": "auto",
-      "series": [
-        {}
-      ],
-      "tooltip": {
-        "hideZeros": false,
-        "mode": "single",
-        "sort": "none"
-      }
-    },
-    "pluginVersion": "12.2.0-16636675413",
-    "targets": [
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "ceu6ho1muemm8a"
-        },
-        "disableTextWrap": false,
-        "editorMode": "builder",
-        "expr": "go_sched_gomaxprocs_threads",
-        "fullMetaSearch": false,
-        "hide": false,
-        "includeNullMetadata": true,
-        "instant": false,
-        "legendFormat": "__auto",
-        "range": true,
-        "refId": "A",
-        "useBackend": false
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "ceu6ho1muemm8a"
-        },
-        "disableTextWrap": false,
-        "editorMode": "builder",
-        "expr": "scrape_series_added",
-        "fullMetaSearch": false,
-        "hide": false,
-        "includeNullMetadata": true,
-        "instant": false,
-        "legendFormat": "__auto",
-        "range": true,
-        "refId": "B",
-        "useBackend": false
-      },
-      {
-        "datasource": {
-          "type": "prometheus",
-          "uid": "ceu6ho1muemm8a"
-        },
-        "disableTextWrap": false,
-        "editorMode": "builder",
-        "expr": "up",
-        "fullMetaSearch": false,
-        "hide": false,
-        "includeNullMetadata": true,
-        "instant": false,
-        "legendFormat": "__auto",
-        "range": true,
-        "refId": "C",
-        "useBackend": false
-      }
-    ],
-    "title": "XY Chart",
-    "type": "xychart"
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 0
   },
-  "version": 13,
-  "meta": {
-    "folderName": "panels",
-    "folderUid": "cevndh48kn2f4c",
-    "connectedDashboards": 3,
-    "created": "2025-08-27T09:19:19Z",
-    "updated": "2025-08-27T13:08:38Z",
-    "createdBy": {
-      "id": 1,
-      "name": "admin",
-      "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56"
+  "options": {
+    "legend": {
+      "calcs": [],
+      "displayMode": "list",
+      "placement": "bottom",
+      "showLegend": true
     },
-    "updatedBy": {
-      "id": 2,
-      "name": "sa-1-github-ci",
-      "avatarUrl": "/avatar/3d44473e2f7008f89d41125ce5c4bd65"
+    "mapping": "auto",
+    "series": [
+      {}
+    ],
+    "tooltip": {
+      "hideZeros": false,
+      "mode": "single",
+      "sort": "none"
     }
+  },
+  "targets": [
+    {
+      "disableTextWrap": false,
+      "editorMode": "builder",
+      "expr": "go_sched_gomaxprocs_threads",
+      "fullMetaSearch": false,
+      "hide": false,
+      "includeNullMetadata": true,
+      "instant": false,
+      "legendFormat": "__auto",
+      "range": true,
+      "refId": "A",
+      "useBackend": false
+    },
+    {
+      "disableTextWrap": false,
+      "editorMode": "builder",
+      "expr": "scrape_series_added",
+      "fullMetaSearch": false,
+      "hide": false,
+      "includeNullMetadata": true,
+      "instant": false,
+      "legendFormat": "__auto",
+      "range": true,
+      "refId": "B",
+      "useBackend": false
+    },
+    {
+      "disableTextWrap": false,
+      "editorMode": "builder",
+      "expr": "up",
+      "fullMetaSearch": false,
+      "hide": false,
+      "includeNullMetadata": true,
+      "instant": false,
+      "legendFormat": "__auto",
+      "range": true,
+      "refId": "C",
+      "useBackend": false
+    }
+  ],
+  "datasource": "ceu6ho1muemm8a",
+  "libraryPanel": {
+    "name": "XY Chart",
+    "uid": "devney21p7x1cf"
   }
 }

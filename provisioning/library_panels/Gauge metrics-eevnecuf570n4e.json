@@ -1,95 +1,41 @@
 {
-  "id": 33,
-  "orgId": 1,
-  "folderId": 307,
-  "folderUid": "cevndh48kn2f4c",
   "uid": "eevnecuf570n4e",
-  "name": "Gauge metrics",
-  "kind": 1,
+  "title": "Gauge metrics pro",
   "type": "gauge",
-  "description": "",
-  "model": {
-    "datasource": "prometheus",
-    "description": "",
-    "fieldConfig": {
-      "defaults": {
-        "color": {
-          "mode": "thresholds"
-        },
-        "mappings": [],
-        "thresholds": {
-          "mode": "absolute",
-          "steps": [
-            {
-              "color": "blue",
-              "value": null
-            },
-            {
-              "color": "yellow",
-              "value": 80
-            }
-          ]
-        }
-      },
-      "overrides": []
-    },
-    "gridPos": {
-      "h": 8,
-      "w": 12,
-      "x": 6,
-      "y": 0
-    },
-    "id": 3,
-    "libraryPanel": {
-      "name": "Gauge metrics",
-      "uid": "eevnecuf570n4e"
-    },
-    "options": {
-      "minVizHeight": 75,
-      "minVizWidth": 75,
-      "orientation": "auto",
-      "reduceOptions": {
-        "calcs": [
-          "lastNotNull"
-        ],
-        "fields": "",
-        "values": false
-      },
-      "showThresholdLabels": false,
-      "showThresholdMarkers": true,
-      "sizing": "auto"
-    },
-    "pluginVersion": "12.2.0-16636675413",
-    "targets": [
-      {
-        "expr": "go_goroutines",
-        "refId": "A"
-      },
-      {
-        "datasource": "prometheus",
-        "expr": "up",
-        "refId": "B"
-      }
-    ],
-    "title": "Gauge metrics pro",
-    "type": "gauge"
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 6,
+    "y": 0
   },
-  "version": 13,
-  "meta": {
-    "folderName": "panels",
-    "folderUid": "cevndh48kn2f4c",
-    "connectedDashboards": 3,
-    "created": "2025-08-27T09:12:43Z",
-    "updated": "2025-08-27T13:08:38Z",
-    "createdBy": {
-      "id": 1,
-      "name": "admin",
-      "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56"
+  "options": {
+    "minVizHeight": 75,
+    "minVizWidth": 75,
+    "orientation": "auto",
+    "reduceOptions": {
+      "calcs": [
+        "lastNotNull"
+      ],
+      "fields": "",
+      "values": false
     },
-    "updatedBy": {
-      "id": 2,
-      "name": "sa-1-github-ci",
-      "avatarUrl": "/avatar/3d44473e2f7008f89d41125ce5c4bd65"
+    "showThresholdLabels": false,
+    "showThresholdMarkers": true,
+    "sizing": "auto"
+  },
+  "targets": [
+    {
+      "expr": "go_goroutines",
+      "refId": "A"
+    },
+    {
+      "expr": "up",
+      "refId": "B"
     }
+  ],
+  "datasource": "prometheus",
+  "libraryPanel": {
+    "name": "Gauge metrics",
+    "uid": "eevnecuf570n4e"
   }
 }

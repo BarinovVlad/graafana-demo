@@ -1,144 +1,51 @@
 {
-  "id": 35,
-  "orgId": 1,
-  "folderId": 307,
-  "folderUid": "cevndh48kn2f4c",
   "uid": "cevnf4x8ohc74f",
-  "name": "Bar chart",
-  "kind": 1,
+  "title": "Bar chart",
   "type": "barchart",
-  "description": "",
-  "model": {
-    "datasource": {
-      "type": "prometheus",
-      "uid": "ceu6ho1muemm8a"
-    },
-    "description": "",
-    "fieldConfig": {
-      "defaults": {
-        "color": {
-          "mode": "palette-classic"
-        },
-        "custom": {
-          "axisBorderShow": false,
-          "axisCenteredZero": false,
-          "axisColorMode": "text",
-          "axisLabel": "",
-          "axisPlacement": "auto",
-          "fillOpacity": 80,
-          "gradientMode": "none",
-          "hideFrom": {
-            "legend": false,
-            "tooltip": false,
-            "viz": false
-          },
-          "lineWidth": 1,
-          "scaleDistribution": {
-            "type": "linear"
-          },
-          "thresholdsStyle": {
-            "mode": "off"
-          }
-        },
-        "mappings": [],
-        "thresholds": {
-          "mode": "absolute",
-          "steps": [
-            {
-              "color": "green",
-              "value": null
-            },
-            {
-              "color": "red",
-              "value": 80
-            }
-          ]
-        }
-      },
-      "overrides": [
-        {
-          "matcher": {
-            "id": "byName",
-            "options": "{__name__=\"go_memstats_alloc_bytes_total\", instance=\"node-exporter:9100\", job=\"node\"}"
-          },
-          "properties": [
-            {
-              "id": "color",
-              "value": {
-                "fixedColor": "#2b83a7",
-                "mode": "fixed"
-              }
-            }
-          ]
-        }
-      ]
-    },
-    "gridPos": {
-      "h": 6,
-      "w": 12,
-      "x": 6,
-      "y": 0
-    },
-    "id": 3,
-    "libraryPanel": {
-      "name": "Bar chart",
-      "uid": "cevnf4x8ohc74f"
-    },
-    "options": {
-      "barRadius": 0,
-      "barWidth": 0.97,
-      "fullHighlight": false,
-      "groupWidth": 0.7,
-      "legend": {
-        "calcs": [],
-        "displayMode": "list",
-        "placement": "bottom",
-        "showLegend": true
-      },
-      "orientation": "auto",
-      "showValue": "auto",
-      "stacking": "none",
-      "tooltip": {
-        "hideZeros": false,
-        "mode": "single",
-        "sort": "none"
-      },
-      "xTickLabelRotation": 0,
-      "xTickLabelSpacing": 0
-    },
-    "pluginVersion": "12.2.0-16636675413",
-    "targets": [
-      {
-        "disableTextWrap": false,
-        "editorMode": "builder",
-        "expr": "go_memstats_alloc_bytes_total",
-        "fullMetaSearch": false,
-        "includeNullMetadata": true,
-        "legendFormat": "__auto",
-        "range": true,
-        "refId": "A",
-        "useBackend": false
-      }
-    ],
-    "title": "Bar chart",
-    "type": "barchart"
+  "gridPos": {
+    "h": 6,
+    "w": 12,
+    "x": 6,
+    "y": 0
   },
-  "version": 15,
-  "meta": {
-    "folderName": "panels",
-    "folderUid": "cevndh48kn2f4c",
-    "connectedDashboards": 1,
-    "created": "2025-08-27T09:21:28Z",
-    "updated": "2025-08-27T13:08:38Z",
-    "createdBy": {
-      "id": 1,
-      "name": "admin",
-      "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56"
+  "options": {
+    "barRadius": 0,
+    "barWidth": 0.97,
+    "fullHighlight": false,
+    "groupWidth": 0.7,
+    "legend": {
+      "calcs": [],
+      "displayMode": "list",
+      "placement": "bottom",
+      "showLegend": true
     },
-    "updatedBy": {
-      "id": 2,
-      "name": "sa-1-github-ci",
-      "avatarUrl": "/avatar/3d44473e2f7008f89d41125ce5c4bd65"
+    "orientation": "auto",
+    "showValue": "auto",
+    "stacking": "none",
+    "tooltip": {
+      "hideZeros": false,
+      "mode": "single",
+      "sort": "none"
+    },
+    "xTickLabelRotation": 0,
+    "xTickLabelSpacing": 0
+  },
+  "targets": [
+    {
+      "disableTextWrap": false,
+      "editorMode": "builder",
+      "expr": "go_memstats_alloc_bytes_total",
+      "fullMetaSearch": false,
+      "includeNullMetadata": true,
+      "legendFormat": "__auto",
+      "range": true,
+      "refId": "A",
+      "useBackend": false
     }
+  ],
+  "datasource": "ceu6ho1muemm8a",
+  "libraryPanel": {
+    "name": "Bar chart",
+    "uid": "cevnf4x8ohc74f"
   }
 }
