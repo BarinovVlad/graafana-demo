@@ -7,6 +7,20 @@
   "version": 1,
   "refresh": "30s",
   "panels": [
+     "gridPos": {
+        "h": 8,
+        "w": 18,
+        "x": 0,
+        "y": 17
+      },
+      "id": 5,
+      "libraryPanel": {
+        "name": "XY Chart",
+        "uid": "devney21p7x1cf"
+      },
+      "title": "XY Chart",
+      "type": "library-panel-ref"
+    },
      {
       "gridPos": {
         "h": 8,
