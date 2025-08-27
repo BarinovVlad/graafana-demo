@@ -7,6 +7,21 @@
   "version": 1,
   "refresh": "30s",
   "panels": [
+     {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "libraryPanel": {
+        "name": "Gauge metrics",
+        "uid": "eevnecuf570n4e"
+      },
+      "title": "Gauge metrics",
+      "type": "library-panel-ref"
+    },
     {
       "type": "stat",
       "title": "Query Log Enabled",
