@@ -22,6 +22,21 @@
   "links": [],
   "panels": [
     {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "libraryPanel": {
+        "name": "XY Chart",
+        "uid": "devney21p7x1cf"
+      },
+      "title": "XY Chart demo",
+      "type": "library-panel-ref"
+    }, 
+    {
       "datasource": {
         "type": "prometheus",
         "uid": "ceu6ho1muemm8a"
@@ -313,4 +328,5 @@
   "title": "Prometheus Internal Metrics",
   "uid": "prometheus-internal-dashboard001",
   "version": 4
+
 }
