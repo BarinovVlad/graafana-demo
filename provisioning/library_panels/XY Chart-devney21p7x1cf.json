@@ -4,7 +4,7 @@
   "folderId": 307,
   "folderUid": "cevndh48kn2f4c",
   "uid": "devney21p7x1cf",
-  "name": "XY Chart v2",
+  "name": "XY Chart",
   "kind": 1,
   "type": "xychart",
   "description": "",
@@ -239,4 +239,5 @@
   }
 
 }
+
 
