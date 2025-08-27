@@ -6,7 +6,7 @@
   "uid": "eevmw4959ze9se",
   "name": "gaugeff",
   "kind": 1,
-  "type": "pie chart",
+  "type": "stat",
   "description": "",
   "model": {
     "datasource": {
@@ -125,7 +125,7 @@
       }
     ],
     "title": "Pie chart",
-    "type": "pie chart"
+    "type": "stat"
   },
   "version": 8,
   "meta": {
@@ -147,6 +147,7 @@
   }
 
 }
+
 
 
 
