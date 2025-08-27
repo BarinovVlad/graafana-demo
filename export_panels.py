@@ -22,23 +22,23 @@ def sanitize_filename(name):
     return re.sub(r'[\\/*?:"<>|]', "_", name)
 
 def transform_panel(panel):
-    """Преобразуем панель к push-ready формату"""
+    """Transform panel to push-ready format"""
     panel_copy = panel.copy()
     model = panel_copy.get("model", {})
 
-    # Обновляем datasource в targets
+    # Update datasource in targets
     targets = model.get("targets", [])
     for t in targets:
         if isinstance(t.get("datasource"), str):
             t["datasource"] = {"type": "prometheus", "uid": t["datasource"]}
 
-    # Если сам datasource задан строкой, приводим к объекту
+    # If datasource itself is a string, convert to object
     if isinstance(model.get("datasource"), str):
         model["datasource"] = {"type": "prometheus", "uid": model["datasource"]}
 
     panel_copy["model"] = model
 
-    # Удаляем лишние поля
+    # Remove unnecessary fields
     for key in ["id", "version", "orgId", "folderId", "meta"]:
         panel_copy.pop(key, None)
 
