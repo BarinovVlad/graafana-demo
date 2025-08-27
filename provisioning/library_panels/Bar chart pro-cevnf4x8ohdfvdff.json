@@ -4,10 +4,7 @@
   "kind": 1,
   "type": "barchart",
   "model": {
-    "datasource": {
-      "type": "prometheus",
-      "uid": "ceu6ho1muemm8a"
-    },
+    "datasource": "prometheus",
     "description": "",
     "fieldConfig": {
       "defaults": {
@@ -112,7 +109,8 @@
         "legendFormat": "__auto",
         "range": true,
         "refId": "A",
-        "useBackend": false
+        "useBackend": false,
+        "datasource": "prometheus"
       }
     ],
     "title": "Bar chart pro",
