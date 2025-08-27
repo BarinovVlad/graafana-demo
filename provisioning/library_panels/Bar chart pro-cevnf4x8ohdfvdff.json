@@ -123,13 +123,13 @@
     "title": "Bar chart pro",
     "type": "barchart"
   },
-  "version": 6,
+  "version": 8,
   "meta": {
     "folderName": "General",
     "folderUid": "general",
     "connectedDashboards": 1,
     "created": "2025-08-27T11:26:47Z",
-    "updated": "2025-08-27T12:08:01Z",
+    "updated": "2025-08-27T13:08:38Z",
     "createdBy": {
       "id": 2,
       "name": "sa-1-github-ci",

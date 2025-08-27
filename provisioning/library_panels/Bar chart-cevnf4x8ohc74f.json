@@ -123,13 +123,13 @@
     "title": "Bar chart",
     "type": "barchart"
   },
-  "version": 14,
+  "version": 15,
   "meta": {
     "folderName": "panels",
     "folderUid": "cevndh48kn2f4c",
     "connectedDashboards": 1,
     "created": "2025-08-27T09:21:28Z",
-    "updated": "2025-08-27T12:08:01Z",
+    "updated": "2025-08-27T13:08:38Z",
     "createdBy": {
       "id": 1,
       "name": "admin",

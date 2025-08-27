@@ -74,13 +74,13 @@
     "title": "Gauge metrics pro",
     "type": "gauge"
   },
-  "version": 12,
+  "version": 13,
   "meta": {
     "folderName": "panels",
     "folderUid": "cevndh48kn2f4c",
     "connectedDashboards": 3,
     "created": "2025-08-27T09:12:43Z",
-    "updated": "2025-08-27T12:08:01Z",
+    "updated": "2025-08-27T13:08:38Z",
     "createdBy": {
       "id": 1,
       "name": "admin",

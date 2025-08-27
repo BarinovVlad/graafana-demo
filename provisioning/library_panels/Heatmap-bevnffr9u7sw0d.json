@@ -108,13 +108,13 @@
     "title": "Heatmap",
     "type": "heatmap"
   },
-  "version": 12,
+  "version": 13,
   "meta": {
     "folderName": "panels",
     "folderUid": "cevndh48kn2f4c",
     "connectedDashboards": 1,
     "created": "2025-08-27T09:24:50Z",
-    "updated": "2025-08-27T12:08:01Z",
+    "updated": "2025-08-27T13:08:38Z",
     "createdBy": {
       "id": 1,
       "name": "admin",
