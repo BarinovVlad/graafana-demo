@@ -16,6 +16,21 @@
       },
       "id": 8,
       "libraryPanel": {
+        "name": "XY Chart",
+        "uid": "devney21p7x1cf"
+      },
+      "title": "XY Chart demo",
+      "type": "library-panel-ref"
+    }, 
+     {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "libraryPanel": {
         "name": "Gauge metrics",
         "uid": "eevnecuf570n4e"
       },
