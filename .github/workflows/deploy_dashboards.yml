@@ -79,28 +79,12 @@ jobs:
                   exit 1
                 }
 
-                $localUids += $dashboard.uid
-
                 # Remove id and version before upload
                 if ($dashboard.PSObject.Properties.Name -contains 'id') { $dashboard.PSObject.Properties.Remove('id') }
                 if ($dashboard.PSObject.Properties.Name -contains 'version') { $dashboard.PSObject.Properties.Remove('version') }
 
-                # Проверяем, есть ли дашборд с таким uid в Grafana
-                $existingDash = $null
-                try {
-                  $existingDash = Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dashboard.uid)" -Headers @{
-                    Authorization = "Bearer $ApiToken"
-                  }
-                } catch {}
+                $localUids += $dashboard.uid
 
-                if ($existingDash) {
-                  Write-Host "Dashboard '$($dashboard.title)' with uid '$($dashboard.uid)' exists. Deleting old version..."
-                  Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dashboard.uid)" -Method Delete -Headers @{
-                    Authorization = "Bearer $ApiToken"
-                  }
-                }
-
-                # Upload dashboard
                 $uploadPayload = @{
                   dashboard = $dashboard
                   folderUid = $folderUid
@@ -158,6 +142,7 @@ jobs:
                 catch {
                   $err = $_.ErrorDetails.Message
                   Write-Warning "Folder '$uid' could not be deleted. Reason: $err"
+                  # Продолжаем, job не падает
                 }
               }
             }
