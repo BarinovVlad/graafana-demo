@@ -8,6 +8,21 @@
   "refresh": "30s",
   "panels": [
     {
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 9,
+      "libraryPanel": {
+        "name": "XY Chart",
+        "uid": "devney21p7x1cf"
+      },
+      "title": "XY Chart",
+      "type": "library-panel-ref"
+    },
+    {
       "type": "stat",
       "title": "Query Log Enabled",
       "id": 1,
