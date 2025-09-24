@@ -57,7 +57,7 @@
             {
               "id": "color",
               "value": {
-                "fixedColor": "#2b83a7",
+                "fixedColor": "#a72b96",
                 "mode": "fixed"
               }
             }
@@ -116,4 +116,5 @@
     "title": "Bar chart",
     "type": "barchart"
   }
+
 }
