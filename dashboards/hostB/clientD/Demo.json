@@ -36,7 +36,6 @@
       "title": "Bullet metrics",
       "type": "library-panel-ref"
     },
-   {
 {
   "gridPos": {
     "h": 6,
@@ -186,6 +185,7 @@
   "version": 2
 
 }
+
 
 
 
