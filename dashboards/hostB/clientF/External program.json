@@ -1,7 +1,7 @@
 {
   "annotations": {
     "list": [
-      
+      {
         "builtIn": 1,
         "datasource": {
           "type": "grafana",
@@ -171,4 +171,5 @@
   "version": 2
 
 }
+
 
