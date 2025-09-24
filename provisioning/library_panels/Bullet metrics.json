@@ -1,79 +1,52 @@
- {
+{
+  "datasource": "prometheus",
+  "description": "new one",
+  "fieldConfig": {
+    "defaults": {
+      "color": { "mode": "thresholds" },
+      "mappings": [],
+      "thresholds": {
+        "mode": "absolute",
+        "steps": [
+          { "color": "green", "value": 0 },
+          { "color": "red", "value": 80 }
+        ]
+      }
+    },
+    "overrides": []
+  },
+  "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+  "id": 8,
+  "options": {
+    "displayMode": "gradient",
+    "legend": { "calcs": [], "displayMode": "list", "placement": "bottom", "showLegend": false },
+    "maxVizHeight": 300,
+    "minVizHeight": 16,
+    "minVizWidth": 8,
+    "namePlacement": "auto",
+    "orientation": "auto",
+    "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
+    "showUnfilled": true,
+    "sizing": "auto",
+    "valueMode": "color"
+  },
+  "pluginVersion": "12.2.0-16636675413",
+  "targets": [
+    {
+      "expr": "go_memstats_next_gc_bytes",
+      "refId": "A",
       "datasource": "prometheus",
-      "description": "new one",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": 0
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 8,
-      "options": {
-        "displayMode": "gradient",
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": false
-        },
-        "maxVizHeight": 300,
-        "minVizHeight": 16,
-        "minVizWidth": 8,
-        "namePlacement": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true,
-        "sizing": "auto",
-        "valueMode": "color"
-      },
-      "pluginVersion": "12.2.0-16636675413",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "ceu6ho1muemm8a"
-          },
-          "disableTextWrap": false,
-          "editorMode": "builder",
-          "expr": "go_memstats_next_gc_bytes",
-          "fullMetaSearch": false,
-          "hide": false,
-          "includeNullMetadata": true,
-          "instant": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A",
-          "useBackend": false
-        }
-      ],
-      "title": "Bullet metrics",
-      "type": "bargauge"
+      "editorMode": "builder",
+      "disableTextWrap": false,
+      "fullMetaSearch": false,
+      "hide": false,
+      "includeNullMetadata": true,
+      "instant": false,
+      "legendFormat": "__auto",
+      "range": true,
+      "useBackend": false
     }
+  ],
+  "title": "Bullet metrics",
+  "type": "bargauge"
+}
