@@ -298,21 +298,6 @@
       ],
       "title": "Table Panel: buck_hash_sys_bytes over time",
       "type": "table"
-    },
-    {
-      "gridPos": {
-        "h": 8,
-        "w": 18,
-        "x": 0,
-        "y": 17
-      },
-      "id": 5,
-      "libraryPanel": {
-        "name": "XY Chart",
-        "uid": "devney21p7x1cf"
-      },
-      "title": "XY Chart",
-      "type": "library-panel-ref"
     }
   ],
   "preload": false,
@@ -334,4 +319,5 @@
   "title": "Go Runtime Memory Stats",
   "uid": "go-memstats-dashboard003",
   "version": 2
+
 }
