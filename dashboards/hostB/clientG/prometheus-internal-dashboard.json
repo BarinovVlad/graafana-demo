@@ -8,6 +8,21 @@
   "refresh": "30s",
   "panels": [
     {
+  "gridPos": {
+    "h": 6,
+    "w": 12,
+    "x": 6,
+    "y": 0
+  },
+  "id": 3,
+  "title": "Bar chart",
+  "type": "barchart",
+  "libraryPanel": {
+    "name": "Bar chart",
+    "uid": "cevnf4x8ohc74f"
+  }
+},
+    {
       "type": "stat",
       "title": "Query Log Enabled",
       "id": 1,
