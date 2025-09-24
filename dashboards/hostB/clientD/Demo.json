@@ -36,21 +36,21 @@
       "title": "Bullet metrics",
       "type": "library-panel-ref"
     },
-    {
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 0
-      },
-      "id": 3,
-      "libraryPanel": {
-        "name": "Bar chart pro",
-        "uid": "cevnf4x8ohdfvdff"
-      },
-      "title": "Bar chart pro",
-      "type": "library-panel-ref"
-    },
+   {
+  "gridPos": {
+    "h": 6,
+    "w": 12,
+    "x": 6,
+    "y": 0
+  },
+  "id": 3,
+  "title": "Bar chart",
+  "type": "barchart",
+  "libraryPanel": {
+    "name": "Bar chart",
+    "uid": "cevnf4x8ohc74f"
+  }
+},
     {
       "datasource": {
         "type": "prometheus",
@@ -185,3 +185,4 @@
   "version": 2
 
 }
+
