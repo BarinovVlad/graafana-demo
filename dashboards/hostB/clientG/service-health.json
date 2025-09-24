@@ -9,21 +9,20 @@
   "style": "dark",
   "editable": true,
   "panels": [
-     {
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 8,
-      "libraryPanel": {
-        "name": "Bar chart pro2",
-        "uid": "cevnf4x8ohdfvdff"
-      },
-      "title": "Bar chart pro2",
-      "type": "barchart"
-    }, 
+    {
+  "type": "barchart",
+  "title": "Bar chart pro",
+  "gridPos": {
+    "h": 6,
+    "w": 12,
+    "x": 6,
+    "y": 0
+  },
+  "libraryPanel": {
+    "uid": "cevnf4x8ohdfvdff",
+    "name": "Bar chart pro2"
+  }
+},
      {
       "gridPos": {
         "h": 8,
