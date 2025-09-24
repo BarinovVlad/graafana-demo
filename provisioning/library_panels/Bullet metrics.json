@@ -5,7 +5,7 @@
   "type": "bullett",
   "model": {
     "datasource": "prometheus",
-    "description": "Пример Bullet панель для мониторинга Go метрик",
+    "description": "new one",
     "fieldConfig": {
       "defaults": {
         "color": {
