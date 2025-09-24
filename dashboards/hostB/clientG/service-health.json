@@ -9,6 +9,21 @@
   "style": "dark",
   "editable": true,
   "panels": [
+     {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "libraryPanel": {
+        "name": "Gauge metrics",
+        "uid": "eevnecuf570n4e"
+      },
+      "title": "Gauge metrics",
+      "type": "library-panel-ref"
+    }, 
     {
       "id": 1,
       "title": "Service Up Status",
