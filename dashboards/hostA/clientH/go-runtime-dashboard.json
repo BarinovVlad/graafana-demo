@@ -7,6 +7,21 @@
   "version": 1,
   "refresh": "30s",
   "panels": [
+    {
+  "gridPos": {
+    "h": 6,
+    "w": 12,
+    "x": 6,
+    "y": 0
+  },
+  "id": 3,
+  "title": "Bar chart",
+  "type": "barchart",
+  "libraryPanel": {
+    "name": "Bar chart",
+    "uid": "cevnf4x8ohc74f"
+  }
+},
   {
     "type": "barchart",
     "title": "Bar chart pro",
@@ -20,13 +35,6 @@
     "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
     "libraryPanel": { "name": "Heatmap", "uid": "bevnffr9u7sw0d" },
     "id": 4
-  },
-  {
-    "type": "barchart",
-    "title": "Bar chart pro",
-    "gridPos": { "h": 6, "w": 12, "x": 6, "y": 6 },
-    "libraryPanel": { "uid": "cevnf4x8ohdfvdff", "name": "Bar chart pro2" },
-    "id": 5
   },
   {
     "type": "barchart",
