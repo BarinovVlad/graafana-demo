@@ -21,6 +21,21 @@
   "id": 78,
   "links": [],
   "panels": [
+     {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 3,
+      "libraryPanel": {
+        "name": "Bullet metrics",
+        "uid": "bullet-metrics001"
+      },
+      "title": "Bullet metrics",
+      "type": "library-panel-ref"
+    },
     {
       "gridPos": {
         "h": 9,
@@ -154,4 +169,5 @@
   "title": "External program",
   "uid": "20f8188e-0a20-4bb1-b1b3-5d58878792b5",
   "version": 2
+
 }
