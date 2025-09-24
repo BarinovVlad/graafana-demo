@@ -1,6 +1,6 @@
 {
   "uid": "prometheus-internal-dashboard874",
-  "title": "Prometheus Internal Metrics new  8574 ",
+  "title": "Prometheus Internal Metrics ",
   "tags": ["prometheus", "internal"],
   "timezone": "browser",
   "schemaVersion": 30,
