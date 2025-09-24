@@ -1,0 +1,75 @@
+{
+  "uid": "bullet-metrics001",
+  "name": "Bullet metrics",
+  "kind": 1,
+  "type": "bullett",
+  "model": {
+    "datasource": "prometheus",
+    "description": "Пример Bullet панель для мониторинга Go метрик",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "orange",
+              "value": 50
+            },
+            {
+              "color": "red",
+              "value": 100
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 6,
+      "w": 12,
+      "x": 0,
+      "y": 0
+    },
+    "id": 10,
+    "libraryPanel": {
+      "name": "Bullet metrics",
+      "uid": "bullet-metrics001"
+    },
+    "options": {
+      "orientation": "horizontal",
+      "showThresholdLabels": true,
+      "showThresholdMarkers": true,
+      "sizing": "auto",
+      "minVizHeight": 50,
+      "minVizWidth": 100,
+      "reduceOptions": {
+        "calcs": ["lastNotNull"],
+        "fields": "",
+        "values": true
+      }
+    },
+    "pluginVersion": "12.2.0-16636675413",
+    "targets": [
+      {
+        "expr": "go_memstats_heap_alloc_bytes",
+        "refId": "A",
+        "datasource": "prometheus"
+      },
+      {
+        "expr": "go_gc_pauses_seconds_count",
+        "refId": "B",
+        "datasource": "prometheus"
+      }
+    ],
+    "title": "Bullet metrics",
+    "type": "bullett"
+  }
+}
