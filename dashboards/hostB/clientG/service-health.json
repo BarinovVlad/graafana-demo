@@ -9,6 +9,21 @@
   "style": "dark",
   "editable": true,
   "panels": [
+     {
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 0
+  },
+  "id": 8,
+  "title": "Heatmap",
+  "type": "heatmap",
+  "libraryPanel": {
+    "name": "Heatmap",
+    "uid": "bevnffr9u7sw0d"
+  }
+},
     {
   "type": "barchart",
   "title": "Bar chart pro",
