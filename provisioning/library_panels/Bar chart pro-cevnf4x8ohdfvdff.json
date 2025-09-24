@@ -1,6 +1,6 @@
 {
   "uid": "cevnf4x8ohdfvdff",
-  "name": "Bar chart pro",
+  "name": "Bar chart pro2",
   "kind": 1,
   "type": "barchart",
   "model": {
@@ -116,4 +116,5 @@
     "title": "Bar chart pro",
     "type": "barchart"
   }
+
 }
