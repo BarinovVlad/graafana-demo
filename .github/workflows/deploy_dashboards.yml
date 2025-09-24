@@ -1,143 +1,164 @@
-name: Deploy Grafana Library Panels
+name: Deploy Grafana Dashboards
 
 on:
   push:
     paths:
-      - 'provisioning/library_panels/**'
+      - 'dashboards/**'
     branches:
       - main
 
 jobs:
-  deploy-library-panels:
+  deploy:
     runs-on: self-hosted
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy library panels to Grafana hostA and hostB
+      - name: Deploy dashboards to Grafana instances
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Targets (оба хоста)
+          # Define Grafana instances
           $grafanaTargets = @(
-            @{ Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
-            @{ Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
+            @{ Folder = "hostA"; Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
+            @{ Folder = "hostB"; Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
           )
 
-          $baseFolder = "./provisioning/library_panels"
-          if (-not (Test-Path $baseFolder)) {
-            Write-Host "No library panels folder found. Skipping."
-            exit 0
-          }
-
           foreach ($target in $grafanaTargets) {
+            $baseFolder = "./dashboards/$($target.Folder)"
             $GrafanaURL = $target.Url
-            $ApiToken   = $target.Token
+            $ApiToken = $target.Token
 
-            Write-Host "`n===== Deploying library panels to $GrafanaURL ====="
+            Write-Host "`n===== Deploying to Grafana at $GrafanaURL from folder $baseFolder ====="
 
-            # Список локальных UID'ов
-            $localUids = @()
+            # Get client folders inside hostA or hostB
+            $gitFolders = Get-ChildItem -Path $baseFolder -Directory -ErrorAction SilentlyContinue
+            if (-not $gitFolders) {
+              Write-Host "No folders found in $baseFolder"
+              continue
+            }
 
-            # Обрабатываем все JSON-файлы
-            Get-ChildItem -Path $baseFolder -Filter "*.json" | ForEach-Object {
-              $file = $_
-              $raw  = Get-Content $file.FullName -Raw
-              $item = $raw | ConvertFrom-Json
+            $gitFolderNames = $gitFolders.Name.ToLower()
 
-              if ($item.result) { $item = $item.result }
+            # Get folders already in Grafana
+            $grafanaFolders = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Headers @{
+              Authorization = "Bearer $ApiToken"
+            }
 
-              if (-not $item.uid)   { throw "Library panel '$($file.Name)' missing 'uid'." }
-              if (-not $item.model) { throw "Library panel '$($file.Name)' missing 'model'." }
+            foreach ($folder in $gitFolders) {
+              $clientName = $folder.Name
+              $folderUid = $clientName.ToLower()
+              $clientPath = $folder.FullName
 
-              $panelUid  = $item.uid
-              $panelName = if ($item.name) { $item.name } elseif ($item.model.title) { $item.model.title } else { [System.IO.Path]::GetFileNameWithoutExtension($file.Name) }
-              $localUids += $panelUid
+              Write-Host "`n=== Processing client: $clientName ==="
 
-              # Проверяем, существует ли панель
-              $existing = $null
               try {
-                $resp = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Headers @{ Authorization = "Bearer $ApiToken" }
-                $existing = $resp.result
-              } catch {}
-
-              if ($existing) {
-                # PATCH требует текущую версию
-                $version = $existing.version
-                $patch = @{
-                  uid     = $panelUid
-                  name    = $panelName
-                  kind    = 1
-                  model   = $item.model
-                  version = $version
-                } | ConvertTo-Json -Depth 30
-
-                try {
-                  Write-Host "Updating library panel '$panelName' (uid: $panelUid)..."
-                  Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Method Patch -Headers @{
-                    Authorization = "Bearer $ApiToken"
-                    "Content-Type" = "application/json"
-                  } -Body $patch | Out-Null
-                } catch {
-                  $status = $_.Exception.Response.StatusCode.value__ 2>$null
-                  if ($status -eq 412) {
-                    Write-Host "Version mismatch for $panelUid; refetching..."
-                    $fresh = (Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Headers @{ Authorization = "Bearer $ApiToken" }).result
-                    $patch2 = @{
-                      uid     = $panelUid
-                      name    = $panelName
-                      kind    = 1
-                      model   = $item.model
-                      version = $fresh.version
-                    } | ConvertTo-Json -Depth 30
-
-                    Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Method Patch -Headers @{
-                      Authorization = "Bearer $ApiToken"
-                      "Content-Type" = "application/json"
-                    } -Body $patch2 | Out-Null
-                  } else {
-                    throw
-                  }
+                $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$folderUid" -Headers @{
+                  Authorization = "Bearer $ApiToken"
                 }
-              } else {
-                # Создание
-                $create = @{
-                  uid   = $panelUid
-                  name  = $panelName
-                  kind  = 1
-                  model = $item.model
-                } | ConvertTo-Json -Depth 30
-
-                Write-Host "Creating library panel '$panelName' (uid: $panelUid)..."
-                Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements" -Method Post -Headers @{
+                Write-Host "Folder '$folderUid' exists in Grafana."
+              } catch {
+                Write-Host "Creating folder '$folderUid'..."
+                $payload = @{ uid = $folderUid; title = $clientName } | ConvertTo-Json -Compress
+                $updatedFolder = Invoke-RestMethod -Uri "$GrafanaURL/api/folders" -Method Post -Headers @{
                   Authorization = "Bearer $ApiToken"
                   "Content-Type" = "application/json"
-                } -Body $create | Out-Null
+                } -Body $payload
+              }
+
+              # Upload dashboards
+              $localUids = @()
+              Get-ChildItem -Path $clientPath -Filter "*.json" | ForEach-Object {
+                $json = Get-Content $_.FullName -Raw
+                $dashboard = $json | ConvertFrom-Json
+
+                if (-not $dashboard.uid) {
+                  Write-Error "Dashboard '$($_.Name)' missing 'uid'."
+                  exit 1
+                }
+
+                $localUids += $dashboard.uid
+
+                # Remove id and version before upload
+                if ($dashboard.PSObject.Properties.Name -contains 'id') { $dashboard.PSObject.Properties.Remove('id') }
+                if ($dashboard.PSObject.Properties.Name -contains 'version') { $dashboard.PSObject.Properties.Remove('version') }
+
+                # Проверяем, есть ли дашборд с таким uid в Grafana
+                $existingDash = $null
+                try {
+                  $existingDash = Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dashboard.uid)" -Headers @{
+                    Authorization = "Bearer $ApiToken"
+                  }
+                } catch {}
+
+                if ($existingDash) {
+                  Write-Host "Dashboard '$($dashboard.title)' with uid '$($dashboard.uid)' exists. Deleting old version..."
+                  Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dashboard.uid)" -Method Delete -Headers @{
+                    Authorization = "Bearer $ApiToken"
+                  }
+                }
+
+                # Upload dashboard
+                $uploadPayload = @{
+                  dashboard = $dashboard
+                  folderUid = $folderUid
+                  overwrite = $true
+                } | ConvertTo-Json -Depth 10
+
+                Write-Host "Uploading dashboard: $($_.Name)"
+                Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/db" -Method Post -Headers @{
+                  Authorization = "Bearer $ApiToken"
+                  "Content-Type" = "application/json"
+                } -Body $uploadPayload
+              }
+
+              # Remove dashboards in Grafana that are not in Git
+              $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
+                Authorization = "Bearer $ApiToken"
+              }
+
+              $folderDashboards = $allDashboards | Where-Object { $_.folderId -eq $updatedFolder.id }
+              $toDelete = $folderDashboards | Where-Object { $localUids -notcontains $_.uid }
+
+              foreach ($dash in $toDelete) {
+                Write-Host "Deleting dashboard '$($dash.title)' (uid: $($dash.uid))..."
+                Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dash.uid)" -Method Delete -Headers @{
+                  Authorization = "Bearer $ApiToken"
+                }
               }
             }
 
-            # Удаляем панели, которых нет в Git и которые не используются
-            $page = 1; $perPage = 500; $remote = @()
-            do {
-              $res = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements?kind=1&perPage=$perPage&page=$page" -Headers @{ Authorization = "Bearer $ApiToken" }
-              $remote += $res.result.elements
-              $page++
-            } while ($remote.Count -lt $res.result.totalCount)
+            # Delete folders in Grafana that no longer exist in Git
+            foreach ($grafanaFolder in $grafanaFolders) {
+              $uid = $grafanaFolder.uid.ToLower()
+              if ($gitFolderNames -notcontains $uid) {
+                Write-Host "`nFolder '$uid' not found in Git. Deleting..."
 
-            $toDelete = @($remote | Where-Object { $localUids -notcontains $_.uid })
+                $allDashboards = Invoke-RestMethod -Uri "$GrafanaURL/api/search?query=&type=dash-db" -Headers @{
+                  Authorization = "Bearer $ApiToken"
+                }
 
-            foreach ($el in $toDelete) {
-              $conn = (Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($el.uid)/connections" -Headers @{ Authorization = "Bearer $ApiToken" }).result
-              if ($conn -and $conn.Count -gt 0) {
-                Write-Warning "Skip delete '$($el.name)' uid=$($el.uid): in use ($($conn.Count) connections)."
-                continue
+                $dashboardsInFolder = $allDashboards | Where-Object { $_.folderId -eq $grafanaFolder.id }
+
+                foreach ($dash in $dashboardsInFolder) {
+                  Write-Host "Deleting dashboard '$($dash.title)' (uid: $($dash.uid))..."
+                  Invoke-RestMethod -Uri "$GrafanaURL/api/dashboards/uid/$($dash.uid)" -Method Delete -Headers @{
+                    Authorization = "Bearer $ApiToken"
+                  }
+                }
+
+                try {
+                  Invoke-RestMethod -Uri "$GrafanaURL/api/folders/$uid" -Method Delete -Headers @{
+                    Authorization = "Bearer $ApiToken"
+                  }
+                  Write-Host "Folder '$uid' deleted."
+                }
+                catch {
+                  $err = $_.ErrorDetails.Message
+                  Write-Warning "Folder '$uid' could not be deleted. Reason: $err"
+                }
               }
-
-              Write-Host "Deleting library panel '$($el.name)' uid=$($el.uid)..."
-              Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$($el.uid)" -Method Delete -Headers @{
-                Authorization = "Bearer $ApiToken"
-              } | Out-Null
             }
           }
