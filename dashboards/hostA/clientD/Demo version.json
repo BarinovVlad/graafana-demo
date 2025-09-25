@@ -21,23 +21,6 @@
   "id": 530,
   "links": [],
   "panels": [
- {
-  "gridPos": {
-    "h": 8,
-    "w": 12,
-    "x": 0,
-    "y": 0
-  },
-  "id": 2,
-  "title": "Series",
-  "type": "timeseries",
-  "libraryPanel": {
-    "name": "Series",
-    "uid": "bez4onojrzcaoc"
-  },
-  "datasource": "Prometheus" 
-}
-
     {
       "gridPos": {
         "h": 8,
@@ -46,18 +29,39 @@
         "y": 0
       },
       "id": 2,
+      "title": "Series",
+      "type": "library-panel-ref",
+      "libraryPanel": {
+        "name": "Series",
+        "uid": "bez4onojrzcaoc"
+      },
+      "datasource": "Prometheus"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 3,
+      "title": "form",
+      "type": "library-panel-ref",
       "libraryPanel": {
         "name": "form",
         "uid": "aez4o4xqtmg3kf"
-      },
-      "title": "form",
-      "type": "library-panel-ref"
+      }
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "ceu6ho1muemm8a"
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
       },
+      "id": 4,
+      "title": "Chart",
+      "type": "piechart",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -74,13 +78,6 @@
         },
         "overrides": []
       },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 8
-      },
-      "id": 1,
       "options": {
         "legend": {
           "displayMode": "list",
@@ -89,9 +86,7 @@
         },
         "pieType": "pie",
         "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
@@ -104,10 +99,7 @@
       "pluginVersion": "12.2.0-16636675413",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "ceu6ho1muemm8a"
-          },
+          "datasource": "Prometheus",
           "disableTextWrap": false,
           "editorMode": "builder",
           "expr": "node_exporter_build_info",
@@ -119,10 +111,7 @@
           "useBackend": false
         },
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "ceu6ho1muemm8a"
-          },
+          "datasource": "Prometheus",
           "disableTextWrap": false,
           "editorMode": "builder",
           "expr": "node_load1",
@@ -135,9 +124,7 @@
           "refId": "B",
           "useBackend": false
         }
-      ],
-      "title": "Chart",
-      "type": "piechart"
+      ]
     }
   ],
   "preload": false,
@@ -155,7 +142,5 @@
   "title": "Demo version",
   "uid": "5b0928dd-8013-4da4-bce4-5eb8187fb40f",
   "version": 2
-
 }
-
 
