@@ -7,6 +7,21 @@
   "version": 1,
   "refresh": "30s",
   "panels": [
+    {
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 6,
+    "y": 0
+  },
+  "id": 3,
+  "libraryPanel": {
+    "name": "Heatmap",
+    "uid": "bevnffr9u7sw0d"
+  },
+  "title": "Heatmap",
+  "type": "heatmap"
+},
         {
       "gridPos": {
         "h": 8,
