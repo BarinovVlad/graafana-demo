@@ -30,38 +30,33 @@
       },
       "id": 2,
       "title": "Series",
-      "type": "library-panel-ref",
+      "type": "timeseries",
       "libraryPanel": {
         "name": "Series",
         "uid": "bez4onojrzcaoc"
       },
-      "datasource": "prometheus"
+      "datasource": "Prometheus"
     },
     {
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 8
+        "y": 0
       },
-      "id": 3,
-      "title": "form",
-      "type": "library-panel-ref",
+      "id": 2,
       "libraryPanel": {
         "name": "form",
         "uid": "aez4o4xqtmg3kf"
-      }
+      },
+      "title": "form",
+      "type": "library-panel-ref"
     },
     {
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 16
+      "datasource": {
+        "type": "prometheus",
+        "uid": "ceu6ho1muemm8a"
       },
-      "id": 4,
-      "title": "Chart",
-      "type": "piechart",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -78,6 +73,13 @@
         },
         "overrides": []
       },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "id": 1,
       "options": {
         "legend": {
           "displayMode": "list",
@@ -86,7 +88,9 @@
         },
         "pieType": "pie",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -99,7 +103,10 @@
       "pluginVersion": "12.2.0-16636675413",
       "targets": [
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "ceu6ho1muemm8a"
+          },
           "disableTextWrap": false,
           "editorMode": "builder",
           "expr": "node_exporter_build_info",
@@ -111,7 +118,10 @@
           "useBackend": false
         },
         {
-          "datasource": "Prometheus",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "ceu6ho1muemm8a"
+          },
           "disableTextWrap": false,
           "editorMode": "builder",
           "expr": "node_load1",
@@ -124,7 +134,9 @@
           "refId": "B",
           "useBackend": false
         }
-      ]
+      ],
+      "title": "Chart",
+      "type": "piechart"
     }
   ],
   "preload": false,
@@ -143,5 +155,3 @@
   "uid": "5b0928dd-8013-4da4-bce4-5eb8187fb40f",
   "version": 2
 }
-
-
