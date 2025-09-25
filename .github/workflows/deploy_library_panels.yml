@@ -20,13 +20,13 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
 
-          # Настройка хостов и токенов
+        
           $grafanaTargets = @(
             @{ Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
             @{ Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
           )
 
-          # Соответствие datasource для каждого хоста
+          
           $datasourceMap = @{
             "http://localhost:3000" = @{ "prometheus" = "ceu6ho1muemm8a" }
             "http://localhost:3001" = @{ "prometheus" = "aeu6eea0zjdvke" }
@@ -60,7 +60,7 @@ jobs:
               $panelName = if ($item.name) { $item.name } elseif ($item.model.title) { $item.model.title } else { [System.IO.Path]::GetFileNameWithoutExtension($file.Name) }
               $localUids += $panelUid
 
-              # ===== Подставляем правильный datasource для текущего хоста =====
+              
               if ($item.model.targets) {
                 foreach ($t in $item.model.targets) {
                   if ($t.datasource -is [Hashtable] -and $t.datasource.type) {
@@ -72,7 +72,7 @@ jobs:
                 }
               }
 
-              # Проверяем, существует ли панель
+              
               $existing = $null
               try {
                 $resp = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Headers @{ Authorization = "Bearer $ApiToken" }
@@ -132,7 +132,7 @@ jobs:
               }
             }
 
-            # Удаляем лишние панели
+            
             $page = 1; $perPage = 500; $remote = @()
             do {
               $res = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements?kind=1&perPage=$perPage&page=$page" -Headers @{ Authorization = "Bearer $ApiToken" }
