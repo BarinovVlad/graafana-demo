@@ -7,8 +7,8 @@
   "description": "",
   "model": {
     "datasource": {
-      "type": "prometheus",
-      "uid": "ceu6ho1muemm8a"
+      "type": "prometheus"
+     
     },
     "description": "",
     "fieldConfig": {
@@ -78,4 +78,5 @@
     "title": "Counter",
     "type": "stat"
   }
+
 }
