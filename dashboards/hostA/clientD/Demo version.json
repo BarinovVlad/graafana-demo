@@ -35,7 +35,7 @@
         "name": "Series",
         "uid": "bez4onojrzcaoc"
       },
-      "datasource": "Prometheus"
+      "uid": "ceu6ho1muemm8a"
     },
     {
       "gridPos": {
@@ -155,3 +155,4 @@
   "uid": "5b0928dd-8013-4da4-bce4-5eb8187fb40f",
   "version": 2
 }
+
