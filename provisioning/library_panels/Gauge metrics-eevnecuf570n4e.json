@@ -16,7 +16,7 @@
           "mode": "absolute",
           "steps": [
             {
-              "color": "blue",
+              "color": "orange",
               "value": null
             },
             {
@@ -70,4 +70,5 @@
     "title": "Gauge metrics pro",
     "type": "gauge"
   }
+
 }
