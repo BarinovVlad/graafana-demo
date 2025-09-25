@@ -21,6 +21,21 @@
   "id": 528,
   "links": [],
   "panels": [
+     {
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 8
+  },
+  "id": 1,
+  "title": "form",
+  "type": "timeseries",
+  "libraryPanel": {
+    "name": "form",
+    "uid": "aez4o4xqtmg3kf"
+  }
+},
     {
       "gridPos": {
         "h": 8,
@@ -139,4 +154,5 @@
   "title": "New dashboard",
   "uid": "7c7183b8-313f-46f1-8f01-aa3143f7b9d1",
   "version": 5
+
 }
