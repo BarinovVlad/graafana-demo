@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Deploy library panels to Grafana hostA and hostB
+      - name: Deploy library panels to Grafana hosts
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
@@ -26,22 +26,40 @@ jobs:
             @{ Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
           )
 
-          # Настройка соответствия datasource для каждого хоста
-          $datasourceMap = @{
-            "http://localhost:3000" = @{ "prometheus" = "ceu6ho1muemm8a" }
-            "http://localhost:3001" = @{ "prometheus" = "aeu6eea0zjdvke" }
-          }
-
           $baseFolder = "./provisioning/library_panels"
           if (-not (Test-Path $baseFolder)) {
             Write-Host "No library panels folder found. Skipping."
             exit 0
           }
 
+          # Функция для рекурсивного обновления datasource.uid в targets
+          function Update-Targets($obj, $dsMap) {
+              if ($null -eq $obj) { return }
+              
+              if ($obj.PSObject.Properties.Match("targets")) {
+                  foreach ($t in $obj.targets) {
+                      if ($t.datasource -is [Hashtable] -and $t.datasource.name -and $dsMap.ContainsKey($t.datasource.name)) {
+                          $t.datasource.uid = $dsMap[$t.datasource.name]
+                      }
+                  }
+              }
+
+              foreach ($prop in $obj.PSObject.Properties) {
+                  if ($prop.Value -is [PSCustomObject] -or $prop.Value -is [System.Collections.ArrayList]) {
+                      Update-Targets $prop.Value $dsMap
+                  }
+              }
+          }
+
           foreach ($target in $grafanaTargets) {
             $GrafanaURL = $target.Url
             $ApiToken   = $target.Token
             Write-Host "`n===== Deploying library panels to $GrafanaURL ====="
+
+            # Получаем все datasources с текущего хоста
+            $datasources = Invoke-RestMethod -Uri "$GrafanaURL/api/datasources" -Headers @{ Authorization = "Bearer $ApiToken" }
+            $dsMap = @{}
+            foreach ($ds in $datasources) { $dsMap[$ds.name] = $ds.uid }
 
             $localUids = @()
 
@@ -59,17 +77,8 @@ jobs:
               $panelName = if ($item.name) { $item.name } elseif ($item.model.title) { $item.model.title } else { [System.IO.Path]::GetFileNameWithoutExtension($file.Name) }
               $localUids += $panelUid
 
-              # ===== Подставляем правильные datasource для текущего хоста =====
-              if ($item.model.targets) {
-                foreach ($t in $item.model.targets) {
-                  if ($t.datasource -is [Hashtable] -and $t.datasource.type) {
-                    $dsType = $t.datasource.type
-                    if ($datasourceMap[$GrafanaURL][$dsType]) {
-                      $t.datasource.uid = $datasourceMap[$GrafanaURL][$dsType]
-                    }
-                  }
-                }
-              }
+              # ===== Обновляем все datasource.uid в targets
+              Update-Targets $item.model $dsMap
 
               # Проверяем, существует ли панель
               $existing = $null
