@@ -9,19 +9,6 @@
   "panels": [
     {
       "type": "graph",
-      "title": "Go GC Pause Count",
-      "id": 1,
-      "datasource": "prometheus",
-      "targets": [
-        {
-          "expr": "increase(go_gc_pauses_seconds_count[5m])",
-          "legendFormat": "GC Pauses (5m)",
-          "refId": "A"
-        }
-      ]
-    },
-    {
-      "type": "graph",
       "title": "Heap Allocation (bytes)",
       "id": 2,
       "datasource": "prometheus",
