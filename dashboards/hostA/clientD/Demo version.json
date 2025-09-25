@@ -21,6 +21,21 @@
   "id": 530,
   "links": [],
   "panels": [
+     {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "libraryPanel": {
+        "name": "Series",
+        "uid": "bez4onojrzcaoc"
+      },
+      "title": "Series",
+      "type": "library-panel-ref"
+    },
     {
       "gridPos": {
         "h": 8,
@@ -138,4 +153,5 @@
   "title": "Demo version",
   "uid": "5b0928dd-8013-4da4-bce4-5eb8187fb40f",
   "version": 2
+
 }
