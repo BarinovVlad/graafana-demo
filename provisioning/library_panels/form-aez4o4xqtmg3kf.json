@@ -7,8 +7,7 @@
   "description": "",
   "model": {
     "datasource": {
-      "type": "prometheus",
-      "uid": "ceu6ho1muemm8a"
+      "type": "prometheus"
     },
     "description": "",
     "fieldConfig": {
@@ -94,8 +93,7 @@
     "targets": [
       {
         "datasource": {
-          "type": "prometheus",
-          "uid": "ceu6ho1muemm8a"
+          "type": "prometheus"
         },
         "disableTextWrap": false,
         "editorMode": "builder",
