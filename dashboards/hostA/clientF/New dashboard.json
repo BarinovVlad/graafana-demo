@@ -27,7 +27,7 @@
   "title": "form",
   "type": "timeseries",
   "libraryPanel": { "name": "form", "uid": "aez4o4xqtmg3kf" },
-  "datasource": { "name": "prometheus" }
+  "datasource": { "name": "Prometheus" }
 },
     {
       "gridPos": {
@@ -149,4 +149,5 @@
   "version": 5
 
 }
+
 
