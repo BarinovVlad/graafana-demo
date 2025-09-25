@@ -1,0 +1,81 @@
+{
+  "folderUid": "general",
+  "uid": "aez4o4a9vgxdse",
+  "name": "Counter",
+  "kind": 1,
+  "type": "stat",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus",
+      "uid": "ceu6ho1muemm8a"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 12,
+      "x": 0,
+      "y": 0
+    },
+    "id": 3,
+    "libraryPanel": {
+      "name": "Counter",
+      "uid": "aez4o4a9vgxdse"
+    },
+    "options": {
+      "colorMode": "value",
+      "graphMode": "area",
+      "justifyMode": "auto",
+      "orientation": "auto",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "12.2.0-16636675413",
+    "targets": [
+      {
+        "disableTextWrap": false,
+        "editorMode": "builder",
+        "expr": "node_filefd_allocated",
+        "fullMetaSearch": false,
+        "includeNullMetadata": true,
+        "legendFormat": "__auto",
+        "range": true,
+        "refId": "A",
+        "useBackend": false
+      }
+    ],
+    "title": "Counter",
+    "type": "stat"
+  }
+}
