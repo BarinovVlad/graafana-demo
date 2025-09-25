@@ -21,21 +21,7 @@
   "id": 138,
   "links": [],
   "panels": [
-     {
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 3,
-      "libraryPanel": {
-        "name": "Counter",
-        "uid": "aez4o4a9vgxdse"
-      },
-      "title": "Counter",
-      "type": "library-panel-ref"
-    },
+   
     {
       "gridPos": {
         "h": 8,
@@ -69,3 +55,4 @@
   "version": 1
 
 }
+
