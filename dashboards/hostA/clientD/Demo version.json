@@ -21,7 +21,7 @@
   "id": 530,
   "links": [],
   "panels": [
-    {
+ {
   "gridPos": {
     "h": 8,
     "w": 12,
@@ -34,8 +34,10 @@
   "libraryPanel": {
     "name": "Series",
     "uid": "bez4onojrzcaoc"
-  }
-},
+  },
+  "datasource": "Prometheus" 
+}
+
     {
       "gridPos": {
         "h": 8,
@@ -155,4 +157,5 @@
   "version": 2
 
 }
+
 
