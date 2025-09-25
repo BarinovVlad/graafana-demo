@@ -21,21 +21,21 @@
   "id": 530,
   "links": [],
   "panels": [
-     {
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 1,
-      "libraryPanel": {
-        "name": "Series",
-        "uid": "bez4onojrzcaoc"
-      },
-      "title": "Series",
-      "type": "library-panel-ref"
-    },
+    {
+  "gridPos": {
+    "h": 8,
+    "w": 12,
+    "x": 0,
+    "y": 0
+  },
+  "id": 2,
+  "title": "Series",
+  "type": "timeseries",
+  "libraryPanel": {
+    "name": "Series",
+    "uid": "bez4onojrzcaoc"
+  }
+},
     {
       "gridPos": {
         "h": 8,
@@ -155,3 +155,4 @@
   "version": 2
 
 }
+
