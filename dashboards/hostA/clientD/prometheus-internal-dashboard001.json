@@ -7,6 +7,16 @@
   "version": 1,
   "refresh": "30s",
   "panels": [
+      {
+  "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+  "id": 7,
+  "title": "Node Forks Total",
+  "type": "stat",
+  "libraryPanel": {
+    "name": "Node Forks Total",
+    "uid": "auto-node-forks-total"
+  }
+},
     {
       "type": "stat",
       "title": "Query Log Enabled",
