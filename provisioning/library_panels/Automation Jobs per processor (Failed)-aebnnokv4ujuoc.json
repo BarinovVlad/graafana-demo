@@ -1,0 +1,113 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "aebnnokv4ujuoc",
+  "name": "Automation Jobs per processor (Failed)",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "axisSoftMax": 150,
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "auto",
+          "spanNulls": false,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 24,
+      "x": 0,
+      "y": 13
+    },
+    "id": 212,
+    "libraryPanel": {
+      "name": "Automation Jobs per processor (Failed)",
+      "uid": "aebnnokv4ujuoc"
+    },
+    "options": {
+      "legend": {
+        "calcs": [
+          "lastNotNull",
+          "sum"
+        ],
+        "displayMode": "table",
+        "placement": "right",
+        "showLegend": true,
+        "sortBy": "Total",
+        "sortDesc": true
+      },
+      "tooltip": {
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.3.0",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "increase(qms_automation_processor_status_counter{instanceName=\"$qmsInstanceName\", status=\"error\"}[$__interval])",
+        "legendFormat": "{{queue}}: {{processor}}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Automation Jobs per processor (Failed)",
+    "type": "timeseries"
+  }
+}

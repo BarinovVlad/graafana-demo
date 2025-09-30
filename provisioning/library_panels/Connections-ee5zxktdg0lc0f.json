@@ -1,0 +1,129 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ee5zxktdg0lc0f",
+  "name": "Connections",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "Number of currently active and idle Interactive connections to the database.\nNumber of currently active and idle Interactive connections to Inspire Content Manager (ICM).\n\n",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Number of currently active and idle Interactive connections to the database.\nNumber of currently active and idle Interactive connections to Inspire Content Manager (ICM).\n\n",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "never",
+          "spanNulls": false,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 8,
+      "x": 16,
+      "y": 101
+    },
+    "id": 189,
+    "options": {
+      "legend": {
+        "calcs": [
+          "lastNotNull",
+          "max"
+        ],
+        "displayMode": "table",
+        "placement": "right",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "12.0.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(\r\n    II_DBConnections{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\"},\r\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\r\n)",
+        "legendFormat": "DB {{instanceShort}}/{{Connection}}",
+        "range": true,
+        "refId": "DB Connections"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(II_ICMConnections{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\"},\"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\r\n)",
+        "hide": false,
+        "legendFormat": "ICM {{instanceShort}}/{{Connection}}",
+        "range": true,
+        "refId": "ICM Connections"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(II_IPSConnections{instance=~\"interactive0.$qmsInstanceName$qmsDomainSuffix:30701|interactive1.$qmsInstanceName$qmsDomainSuffix:30701\"},\"instanceShort\", \"$1\", \"instance\", \"(.*).$qmsInstanceName$qmsDomainSuffix.*\"\r\n)",
+        "hide": false,
+        "legendFormat": "IPS {{instanceShort}}/{{Connection}}",
+        "range": true,
+        "refId": "C"
+      }
+    ],
+    "title": "Connections",
+    "type": "timeseries"
+  }
+}

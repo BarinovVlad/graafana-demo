@@ -1,0 +1,75 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "fe637geh6fklcd",
+  "name": "DB - Daily (Monday - Saturday)",
+  "kind": 1,
+  "type": "stat",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "dark-red",
+              "value": null
+            },
+            {
+              "color": "green",
+              "value": 1
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 5,
+      "w": 6,
+      "x": 0,
+      "y": 42
+    },
+    "id": 173,
+    "options": {
+      "colorMode": "value",
+      "graphMode": "none",
+      "justifyMode": "auto",
+      "orientation": "horizontal",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "hms_backup_info_daily_all{containerName=~\".*db$\",instanceName=\"$qmsInstanceName\",backupType=\"daily\"}",
+        "legendFormat": "{{backupItem}}-database",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "DB - Daily (Monday - Saturday)",
+    "type": "stat"
+  }
+}

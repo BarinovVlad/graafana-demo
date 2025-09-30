@@ -1,0 +1,78 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ee7dlclh3ompsa",
+  "name": "Automation Heap used",
+  "kind": 1,
+  "type": "stat",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "decimals": 2,
+        "mappings": [],
+        "max": 100,
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        },
+        "unit": "percent"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 6,
+      "w": 4,
+      "x": 0,
+      "y": 13
+    },
+    "id": 204,
+    "options": {
+      "colorMode": "value",
+      "graphMode": "none",
+      "justifyMode": "auto",
+      "orientation": "horizontal",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.3.0",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "sum(jvm_memory_bytes_used{job=\"$qmsInstanceName-automation-automation\", area=\"heap\"})*100/sum(jvm_memory_bytes_max{job=\"$qmsInstanceName-automation-automation\", area=\"heap\"})",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Automation Heap used",
+    "type": "stat"
+  }
+}
