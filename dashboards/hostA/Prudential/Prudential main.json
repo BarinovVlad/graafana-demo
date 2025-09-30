@@ -1,0 +1,1375 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 240,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "panels": [],
+      "title": "Availability",
+      "type": "row"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 198,
+      "libraryPanel": {
+        "name": "Linux VM Overview",
+        "uid": "b417f9c5-da7c-44d9-b4b3-89511e1306c8"
+      },
+      "title": "Linux VM Overview",
+      "type": "library-panel-ref"
+    },
+    {
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 167,
+      "libraryPanel": {
+        "name": "Inspire heartbeat",
+        "uid": "da8a3ac2-d83f-4703-b760-81aa246f5df5"
+      },
+      "title": "Inspire heartbeat",
+      "type": "library-panel-ref"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 15,
+        "x": 0,
+        "y": 18
+      },
+      "id": 168,
+      "libraryPanel": {
+        "name": "RHEL security updates",
+        "uid": "be601y0u0kxs0f"
+      },
+      "title": "RHEL security updates",
+      "type": "library-panel-ref"
+    },
+    {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 9,
+        "x": 15,
+        "y": 18
+      },
+      "id": 87,
+      "options": {
+        "alertInstanceLabelFilter": "instanceName=\"$qmsInstanceName\"",
+        "alertName": "",
+        "dashboardAlerts": false,
+        "datasource": "-- Grafana --",
+        "folder": {
+          "title": "PROD",
+          "uid": "VHE0l737z"
+        },
+        "groupBy": [],
+        "groupMode": "default",
+        "maxItems": 20,
+        "showInactiveAlerts": false,
+        "sortOrder": 4,
+        "stateFilter": {
+          "error": true,
+          "firing": true,
+          "noData": true,
+          "normal": true,
+          "pending": true,
+          "recovering": true
+        },
+        "viewMode": "list"
+      },
+      "pluginVersion": "12.0.2",
+      "title": "Alerts",
+      "type": "alertlist"
+    },
+    {
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 0,
+        "y": 26
+      },
+      "id": 171,
+      "libraryPanel": {
+        "name": "Number of requests over 30m ",
+        "uid": "be634qzvsepdsb"
+      },
+      "title": "Number of requests over 30m ",
+      "type": "library-panel-ref"
+    },
+    {
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 5,
+        "y": 26
+      },
+      "id": 170,
+      "libraryPanel": {
+        "name": "Number of requests over 3s ",
+        "uid": "de634qkkvsw00d"
+      },
+      "title": "Number of requests over 3s ",
+      "type": "library-panel-ref"
+    },
+    {
+      "gridPos": {
+        "h": 3,
+        "w": 5,
+        "x": 10,
+        "y": 26
+      },
+      "id": 172,
+      "libraryPanel": {
+        "name": "Audit Logs",
+        "uid": "ce634rf1p7tvkc"
+      },
+      "title": "Audit Logs",
+      "type": "library-panel-ref"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "id": 200,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 33
+          },
+          "id": 201,
+          "libraryPanel": {
+            "name": "Scaler jobs over 3s percentage",
+            "uid": "ee7dpzvdavcowd"
+          },
+          "title": "Scaler jobs over 3s percentage",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 33
+          },
+          "id": 202,
+          "libraryPanel": {
+            "name": "Scaler jobs over 5s percentage",
+            "uid": "ce7dq0abkzn5sf"
+          },
+          "title": "Scaler jobs over 5s percentage",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 0,
+            "y": 41
+          },
+          "id": 205,
+          "libraryPanel": {
+            "name": "Appgw number of requests over 3s",
+            "uid": "fe7dq89tz93b4e"
+          },
+          "title": "Appgw number of requests over 3s",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 6,
+            "y": 41
+          },
+          "id": 203,
+          "libraryPanel": {
+            "name": "Scaler jobs over 3 seconds",
+            "uid": "be5zzw11889vkb"
+          },
+          "title": "Scaler jobs over 3 seconds",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 12,
+            "y": 41
+          },
+          "id": 204,
+          "libraryPanel": {
+            "name": "Scaler jobs over 5 seconds",
+            "uid": "ce5zzx0pc1534e"
+          },
+          "title": "Scaler jobs over 5 seconds",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 18,
+            "y": 41
+          },
+          "id": 206,
+          "libraryPanel": {
+            "name": "Appgw number of requests over 5s",
+            "uid": "ee7dq8lo8fbi8f"
+          },
+          "title": "Appgw number of requests over 5s",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 48
+          },
+          "id": 207,
+          "libraryPanel": {
+            "name": "Appgw number of requests over 3s - Detail",
+            "uid": "ae7dq917979c0d"
+          },
+          "title": "Appgw number of requests over 3s - Detail",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 48
+          },
+          "id": 208,
+          "libraryPanel": {
+            "name": "Request Count",
+            "uid": "ae6p20b3viznke"
+          },
+          "title": "Request Count",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 56
+          },
+          "id": 209,
+          "libraryPanel": {
+            "name": "SUCCESSFUL - Overall average request time in (s)",
+            "uid": "fe7gzm4xetedce"
+          },
+          "title": "SUCCESSFUL - Overall average request time in (s)",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 56
+          },
+          "id": 210,
+          "libraryPanel": {
+            "name": "FAILED - Overall average request time in (s)",
+            "uid": "ce7gzmgkis2yoa"
+          },
+          "title": "FAILED - Overall average request time in (s)",
+          "type": "library-panel-ref"
+        }
+      ],
+      "title": "Scaler Job Duration",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 33
+      },
+      "id": 129,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 1336
+          },
+          "id": 176,
+          "libraryPanel": {
+            "name": "Daily VM/Disk Azure backup",
+            "uid": "de637uyb4d98ge"
+          },
+          "title": "",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 1336
+          },
+          "id": 177,
+          "libraryPanel": {
+            "name": "Azure VM/Disks backup health",
+            "uid": "ae637vchimcqob"
+          },
+          "title": "",
+          "type": "library-panel-ref"
+        }
+      ],
+      "title": "Backups Detail",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 34
+      },
+      "id": 20,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 10,
+            "w": 8,
+            "x": 0,
+            "y": 66
+          },
+          "id": 152,
+          "libraryPanel": {
+            "name": "CPU Usage ",
+            "uid": "edwyfrnbscruoc"
+          },
+          "title": "CPU Usage",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 10,
+            "w": 8,
+            "x": 8,
+            "y": 66
+          },
+          "id": 150,
+          "libraryPanel": {
+            "name": "Memory Usage",
+            "uid": "edwyftpf1xjwgd"
+          },
+          "title": "Memory Usage",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 33,
+            "w": 8,
+            "x": 16,
+            "y": 66
+          },
+          "id": 154,
+          "libraryPanel": {
+            "name": "DiskSpace usage",
+            "uid": "fdwyfvi5tor28d"
+          },
+          "title": "DiskSpace usage",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 10,
+            "w": 8,
+            "x": 0,
+            "y": 76
+          },
+          "id": 148,
+          "libraryPanel": {
+            "name": "Average CPU Usage",
+            "uid": "bdwyfw7ldyxogb"
+          },
+          "title": "Average CPU Usage",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 10,
+            "w": 8,
+            "x": 8,
+            "y": 76
+          },
+          "id": 156,
+          "libraryPanel": {
+            "name": "File Shares usage",
+            "uid": "bdwyfwozp0etcf"
+          },
+          "title": "File Shares usage",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 13,
+            "w": 16,
+            "x": 0,
+            "y": 86
+          },
+          "id": 158,
+          "libraryPanel": {
+            "name": "Network Traffic",
+            "uid": "ddwyfx20egikga"
+          },
+          "title": "Network Traffic",
+          "type": "library-panel-ref"
+        }
+      ],
+      "title": "Resources",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 35
+      },
+      "id": 211,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 67
+          },
+          "id": 212,
+          "libraryPanel": {
+            "name": "Scaler workflows (Job Duration)",
+            "uid": "ce7a24iigxkw0d"
+          },
+          "title": "Scaler workflows (Job Duration)",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 75
+          },
+          "id": 213,
+          "libraryPanel": {
+            "name": "Number of requests over 3s ",
+            "uid": "de634qkkvsw00d"
+          },
+          "title": "Number of requests over 3s ",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 75
+          },
+          "id": 214,
+          "libraryPanel": {
+            "name": "Request Count",
+            "uid": "ae6p20b3viznke"
+          },
+          "title": "Request Count",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 83
+          },
+          "id": 215,
+          "libraryPanel": {
+            "name": "SUCCESSFUL - Average Request Time",
+            "uid": "be7h4gsw159fkc"
+          },
+          "title": "SUCCESSFUL - Average Request Time",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 83
+          },
+          "id": 216,
+          "libraryPanel": {
+            "name": "FAILED - Average Request Time",
+            "uid": "ae7h4h2xmy3ggc"
+          },
+          "title": "FAILED - Average Request Time",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 91
+          },
+          "id": 217,
+          "libraryPanel": {
+            "name": "Number of requests over 3s - Detail",
+            "uid": "ee7h4hhj82yo0d"
+          },
+          "title": "Number of requests over 3s - Detail",
+          "type": "library-panel-ref"
+        }
+      ],
+      "title": "Application Gateway",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "id": 54,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 68
+          },
+          "id": 160,
+          "libraryPanel": {
+            "name": "Scaler-Failed jobs",
+            "uid": "bdwygbyn55vk0f"
+          },
+          "title": "Scaler-Failed jobs",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 68
+          },
+          "id": 162,
+          "libraryPanel": {
+            "name": "Scaler-Completed jobs",
+            "uid": "cdwyg8q5h4su8f"
+          },
+          "title": "Scaler-Completed jobs",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 68
+          },
+          "id": 178,
+          "libraryPanel": {
+            "name": "Scaler-Canceled jobs",
+            "uid": "be634tsewaku8c"
+          },
+          "title": "Scaler-Canceled jobs",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 76
+          },
+          "id": 179,
+          "libraryPanel": {
+            "name": "Scaler Jobs per Workflow (Completed)",
+            "uid": "ddwygvmg0voxsb"
+          },
+          "title": "Scaler Jobs per Workflow (Completed)",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 76
+          },
+          "id": 180,
+          "libraryPanel": {
+            "name": "Scaler Jobs per Workflow (Failed)",
+            "uid": "adwygw1z45j40d"
+          },
+          "title": "Scaler Jobs per Workflow (Failed)",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 84
+          },
+          "id": 181,
+          "libraryPanel": {
+            "name": "Processing jobs",
+            "uid": "de634vwlabf9cd"
+          },
+          "title": "Processing jobs",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 84
+          },
+          "id": 182,
+          "libraryPanel": {
+            "name": "Average IPS Queue Waiting Time",
+            "uid": "ae634wfqnamm8b"
+          },
+          "title": "Average IPS Queue Waiting Time",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 84
+          },
+          "id": 183,
+          "libraryPanel": {
+            "name": "Scaler workflows",
+            "uid": "be634ws8hiccgc"
+          },
+          "title": "Scaler workflows",
+          "type": "library-panel-ref"
+        }
+      ],
+      "title": "Scalers",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
+      "id": 67,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 69
+          },
+          "id": 184,
+          "libraryPanel": {
+            "name": "Number of tickets",
+            "uid": "ae5zxgqtghczkf"
+          },
+          "title": "Number of tickets",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 69
+          },
+          "id": 185,
+          "libraryPanel": {
+            "name": "IPS call errors",
+            "uid": "ce5zxhpc7yq68d"
+          },
+          "title": "IPS call errors",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 69
+          },
+          "id": 186,
+          "libraryPanel": {
+            "name": "Interactive requests & errors",
+            "uid": "ae5zxihqoehhcb"
+          },
+          "title": "Interactive requests & errors",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 77
+          },
+          "id": 187,
+          "libraryPanel": {
+            "name": "Number of users",
+            "uid": "ae5zxjiligtmof"
+          },
+          "title": "Number of users",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 77
+          },
+          "id": 188,
+          "libraryPanel": {
+            "name": "Drafts and Tickets",
+            "uid": "ae5zxk7jnyhhcb"
+          },
+          "title": "Drafts and Tickets",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 77
+          },
+          "id": 189,
+          "libraryPanel": {
+            "name": "Connections",
+            "uid": "ee5zxktdg0lc0f"
+          },
+          "title": "Connections",
+          "type": "library-panel-ref"
+        }
+      ],
+      "title": "Interactives",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 38
+      },
+      "id": 32,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 0,
+            "y": 70
+          },
+          "id": 36,
+          "libraryPanel": {
+            "name": "Scaler heap used",
+            "uid": "adzki8ejoum80b"
+          },
+          "title": "Scaler heap used",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 6,
+            "y": 70
+          },
+          "id": 34,
+          "libraryPanel": {
+            "name": "Scaler start time",
+            "uid": "fdzkj0a3krtvkf"
+          },
+          "title": "Scaler start time",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 12,
+            "y": 70
+          },
+          "id": 38,
+          "libraryPanel": {
+            "name": "JVM Heap Scaler",
+            "uid": "cdzkmgpx3lk3ke"
+          },
+          "title": "JVM Heap Scaler",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 18,
+            "y": 70
+          },
+          "id": 40,
+          "libraryPanel": {
+            "name": "Scaler thread states",
+            "uid": "fdzkmg404o4cgd"
+          },
+          "title": "Scaler thread states",
+          "type": "library-panel-ref"
+        }
+      ],
+      "title": "Scaler JVM",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 39
+      },
+      "id": 61,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 0,
+            "y": 71
+          },
+          "id": 190,
+          "libraryPanel": {
+            "name": "Interactive heap used",
+            "uid": "de6351688b0n4e"
+          },
+          "title": "Interactive heap used",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 6,
+            "y": 71
+          },
+          "id": 191,
+          "libraryPanel": {
+            "name": "Interactive start time",
+            "uid": "be6351hc4jthcd"
+          },
+          "title": "Interactive start time",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 12,
+            "y": 71
+          },
+          "id": 196,
+          "libraryPanel": {
+            "name": "JVM Heap Interactive",
+            "uid": "ce63jb0t6ddkwe"
+          },
+          "title": "JVM Heap Interactive",
+          "type": "library-panel-ref"
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 18,
+            "y": 71
+          },
+          "id": 197,
+          "libraryPanel": {
+            "name": "Interactive thread states",
+            "uid": "ee63k1lfazchsa"
+          },
+          "title": "Interactive thread states",
+          "type": "library-panel-ref"
+        }
+      ],
+      "title": "Interactive JVM",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      },
+      "id": 89,
+      "panels": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 15,
+            "w": 24,
+            "x": 0,
+            "y": 72
+          },
+          "id": 199,
+          "options": {
+            "dedupStrategy": "none",
+            "enableInfiniteScrolling": true,
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": true,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "wrapLogMessage": true
+          },
+          "pluginVersion": "12.0.2",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "${lokiInstance}"
+              },
+              "direction": "forward",
+              "editorMode": "code",
+              "expr": "{job=\"scalerlogs\"} != `CachedIcmWorkflowDao: Workflow` != `DistributedMasterCheckRoutine` != `net.gmc.nuc.engine.log.Log4jJobLogger`",
+              "maxLines": 5000,
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Scaler Logs",
+          "type": "logs"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 87
+          },
+          "id": 100,
+          "options": {
+            "dedupStrategy": "none",
+            "enableInfiniteScrolling": false,
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Ascending",
+            "wrapLogMessage": false
+          },
+          "pluginVersion": "11.6.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "${lokiInstance}"
+              },
+              "direction": "forward",
+              "editorMode": "code",
+              "expr": "{instance=~\"(scaler|inspire).*\", job=\"icmlogs\"} != `connection to 168`",
+              "legendFormat": "",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Scaler ICM Logs",
+          "type": "logs"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 87
+          },
+          "id": 99,
+          "options": {
+            "dedupStrategy": "none",
+            "enableInfiniteScrolling": true,
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": true,
+            "showLabels": true,
+            "showTime": false,
+            "sortOrder": "Descending",
+            "wrapLogMessage": false
+          },
+          "pluginVersion": "11.6.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "${lokiInstance}"
+              },
+              "direction": "backward",
+              "editorMode": "builder",
+              "expr": "{instance=~\"(scaler|inspire).*\", job=\"ipslogs\"}",
+              "maxLines": 2000,
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Scaler IPS Logs",
+          "type": "logs"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 13,
+            "w": 24,
+            "x": 0,
+            "y": 95
+          },
+          "id": 93,
+          "options": {
+            "dedupStrategy": "none",
+            "enableInfiniteScrolling": false,
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Descending",
+            "wrapLogMessage": false
+          },
+          "pluginVersion": "11.6.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "${lokiInstance}"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "{job=\"interactivelogs\"}",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Interactive Logs",
+          "type": "logs"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 108
+          },
+          "id": 101,
+          "options": {
+            "dedupStrategy": "none",
+            "enableInfiniteScrolling": false,
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Descending",
+            "wrapLogMessage": false
+          },
+          "pluginVersion": "11.6.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "${lokiInstance}"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "{instance=~\"interactive.*\", job=\"icmlogs\"}",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "",
+          "type": "logs"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 108
+          },
+          "id": 97,
+          "options": {
+            "dedupStrategy": "none",
+            "enableInfiniteScrolling": false,
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Descending",
+            "wrapLogMessage": false
+          },
+          "pluginVersion": "11.6.1",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "${lokiInstance}"
+              },
+              "direction": "backward",
+              "editorMode": "code",
+              "expr": "{instance=~\"interactive.*\", job=\"ipslogs\"}",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "",
+          "type": "logs"
+        }
+      ],
+      "title": "Logs",
+      "type": "row"
+    }
+  ],
+  "preload": false,
+  "refresh": "",
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "prudential-dev",
+          "value": "prudential-dev"
+        },
+        "description": "",
+        "label": "QMS Instance name",
+        "name": "qmsInstanceName",
+        "options": [
+          {
+            "selected": true,
+            "text": "prudential-dev",
+            "value": "prudential-dev"
+          },
+          {
+            "selected": false,
+            "text": "prudential-perf",
+            "value": "prudential-perf"
+          },
+          {
+            "selected": false,
+            "text": "prudential-prod",
+            "value": "prudential-prod"
+          },
+          {
+            "selected": false,
+            "text": "prudential-stage",
+            "value": "prudential-stage"
+          },
+          {
+            "selected": false,
+            "text": "prudential-test",
+            "value": "prudential-test"
+          },
+          {
+            "selected": false,
+            "text": "prudential-uat",
+            "value": "prudential-uat"
+          }
+        ],
+        "query": "prudential-dev, prudential-perf, prudential-prod, prudential-stage, prudential-test, prudential-uat",
+        "type": "custom"
+      },
+      {
+        "current": {
+          "text": "Thanos US",
+          "value": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "label": "QMS Datasource",
+        "name": "qmsDatasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "Thanos US",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": "Loki-PRUDENTIAL-DEV",
+          "value": "edtek9kdclon4e"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "label": "Loki Instance",
+        "name": "lokiInstance",
+        "options": [],
+        "query": "loki",
+        "refresh": 1,
+        "regex": "/^Loki-${qmsInstanceName:text}$/i",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": ".quadient.cloud",
+          "value": ".quadient.cloud"
+        },
+        "hide": 2,
+        "name": "qmsDomainSuffix",
+        "query": ".quadient.cloud",
+        "skipUrlSync": true,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "Prudential",
+          "value": "Prudential"
+        },
+        "hide": 2,
+        "name": "qmsCustomerName",
+        "options": [
+          {
+            "selected": true,
+            "text": "Prudential",
+            "value": "Prudential"
+          }
+        ],
+        "query": "Prudential",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "America/New_York",
+  "title": "Prudential main",
+  "uid": "ee6ot4yv1e29sb",
+  "version": 19
+}
