@@ -20,13 +20,13 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
 
-        
+          # Цели для деплоя
           $grafanaTargets = @(
             @{ Url = "http://localhost:3000"; Token = "${{ secrets.GRAFANA_API_TOKEN }}" },
             @{ Url = "http://localhost:3001"; Token = "${{ secrets.GRAFANA_API_TOKENV_2 }}" }
           )
 
-          
+          # Маппинг источников данных (если нужно подменять)
           $datasourceMap = @{
             "http://localhost:3000" = @{ "prometheus" = "ceu6ho1muemm8a" }
             "http://localhost:3001" = @{ "prometheus" = "aeu6eea0zjdvke" }
@@ -60,7 +60,7 @@ jobs:
               $panelName = if ($item.name) { $item.name } elseif ($item.model.title) { $item.model.title } else { [System.IO.Path]::GetFileNameWithoutExtension($file.Name) }
               $localUids += $panelUid
 
-              
+              # Обновляем UID датасорсов, если есть маппинг
               if ($item.model.targets) {
                 foreach ($t in $item.model.targets) {
                   if ($t.datasource -is [Hashtable] -and $t.datasource.type) {
@@ -72,7 +72,7 @@ jobs:
                 }
               }
 
-              
+              # Проверка по UID (имя не учитываем)
               $existing = $null
               try {
                 $resp = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements/$panelUid" -Headers @{ Authorization = "Bearer $ApiToken" }
@@ -80,6 +80,7 @@ jobs:
               } catch {}
 
               if ($existing) {
+                # Панель с таким UID существует → обновляем
                 $version = $existing.version
                 $patch = @{
                   uid     = $panelUid
@@ -117,6 +118,7 @@ jobs:
                   }
                 }
               } else {
+                # Панели с таким UID нет → создаём
                 $create = @{
                   uid   = $panelUid
                   name  = $panelName
@@ -132,7 +134,7 @@ jobs:
               }
             }
 
-            
+            # Удаляем панели, которых нет локально
             $page = 1; $perPage = 500; $remote = @()
             do {
               $res = Invoke-RestMethod -Uri "$GrafanaURL/api/library-elements?kind=1&perPage=$perPage&page=$page" -Headers @{ Authorization = "Bearer $ApiToken" }
