@@ -24,7 +24,7 @@
               "value": null
             },
             {
-              "color": "red",
+              "color": "green",
               "value": 80
             }
           ]
@@ -77,4 +77,5 @@
     "title": "Counter",
     "type": "stat"
   }
+
 }
