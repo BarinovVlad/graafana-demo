@@ -1,0 +1,1150 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 197,
+  "links": [],
+  "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 66,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "| **Customer:** ${qmsCustomer} | **Environments:** ${qmsEnvironment} | **Delivery Contacts:** ${qmsContacts} | **Timezone:** ${qmsTimezone} |",
+        "mode": "markdown"
+      },
+      "pluginVersion": "11.5.2",
+      "title": "Summary",
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 11,
+      "panels": [],
+      "repeat": "qmsEnvironment",
+      "title": "$qmsEnvironment",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 7,
+        "x": 0,
+        "y": 3
+      },
+      "id": 118,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "( sum(increase(hms_scaler_jobDuration_3s_total{ workflow=\"ComposeDocument\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"}[$__range])) * 100) / sum(increase(scaler_job_runs_total{instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"}[$__range]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Scaler jobs over 3s percentage",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "orange",
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 7,
+        "y": 3
+      },
+      "id": 119,
+      "options": {
+        "displayLabels": [
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "none",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(increase(hms_scaler_jobDuration_3s_total{ workflow=\"ComposeDocument\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"}[$__range]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Jobs over 3 seconds",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(scaler_job_runs_total{instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"}[$__range]))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Jobs total",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Scaler jobs over 3s percentage",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 0.01
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 13,
+        "y": 3
+      },
+      "id": 120,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "( sum(increase(hms_scaler_jobDuration_5s_total{ workflow=\"ComposeDocument\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"}[$__range])) * 100) / sum(increase(scaler_job_runs_total{instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"}[$__range]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Scaler jobs over 5s percentage",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "orange",
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 5,
+        "x": 19,
+        "y": 3
+      },
+      "id": 121,
+      "options": {
+        "displayLabels": [
+          "percent"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "none",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(increase(hms_scaler_jobDuration_5s_total{ workflow=\"ComposeDocument\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"}[$__range]))",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "Jobs over 5 seconds",
+          "range": false,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+          },
+          "editorMode": "code",
+          "expr": "sum(increase(scaler_job_runs_total{instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"}[$__range]))",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "Jobs total",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Scaler jobs over 5s percentage",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "linearThreshold": 1,
+              "log": 10,
+              "type": "symlog"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 11
+      },
+      "id": 122,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "increase(hms_scaler_jobDuration_3s_total{ workflow=\"ComposeDocument\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"}[$__interval])",
+          "instant": false,
+          "legendFormat": "3s/{{workflow}}/{{instance}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Scaler jobs over 3 seconds",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "linearThreshold": 1,
+              "log": 10,
+              "type": "symlog"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 11
+      },
+      "id": 123,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "increase(hms_scaler_jobDuration_5s_total{ workflow=\"ComposeDocument\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"}[$__interval])",
+          "instant": false,
+          "legendFormat": "5s/{{workflow}}/{{instance}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Scaler jobs over 5 seconds",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "af3edba8-d9b2-4676-9fc6-02b7be685211"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RequestStatus"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 116
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TimeStamp"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 185
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TimeTaken"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 104
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RequestType"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 114
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RequestEndpoint"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 313
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 19
+      },
+      "id": 124,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "dashboardTime": false,
+            "query": "AzureDiagnostics\r\n| where ResourceType == \"APPLICATIONGATEWAYS\"\r\n    and OperationName == \"ApplicationGatewayAccess\"\r\n    and (httpMethod_s == \"POST\" or httpMethod_s == \"GET\")\r\n    and requestUri_s startswith \"/rest/api/\"\r\n    and timeTaken_d > 3\r\n    and not(\r\n        requestUri_s == \"/rest/api/submit-job/test\"\r\n    )\r\n    and TimeGenerated >= $__timeFrom() and TimeGenerated <= $__timeTo()\r\n| project TimeStamp = timeStamp_t, TimeTaken = timeTaken_d, RequestType = httpMethod_s, RequestEndpoint = requestUri_s, RequestStatus = httpStatus_d, clientIP_s, host_s, serverRouted_s, instanceId_s, receivedBytes_d, sentBytes_d, clientResponseTime_d, serverResponseLatency_s\r\n| sort by TimeTaken desc\r\n| summarize RequestCount = count() by RequestType, RequestEndpoint\r\n| render table\r\n",
+            "resources": [
+              "/subscriptions/b3a1bc7c-4424-45f5-8d8d-98db685519b4/resourceGroups/hmsrg-prudential-hub-nonprod/providers/Microsoft.Network/applicationGateways/appgw-prudential-nonprod"
+            ],
+            "resultFormat": "table"
+          },
+          "azureMonitor": {
+            "allowedTimeGrainsMs": [],
+            "dimensionFilters": [],
+            "metricNamespace": "microsoft.network/applicationgateways",
+            "resources": [
+              {
+                "resourceGroup": "hmsrg-fmr-hub-prod",
+                "resourceName": "appgw-fmr-prod"
+              }
+            ],
+            "timeGrain": "auto"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "af3edba8-d9b2-4676-9fc6-02b7be685211"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A",
+          "subscription": "ea549d66-7b11-4554-879a-55742d7f76a7"
+        }
+      ],
+      "title": "Appgw number of requests over 3s",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "grafana-azure-monitor-datasource",
+        "uid": "af3edba8-d9b2-4676-9fc6-02b7be685211"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RequestStatus"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 116
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TimeStamp"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 185
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TimeTaken"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 104
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RequestType"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 114
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RequestEndpoint"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 313
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 19
+      },
+      "id": 125,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "azureLogAnalytics": {
+            "dashboardTime": false,
+            "query": "AzureDiagnostics\r\n| where ResourceType == \"APPLICATIONGATEWAYS\"\r\n    and OperationName == \"ApplicationGatewayAccess\"\r\n    and (httpMethod_s == \"POST\" or httpMethod_s == \"GET\")\r\n    and requestUri_s startswith \"/rest/api/\"\r\n    and timeTaken_d > 5\r\n    and not(\r\n        requestUri_s == \"/rest/api/submit-job/TEST\"\r\n    )\r\n    and TimeGenerated >= $__timeFrom() and TimeGenerated <= $__timeTo()\r\n| project TimeStamp = timeStamp_t, TimeTaken = timeTaken_d, RequestType = httpMethod_s, RequestEndpoint = requestUri_s, RequestStatus = httpStatus_d, clientIP_s, host_s, serverRouted_s, instanceId_s, receivedBytes_d, sentBytes_d, clientResponseTime_d, serverResponseLatency_s\r\n| sort by TimeTaken desc\r\n| summarize RequestCount = count() by RequestType, RequestEndpoint\r\n| render table\r\n",
+            "resources": [
+              "/subscriptions/b3a1bc7c-4424-45f5-8d8d-98db685519b4/resourceGroups/hmsrg-prudential-hub-nonprod/providers/Microsoft.Network/applicationGateways/appgw-prudential-nonprod"
+            ],
+            "resultFormat": "table"
+          },
+          "azureMonitor": {
+            "allowedTimeGrainsMs": [],
+            "dimensionFilters": [],
+            "metricNamespace": "microsoft.network/applicationgateways",
+            "resources": [
+              {
+                "resourceGroup": "hmsrg-fmr-hub-prod",
+                "resourceName": "appgw-fmr-prod"
+              }
+            ],
+            "timeGrain": "auto"
+          },
+          "datasource": {
+            "type": "grafana-azure-monitor-datasource",
+            "uid": "af3edba8-d9b2-4676-9fc6-02b7be685211"
+          },
+          "queryType": "Azure Log Analytics",
+          "refId": "A",
+          "subscription": "ea549d66-7b11-4554-879a-55742d7f76a7"
+        }
+      ],
+      "title": "Appgw number of requests over 5s",
+      "type": "table"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 16,
+        "x": 0,
+        "y": 27
+      },
+      "id": 98,
+      "libraryPanel": {
+        "name": "Monthly - CPU Usage",
+        "uid": "adp4wic0xrtogd"
+      },
+      "title": "CPU Usage $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 8,
+        "x": 16,
+        "y": 27
+      },
+      "id": 100,
+      "libraryPanel": {
+        "name": "Monthly - CPU Usage (AVG)",
+        "uid": "edp4wmlvh4uf4d"
+      },
+      "title": "CPU Usage (AVG) $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 16,
+        "x": 0,
+        "y": 44
+      },
+      "id": 102,
+      "libraryPanel": {
+        "name": "Monthly - Memory Usage",
+        "uid": "adp4wt18m25tsd"
+      },
+      "title": "Memory Usage $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 8,
+        "x": 16,
+        "y": 44
+      },
+      "id": 104,
+      "libraryPanel": {
+        "name": "Monthly - Memory Usage (AVG)",
+        "uid": "adp4wua8l7itce"
+      },
+      "title": "Memory Usage (AVG) $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 16,
+        "x": 0,
+        "y": 61
+      },
+      "id": 106,
+      "libraryPanel": {
+        "name": "Monthly - Disk Usage",
+        "uid": "cdp4wwixpm874c"
+      },
+      "title": "Disk Usage $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 8,
+        "x": 16,
+        "y": 61
+      },
+      "id": 108,
+      "libraryPanel": {
+        "name": "Monthly - Disk Usage (AVG)",
+        "uid": "cdp4wxgp57l6of"
+      },
+      "title": "Disk Usage (AVG) $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 16,
+        "x": 0,
+        "y": 78
+      },
+      "id": 111,
+      "libraryPanel": {
+        "name": "Monthly - Storage Usage",
+        "uid": "cdp4wyi4kxs00c"
+      },
+      "title": "Storage Usage $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 78
+      },
+      "id": 114,
+      "libraryPanel": {
+        "name": "Monthly - Storage Usage (AVG)",
+        "uid": "edp4x0e7zagaoc"
+      },
+      "title": "Storage Usage (AVG) $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 87
+      },
+      "id": 112,
+      "libraryPanel": {
+        "name": "Monthly - Storage capacity",
+        "uid": "ddp4x13itrjeoa"
+      },
+      "title": "Storage capacity $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 10,
+        "w": 16,
+        "x": 0,
+        "y": 95
+      },
+      "id": 116,
+      "libraryPanel": {
+        "name": "Completed Jobs $qmsEnvironment",
+        "uid": "ddsm2ocnqqnlsd"
+      },
+      "title": "Completed Jobs $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 16,
+        "y": 95
+      },
+      "id": 115,
+      "libraryPanel": {
+        "name": "AVG Completed Jobs $qmsEnvironment",
+        "uid": "edsm4btce3vgge"
+      },
+      "title": "AVG Completed Jobs $qmsEnvironment"
+    }
+  ],
+  "preload": false,
+  "refresh": "",
+  "schemaVersion": 40,
+  "tags": [
+    "qms-monthly"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "DEV",
+          "value": "DEV"
+        },
+        "includeAll": true,
+        "label": "Environment",
+        "name": "qmsEnvironment",
+        "options": [
+          {
+            "selected": true,
+            "text": "DEV",
+            "value": "DEV"
+          },
+          {
+            "selected": false,
+            "text": "TEST",
+            "value": "TEST"
+          },
+          {
+            "selected": false,
+            "text": "STAGE",
+            "value": "STAGE"
+          },
+          {
+            "selected": false,
+            "text": "UAT",
+            "value": "UAT"
+          },
+          {
+            "selected": false,
+            "text": "PERF",
+            "value": "PERF"
+          },
+          {
+            "selected": false,
+            "text": "PROD",
+            "value": "PROD"
+          }
+        ],
+        "query": "DEV,TEST,STAGE,UAT,PERF,PROD",
+        "type": "custom"
+      },
+      {
+        "current": {
+          "text": "prudential",
+          "value": "prudential"
+        },
+        "hide": 2,
+        "name": "qmsCustomer",
+        "query": "prudential",
+        "skipUrlSync": true,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "m.cernohorsky@quadient.com",
+          "value": "m.cernohorsky@quadient.com"
+        },
+        "hide": 2,
+        "name": "qmsContacts",
+        "query": "m.cernohorsky@quadient.com",
+        "skipUrlSync": true,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "America/New_York",
+          "value": "America/New_York"
+        },
+        "hide": 2,
+        "name": "qmsTimezone",
+        "query": "America/New_York",
+        "skipUrlSync": true,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "Thanos US",
+          "value": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "label": "QMS Datasource",
+        "name": "qmsDatasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "Thanos US",
+        "type": "datasource"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1M/M",
+    "to": "now-1M/M"
+  },
+  "timepicker": {},
+  "timezone": "America/New_York",
+  "title": "Prudential monthly",
+  "uid": "cdwv6zbq7g2kgf",
+  "version": 8,
+  "weekStart": "monday"
+}
