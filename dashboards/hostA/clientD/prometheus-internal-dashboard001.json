@@ -22,13 +22,6 @@
       "title": "Series",
       "type": "library-panel-ref"
     },
-     {
-  "gridPos": { "h": 8, "w": 8, "x": 0, "y": 0 },
-  "id": 3,
-  "title": "Counter",
-  "type": "stat",
-  "libraryPanel": { "name": "Counter", "uid": "aez4o4a9vgxdse" }
-},
       {
   "gridPos": { "h": 8, "w": 8, "x": 0, "y": 0 },
   "id": 7,
