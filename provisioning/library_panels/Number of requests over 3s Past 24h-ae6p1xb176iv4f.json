@@ -1,0 +1,88 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ae6p1xb176iv4f",
+  "name": "Number of requests over 3s Past 24h",
+  "kind": 1,
+  "type": "table",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "grafana-azure-monitor-datasource"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "custom": {
+          "align": "auto",
+          "cellOptions": {
+            "type": "auto"
+          },
+          "inspect": false
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 12,
+      "x": 0,
+      "y": 11
+    },
+    "id": 124,
+    "libraryPanel": {
+      "name": "Number of requests over 3s Past 24h",
+      "uid": "ae6p1xb176iv4f"
+    },
+    "options": {
+      "cellHeight": "sm",
+      "footer": {
+        "countRows": false,
+        "fields": "",
+        "reducer": [
+          "sum"
+        ],
+        "show": false
+      },
+      "showHeader": true
+    },
+    "pluginVersion": "11.3.0",
+    "targets": [
+      {
+        "azureLogAnalytics": {
+          "query": "AzureDiagnostics\r\n| where ResourceType == \"APPLICATIONGATEWAYS\"\r\n    and OperationName == \"ApplicationGatewayAccess\"\r\n    and (httpMethod_s == \"POST\" or httpMethod_s == \"GET\")\r\n    and requestUri_s startswith \"/rest/api/\"\r\n    and timeTaken_d > 3\r\n    and TimeGenerated >= ago(24h)  // Filter data for the last 24 hours\r\n| project TimeStamp = timeStamp_t, TimeTaken = timeTaken_d, RequestType = httpMethod_s, RequestEndpoint = requestUri_s, RequestStatus = httpStatus_d, clientIP_s, host_s, serverRouted_s, instanceId_s, receivedBytes_d, sentBytes_d, clientResponseTime_d, serverResponseLatency_s\r\n| sort by TimeTaken desc\r\n| summarize RequestCount = count() by RequestType, RequestEndpoint\r\n| render table",
+          "resources": [
+            "/subscriptions/3caf960b-e93d-4863-9128-af667b1c44a2/resourceGroups/hmsrg-caldhr-hub-nonprod/providers/Microsoft.Network/applicationGateways/appgw-caldhr-nonprod"
+          ]
+        },
+        "azureMonitor": {
+          "allowedTimeGrainsMs": [],
+          "timeGrain": "auto"
+        },
+        "datasource": {
+          "type": "grafana-azure-monitor-datasource"
+        },
+        "queryType": "Azure Log Analytics",
+        "refId": "A"
+      }
+    ],
+    "title": "Number of requests over 3s Past 24h",
+    "type": "table"
+  }
+}

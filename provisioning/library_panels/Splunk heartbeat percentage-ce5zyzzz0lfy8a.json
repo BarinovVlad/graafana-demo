@@ -1,0 +1,88 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ce5zyzzz0lfy8a",
+  "name": "Splunk heartbeat percentage",
+  "kind": 1,
+  "type": "stat",
+  "description": "NOTE: The monitoring server needs to be ON to show Scaler and Interactive traffic lights properly. \n",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "NOTE: The monitoring server needs to be ON to show Scaler and Interactive traffic lights properly. \n",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "red",
+              "value": null
+            },
+            {
+              "color": "orange",
+              "value": 93
+            },
+            {
+              "color": "yellow",
+              "value": 97
+            },
+            {
+              "color": "green",
+              "value": 99
+            }
+          ]
+        },
+        "unit": "percent"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 12,
+      "x": 12,
+      "y": 34
+    },
+    "id": 204,
+    "options": {
+      "colorMode": "background",
+      "graphMode": "none",
+      "justifyMode": "auto",
+      "orientation": "horizontal",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "avg_over_time((sum without() (node_systemd_unit_state{state=\"active\", name=~\"splunkforwarder.service\", instanceName=\"$qmsInstanceName\"}) or (0 * sum_over_time(node_systemd_unit_state{state=\"active\", name=~\"splunkforwarder.service\", instanceName=\"$qmsInstanceName\"}[$__range])))[$__range:$__interval]) * 100",
+        "format": "time_series",
+        "instant": false,
+        "interval": "",
+        "legendFormat": "{{instanceName}} -- {{ name}} -- {{instance}}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Splunk heartbeat percentage",
+    "type": "stat"
+  }
+}

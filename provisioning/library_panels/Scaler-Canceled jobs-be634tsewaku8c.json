@@ -1,0 +1,107 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "be634tsewaku8c",
+  "name": "Scaler-Canceled jobs",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "Indicates jobs that have been successfully processed.",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Indicates jobs that have been successfully processed.",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "axisSoftMax": 10,
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 10,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "never",
+          "spanNulls": true,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "line"
+          }
+        },
+        "mappings": [],
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 3
+            }
+          ]
+        },
+        "unit": "none"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 8,
+      "x": 16,
+      "y": 68
+    },
+    "id": 178,
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "multi",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(increase(scaler_job_runs_total{instanceName=\"$qmsInstanceName\",instance=~\".*:30600$\", status=\"canceled\"}[$__interval]),\r\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\r\n)",
+        "legendFormat": "{{instanceShort}}/{{group}}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Scaler-Canceled jobs",
+    "type": "timeseries"
+  }
+}

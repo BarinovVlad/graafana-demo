@@ -1,0 +1,102 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "be634msk6ultsb",
+  "name": "Inspire heartbeat 2",
+  "kind": 1,
+  "type": "stat",
+  "description": "Check the application's availability using ping and the application's health status API. \nNOTE: The monitoring server needs to be ON to show other metrics properly. \n",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Check the application's availability using ping and the application's health status API. \nNOTE: The monitoring server needs to be ON to show other metrics properly. \n",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "fixed"
+        },
+        "fieldMinMax": false,
+        "mappings": [
+          {
+            "options": {
+              "0": {
+                "color": "dark-red",
+                "index": 0,
+                "text": "Off"
+              },
+              "1": {
+                "color": "dark-green",
+                "index": 1,
+                "text": "On"
+              }
+            },
+            "type": "value"
+          }
+        ],
+        "min": 10,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            }
+          ]
+        },
+        "unit": "bool_on_off"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 22,
+      "w": 5,
+      "x": 7,
+      "y": 1
+    },
+    "id": 8,
+    "libraryPanel": {
+      "name": "Inspire heartbeat 2",
+      "uid": "be634msk6ultsb"
+    },
+    "options": {
+      "colorMode": "background",
+      "graphMode": "none",
+      "justifyMode": "center",
+      "orientation": "auto",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "text": {
+        "titleSize": 8,
+        "valueSize": 50
+      },
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.3.0",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "node_systemd_unit_state{state=\"active\", name=~\"Inspire.*service\", instanceName=\"aware-prod\", environment=\"prod1\"}",
+        "format": "time_series",
+        "instant": true,
+        "interval": "",
+        "legendFormat": "{{instance}}: {{ name}}",
+        "range": false,
+        "refId": "A"
+      }
+    ],
+    "title": "Inspire heartbeat 2",
+    "type": "stat"
+  }
+}

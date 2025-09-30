@@ -1,0 +1,84 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "de634o3h1p62oe",
+  "name": "Server's Percentage Availability",
+  "kind": 1,
+  "type": "stat",
+  "description": "NOTE: The monitoring server needs to be ON to show Scaler and Interactive traffic lights properly. \n",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "NOTE: The monitoring server needs to be ON to show Scaler and Interactive traffic lights properly. \n",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "red",
+              "value": null
+            },
+            {
+              "color": "orange",
+              "value": 93
+            },
+            {
+              "color": "yellow",
+              "value": 97
+            },
+            {
+              "color": "green",
+              "value": 99
+            }
+          ]
+        },
+        "unit": "percent"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 8,
+      "x": 0,
+      "y": 11
+    },
+    "id": 204,
+    "options": {
+      "colorMode": "background",
+      "graphMode": "none",
+      "justifyMode": "center",
+      "orientation": "auto",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.3.0",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "avg_over_time((sum without() (up{job=~\".*vm\", instanceName=\"$qmsInstanceName\"}) or (0 * sum_over_time(up{job=~\".*vm\", instanceName=\"$qmsInstanceName\"}[$__range])))[$__range:1m]) * 100",
+        "legendFormat": "{{instance}}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Server's Percentage Availability",
+    "type": "stat"
+  }
+}

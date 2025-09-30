@@ -1,0 +1,89 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "be5zyyr8ojz0gd",
+  "name": "Splunk heartbeat",
+  "kind": 1,
+  "type": "stat",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "fixed"
+        },
+        "mappings": [
+          {
+            "options": {
+              "0": {
+                "color": "dark-red",
+                "index": 0,
+                "text": "Off"
+              },
+              "1": {
+                "color": "dark-green",
+                "index": 1,
+                "text": "On"
+              }
+            },
+            "type": "value"
+          }
+        ],
+        "min": 10,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            }
+          ]
+        },
+        "unit": "bool_on_off"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 12,
+      "x": 0,
+      "y": 3
+    },
+    "id": 203,
+    "options": {
+      "colorMode": "background",
+      "graphMode": "none",
+      "justifyMode": "auto",
+      "orientation": "horizontal",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "node_systemd_unit_state{state=\"active\", name=~\"splunkforwarder.service\", instanceName=\"$qmsInstanceName\"}",
+        "legendFormat": "{{instanceName}} -- {{ name}} -- {{instance}}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "",
+    "type": "stat"
+  }
+}
