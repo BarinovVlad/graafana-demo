@@ -1,7 +1,7 @@
 {
   "folderUid": "bdp4wd4yy07i8b",
   "uid": "ee5zwrrl4ecqoa",
-  "name": "All Daily (Monday - Saturday)",
+  "name": "All Daily (Monday - Saturday) demo",
   "kind": 1,
   "type": "stat",
   "description": "",
@@ -19,7 +19,7 @@
           {
             "options": {
               "1": {
-                "color": "green",
+                "color": "orange",
                 "index": 0,
                 "text": "OK"
               }
@@ -97,3 +97,4 @@
   }
 
 }
+
