@@ -1,0 +1,33 @@
+name: Deploy Grafana Library Panels
+
+on:
+  push:
+    paths:
+      - 'provisioning/library_panels/**'
+    branches:
+      - main
+
+jobs:
+  deploy-library-panels:
+    runs-on: self-hosted  # или ubuntu-latest для облачных раннеров
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
+
+      - name: Deploy library panels
+        env:
+          GRAFANA_API_TOKEN: ${{ secrets.GRAFANA_API_TOKEN }}
+          GRAFANA_API_TOKENV_2: ${{ secrets.GRAFANA_API_TOKENV_2 }}
+        run: |
+          python scripts/deploy_library_panels.py
