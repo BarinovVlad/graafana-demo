@@ -1,0 +1,509 @@
+{
+  "folderUid": "general",
+  "uid": "da8a3ac2-d83f-4703-b760-81aa246f5df5",
+  "name": "Inspire heartbeat",
+  "kind": 1,
+  "type": "table",
+  "description": "Check the application's availability using ping and the application's health status API. \nNOTE: The monitoring server needs to be ON to show other metrics properly. \n",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Check the application's availability using ping and the application's health status API. \nNOTE: The monitoring server needs to be ON to show other metrics properly. \n",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "fixedColor": "green",
+          "mode": "thresholds"
+        },
+        "custom": {
+          "align": "auto",
+          "cellOptions": {
+            "type": "auto",
+            "wrapText": false
+          },
+          "filterable": false,
+          "inspect": false,
+          "minWidth": 0
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            }
+          ]
+        },
+        "unit": "none"
+      },
+      "overrides": [
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "ICM"
+          },
+          "properties": [
+            {
+              "id": "unit",
+              "value": "bool_on_off"
+            },
+            {
+              "id": "custom.cellOptions",
+              "value": {
+                "type": "color-background"
+              }
+            },
+            {
+              "id": "thresholds",
+              "value": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "red",
+                    "value": null
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "IPS"
+          },
+          "properties": [
+            {
+              "id": "custom.cellOptions",
+              "value": {
+                "mode": "basic",
+                "type": "color-background"
+              }
+            },
+            {
+              "id": "unit",
+              "value": "bool_on_off"
+            },
+            {
+              "id": "thresholds",
+              "value": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "text",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            {
+              "id": "noValue"
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "Interactive"
+          },
+          "properties": [
+            {
+              "id": "custom.cellOptions",
+              "value": {
+                "mode": "basic",
+                "type": "color-background"
+              }
+            },
+            {
+              "id": "unit",
+              "value": "bool_on_off"
+            },
+            {
+              "id": "thresholds",
+              "value": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "text",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "Scaler"
+          },
+          "properties": [
+            {
+              "id": "custom.cellOptions",
+              "value": {
+                "mode": "basic",
+                "type": "color-background"
+              }
+            },
+            {
+              "id": "unit",
+              "value": "bool_on_off"
+            },
+            {
+              "id": "thresholds",
+              "value": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "text",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*Availability/"
+          },
+          "properties": [
+            {
+              "id": "unit",
+              "value": "percentunit"
+            },
+            {
+              "id": "custom.cellOptions",
+              "value": {
+                "applyToRow": false,
+                "mode": "basic",
+                "type": "color-background",
+                "wrapText": false
+              }
+            },
+            {
+              "id": "thresholds",
+              "value": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "text",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0
+                  },
+                  {
+                    "color": "orange",
+                    "value": 0.95
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 0.99
+                  },
+                  {
+                    "color": "green",
+                    "value": 1
+                  }
+                ]
+              }
+            },
+            {
+              "id": "decimals",
+              "value": 3
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "Hostname"
+          },
+          "properties": [
+            {
+              "id": "custom.width",
+              "value": 335
+            }
+          ]
+        }
+      ]
+    },
+    "gridPos": {
+      "h": 9,
+      "w": 24,
+      "x": 0,
+      "y": 9
+    },
+    "id": 167,
+    "options": {
+      "cellHeight": "sm",
+      "footer": {
+        "countRows": false,
+        "fields": "",
+        "reducer": [
+          "sum"
+        ],
+        "show": false
+      },
+      "showHeader": true,
+      "sortBy": []
+    },
+    "pluginVersion": "12.0.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "sum (node_systemd_unit_state{state=\"active\", name=~\"InspireContent.*30353.service\", instanceName=\"$qmsInstanceName\"} * on(instance) group_left(nodename) node_uname_info{instanceName=\"$qmsInstanceName\"}) by (nodename)",
+        "format": "table",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "__auto",
+        "range": false,
+        "refId": "ICM"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "sum (node_systemd_unit_state{state=\"active\", name=~\"InspireProduction.*service\", instanceName=\"$qmsInstanceName\"} * on(instance) group_left(nodename) node_uname_info{instanceName=\"$qmsInstanceName\"}) by (nodename)",
+        "format": "table",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "__auto",
+        "range": false,
+        "refId": "IPS"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "sum (node_systemd_unit_state{state=\"active\", name=~\"InspireInteractive.*service\", instanceName=\"$qmsInstanceName\"} * on(instance) group_left(nodename) node_uname_info{instanceName=\"$qmsInstanceName\"}) by (nodename)",
+        "format": "table",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "__auto",
+        "range": false,
+        "refId": "Interactive"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "sum (node_systemd_unit_state{state=\"active\", name=~\"InspireScaler.*service\", instanceName=\"$qmsInstanceName\"} * on(instance) group_left(nodename) node_uname_info{instanceName=\"$qmsInstanceName\"}) by (nodename)",
+        "format": "table",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "__auto",
+        "range": false,
+        "refId": "Scaler"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "avg (avg_over_time(node_systemd_unit_state{state=\"active\", name=~\"InspireContent.*30353.service\", instanceName=\"$qmsInstanceName\"}[$__range]) * on(instance) group_left(nodename) node_uname_info{instanceName=\"$qmsInstanceName\"}) by (nodename)",
+        "format": "table",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "__auto",
+        "range": false,
+        "refId": "ICM Availability"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "avg (avg_over_time(node_systemd_unit_state{state=\"active\", name=~\"InspireProduction.*service\", instanceName=\"$qmsInstanceName\"}[$__range]) * on(instance) group_left(nodename) node_uname_info{instanceName=\"$qmsInstanceName\"}) by (nodename)",
+        "format": "table",
+        "hide": true,
+        "instant": true,
+        "legendFormat": "__auto",
+        "range": false,
+        "refId": "IPS Availability"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "avg (avg_over_time(node_systemd_unit_state{state=\"active\", name=~\"InspireInteractive.*service\", instanceName=\"$qmsInstanceName\"}[$__range]) * on(instance) group_left(nodename) node_uname_info{instanceName=\"$qmsInstanceName\"}) by (nodename)",
+        "format": "table",
+        "hide": true,
+        "instant": true,
+        "legendFormat": "__auto",
+        "range": false,
+        "refId": "Interactive Availability"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "avg (avg_over_time(node_systemd_unit_state{state=\"active\", name=~\"InspireScaler.*service\", instanceName=\"$qmsInstanceName\"}[$__range]) * on(instance) group_left(nodename) node_uname_info{instanceName=\"$qmsInstanceName\"}) by (nodename)",
+        "format": "table",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "__auto",
+        "range": false,
+        "refId": "Scaler Availability"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "sum by(nodename, scaler_version) (\n  label_replace(\n    label_replace(\n        scaler_node_info{instanceName=\"$qmsInstanceName\"}, \"serverName\", \"$1\", \"instance\", \"^([^.]+)\\\\..+\"\n  ), \"scaler_version\", \"$1\", \"version\", \"(.+)\")\n  * on(serverName)\n  group_left(nodename)\n  label_replace(\n    node_uname_info{instanceName=\"$qmsInstanceName\"}, \"serverName\", \"$1\", \"instance\", \"^([^.]+)\\\\..+\"\n  )\n)",
+        "format": "table",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "__auto",
+        "range": false,
+        "refId": "Scaler Info"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "sum by(nodename, icm_version) (\n  label_replace(\n      label_replace(\n    avg_over_time(icm_app_info{instanceName=\"$qmsInstanceName\"}[$__range]), \"serverName\", \"$1\", \"instance\", \"^([^.]+)\\\\..+\"\n  ), \"icm_version\", \"$1\", \"version\", \"(.+)\")\n  * on(serverName)\n  group_left(nodename)\n  label_replace(\n    node_uname_info{instanceName=\"$qmsInstanceName\"}, \"serverName\", \"$1\", \"instance\", \"^([^.]+)\\\\..+\"\n  )\n)",
+        "format": "table",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "__auto",
+        "range": false,
+        "refId": "ICM Info"
+      }
+    ],
+    "title": "Inspire heartbeat",
+    "transformations": [
+      {
+        "id": "merge",
+        "options": {}
+      },
+      {
+        "id": "organize",
+        "options": {
+          "excludeByName": {
+            "Time": true,
+            "Value #ICM Info": true,
+            "Value #Scaler Info": true,
+            "__name__": true,
+            "customerName": true,
+            "deployment_type": true,
+            "development": true,
+            "environment": true,
+            "environment_name": true,
+            "instance": true,
+            "instanceName": true,
+            "issueKey": true,
+            "job": true,
+            "node_ip": true,
+            "nodename": false,
+            "projectName": true,
+            "receive": true,
+            "serverName": true,
+            "tenant_id": true,
+            "type": true,
+            "version": true
+          },
+          "includeByName": {},
+          "indexByName": {
+            "Time": 1,
+            "Value #ICM": 2,
+            "Value #ICM Availability": 3,
+            "Value #ICM Info": 25,
+            "Value #IPS": 5,
+            "Value #Interactive": 6,
+            "Value #Scaler": 7,
+            "Value #Scaler Availability": 10,
+            "Value #Scaler Info": 23,
+            "customerName": 11,
+            "deployment_type": 12,
+            "development": 13,
+            "environment": 14,
+            "environment_name": 24,
+            "icm_version": 4,
+            "instance": 15,
+            "instanceName": 16,
+            "issueKey": 17,
+            "job": 18,
+            "node_ip": 19,
+            "nodename": 0,
+            "receive": 20,
+            "scaler_version": 8,
+            "serverName": 21,
+            "tenant_id": 22,
+            "version": 9
+          },
+          "renameByName": {
+            "Value #ICM": "ICM",
+            "Value #ICM Availability": "ICM Availability",
+            "Value #IPS": "IPS",
+            "Value #IPS Availability": "IPS Availability",
+            "Value #Interactive": "Interactive",
+            "Value #Interactive Availability": "Interactive Availability",
+            "Value #Scaler": "Scaler",
+            "Value #Scaler Availability": "Scaler Availability",
+            "Value #Scaler Info": "",
+            "icm_version": "ICM version",
+            "name": "",
+            "nodename": "Hostname",
+            "scaler_version": "Scaler version",
+            "version": "",
+            "{__name__=\"scaler_node_info\", customerName=\"GEMA\", deployment_type=\"Cluster\", development=\"false\", environment=\"prod1\", instance=\"scaler0.gema-prod.quadient.cloud:30600\", instanceName=\"gema-prod\", issueKey=\"GEMA\", job=\"gema-prod-scaler-scaler\", node_ip=\"10.40.78.5\", receive=\"true\", tenant_id=\"default-tenant\", version=\"16.0.631.0\"}": "Scaler Version"
+          }
+        }
+      }
+    ],
+    "type": "table"
+  }
+}

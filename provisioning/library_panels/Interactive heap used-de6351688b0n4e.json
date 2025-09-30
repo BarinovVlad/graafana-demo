@@ -1,0 +1,78 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "de6351688b0n4e",
+  "name": "Interactive heap used",
+  "kind": 1,
+  "type": "gauge",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "decimals": 2,
+        "mappings": [],
+        "max": 100,
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        },
+        "unit": "percent"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 7,
+      "w": 6,
+      "x": 0,
+      "y": 132
+    },
+    "id": 190,
+    "options": {
+      "minVizHeight": 75,
+      "minVizWidth": 75,
+      "orientation": "vertical",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showThresholdLabels": false,
+      "showThresholdMarkers": true,
+      "sizing": "auto"
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(\r\n    max_over_time(\r\n        (jvm_memory_bytes_used{area=\"heap\",customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:30701$\"}\r\n        /\r\n        jvm_memory_bytes_max{area=\"heap\",customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:30701$\"}*100)\r\n        [$__interval:]\r\n    ),\r\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\r\n)",
+        "hide": false,
+        "legendFormat": "{{instanceShort}}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Interactive heap used",
+    "type": "gauge"
+  }
+}

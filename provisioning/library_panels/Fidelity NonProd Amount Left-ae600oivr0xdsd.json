@@ -1,0 +1,86 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ae600oivr0xdsd",
+  "name": "Fidelity NonProd Amount Left",
+  "kind": 1,
+  "type": "stat",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "fieldMinMax": false,
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "dark-red",
+              "value": null
+            },
+            {
+              "color": "dark-yellow",
+              "value": 20
+            },
+            {
+              "color": "dark-green",
+              "value": 100
+            }
+          ]
+        },
+        "unit": "short"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 10,
+      "w": 12,
+      "x": 0,
+      "y": 52
+    },
+    "id": 9,
+    "libraryPanel": {
+      "name": "Fidelity NonProd Amount Left",
+      "uid": "ae600oivr0xdsd"
+    },
+    "options": {
+      "colorMode": "background",
+      "graphMode": "none",
+      "justifyMode": "center",
+      "orientation": "auto",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "value_and_name",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.3.0",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "hms_quadient_cloud_license_info_report{counterType=\"amountLeft\", companyName=\"fidelity\",  entitlementName=\"Fidelity Investments Group - Non-Production\"}",
+        "instant": false,
+        "legendFormat": "{{ metricName }}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Fidelity NonProd Amount Left",
+    "type": "stat"
+  }
+}

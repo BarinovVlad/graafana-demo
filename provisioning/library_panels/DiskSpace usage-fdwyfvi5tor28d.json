@@ -1,0 +1,123 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "fdwyfvi5tor28d",
+  "name": "DiskSpace usage",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "Disk space used of all filesystems mounted",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Disk space used of all filesystems mounted",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "auto",
+          "spanNulls": false,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "decimals": 0,
+        "mappings": [],
+        "max": 100,
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        },
+        "unit": "percent"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 33,
+      "w": 8,
+      "x": 16,
+      "y": 34
+    },
+    "id": 154,
+    "options": {
+      "legend": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "displayMode": "table",
+        "placement": "right",
+        "showLegend": true,
+        "sortBy": "Last *",
+        "sortDesc": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "avg by (instanceShort,mountpoint) (label_replace(\n    100 - ((node_filesystem_avail_bytes{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9100$\", device!~\"rootfs\", fstype!~\"cifs\"} * 100) / node_filesystem_size_bytes{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9100$\", device!~\"rootfs\", fstype!~\"cifs\"}),\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\n))",
+        "legendFormat": "{{instanceShort}}: {{mountpoint}}",
+        "range": true,
+        "refId": "Linux"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "avg by (instanceShort, volume) (label_replace(\n    100 - ((windows_logical_disk_free_bytes{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9182$\", device!~\"rootfs\", fstype!~\"cifs\"} * 100) / windows_logical_disk_size_bytes{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9182$\", device!~\"rootfs\", fstype!~\"cifs\"}),\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\n))",
+        "hide": false,
+        "legendFormat": "{{instanceShort}}: {{volume}}",
+        "range": true,
+        "refId": "Windows"
+      }
+    ],
+    "title": "DiskSpace usage",
+    "type": "timeseries"
+  }
+}
