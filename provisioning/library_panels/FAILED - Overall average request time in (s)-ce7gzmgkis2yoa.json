@@ -1,0 +1,174 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ce7gzmgkis2yoa",
+  "name": "FAILED - Overall average request time in (s)",
+  "kind": 1,
+  "type": "table",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "grafana-azure-monitor-datasource"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "custom": {
+          "align": "left",
+          "cellOptions": {
+            "type": "auto"
+          },
+          "inspect": false
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        }
+      },
+      "overrides": [
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "RequestStatus"
+          },
+          "properties": [
+            {
+              "id": "custom.width",
+              "value": 116
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "TimeStamp"
+          },
+          "properties": [
+            {
+              "id": "custom.width",
+              "value": 185
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "TimeTaken"
+          },
+          "properties": [
+            {
+              "id": "custom.width",
+              "value": 104
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "RequestType"
+          },
+          "properties": [
+            {
+              "id": "custom.width",
+              "value": 114
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "RequestEndpoint"
+          },
+          "properties": [
+            {
+              "id": "custom.width",
+              "value": 348
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "Count"
+          },
+          "properties": [
+            {
+              "id": "custom.width",
+              "value": 110
+            }
+          ]
+        }
+      ]
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 12,
+      "x": 12,
+      "y": 25
+    },
+    "id": 210,
+    "options": {
+      "cellHeight": "sm",
+      "footer": {
+        "countRows": false,
+        "fields": "",
+        "reducer": [
+          "sum"
+        ],
+        "show": false
+      },
+      "showHeader": true,
+      "sortBy": [
+        {
+          "desc": true,
+          "displayName": "RequestCount"
+        }
+      ]
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "azureLogAnalytics": {
+          "dashboardTime": false,
+          "query": "AzureDiagnostics\r\n| where ResourceType == \"APPLICATIONGATEWAYS\"\r\n    and OperationName == \"ApplicationGatewayAccess\"\r\n    and (httpMethod_s == \"POST\" or httpMethod_s == \"GET\")\r\n    and requestUri_s startswith \"/rest/api/\"\r\n    and httpStatus_d >=300\r\n    and TimeGenerated >= $__timeFrom() and TimeGenerated <= $__timeTo()\r\n| project timeStamp_t, RequestType = httpMethod_s, RequestEndpoint = requestUri_s, RequestStatus = httpStatus_d, clientIP_s, host_s, serverRouted_s, instanceId_s, receivedBytes_d, sentBytes_d, timeTaken_d, clientResponseTime_d, serverResponseLatency_s\r\n| summarize RequestCount = count(), AvgTimeTaken = avg(timeTaken_d) by RequestType, RequestStatus, RequestEndpoint\r\n| order by RequestType desc, RequestCount desc",
+          "resources": [
+            "/subscriptions/b3a1bc7c-4424-45f5-8d8d-98db685519b4/resourceGroups/hmsrg-prudential-hub-nonprod/providers/Microsoft.Network/applicationGateways/appgw-prudential-nonprod"
+          ],
+          "resultFormat": "time_series"
+        },
+        "azureMonitor": {
+          "allowedTimeGrainsMs": [],
+          "dimensionFilters": [],
+          "metricNamespace": "microsoft.network/applicationgateways",
+          "resources": [
+            {
+              "resourceGroup": "hmsrg-fmr-hub-prod",
+              "resourceName": "appgw-fmr-prod"
+            }
+          ],
+          "timeGrain": "auto"
+        },
+        "datasource": {
+          "type": "grafana-azure-monitor-datasource"
+        },
+        "queryType": "Azure Log Analytics",
+        "refId": "A",
+        "subscription": "ea549d66-7b11-4554-879a-55742d7f76a7"
+      }
+    ],
+    "title": "FAILED - Overall average request time in (s)",
+    "type": "table"
+  }
+}

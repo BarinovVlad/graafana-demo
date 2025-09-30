@@ -1,0 +1,51 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "de6laakvv7r40e",
+  "name": "Interactive Logs",
+  "kind": 1,
+  "type": "logs",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "loki"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {},
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 13,
+      "w": 24,
+      "x": 0,
+      "y": 62
+    },
+    "id": 93,
+    "options": {
+      "dedupStrategy": "none",
+      "enableInfiniteScrolling": false,
+      "enableLogDetails": true,
+      "prettifyLogMessage": false,
+      "showCommonLabels": false,
+      "showLabels": false,
+      "showTime": false,
+      "sortOrder": "Descending",
+      "wrapLogMessage": false
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "loki"
+        },
+        "direction": "backward",
+        "editorMode": "code",
+        "expr": "{job=\"logs_interactive\"}",
+        "queryType": "range",
+        "refId": "A"
+      }
+    ],
+    "title": "Interactive Logs",
+    "type": "logs"
+  }
+}

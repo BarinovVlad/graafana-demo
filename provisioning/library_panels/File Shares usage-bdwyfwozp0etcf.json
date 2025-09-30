@@ -1,0 +1,107 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "bdwyfwozp0etcf",
+  "name": "File Shares usage",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "Disk space used of all filesystems mounted",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Disk space used of all filesystems mounted",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "auto",
+          "spanNulls": false,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "decimals": 1,
+        "mappings": [],
+        "max": 100,
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 10,
+      "w": 8,
+      "x": 8,
+      "y": 58
+    },
+    "id": 156,
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(avg by (mountpoint, job) (100 - ((node_filesystem_avail_bytes{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9100$\", fstype=~\"cifs|nfs\"} * 100) / node_filesystem_size_bytes{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9100$\", fstype=~\"cifs|nfs\"})),\n    \"instanceShort\", \"$1\", \"job\", \"$qmsInstanceName-(.*)-vm\"\n)",
+        "legendFormat": "{{instanceShort}}: {{mountpoint}}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "File Shares usage",
+    "type": "timeseries"
+  }
+}

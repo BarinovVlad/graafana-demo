@@ -1,0 +1,76 @@
+{
+  "folderUid": "fel522vsv8flsf",
+  "uid": "del5m0ok3ezuoa",
+  "name": "Monthly Envs - AVG Completed Jobs",
+  "kind": 1,
+  "type": "stat",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            }
+          ]
+        },
+        "unit": "none"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 9,
+      "w": 8,
+      "x": 16,
+      "y": 71
+    },
+    "id": 116,
+    "interval": "1d",
+    "options": {
+      "colorMode": "value",
+      "graphMode": "area",
+      "justifyMode": "auto",
+      "orientation": "auto",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "avg_over_time(sum by(group, instanceName) (increase(scaler_job_runs_total{instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment)).*\", status=\"completed\"}[24h]))[$__range:$__interval])",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "{{instanceName}}: {{group}}",
+        "range": false,
+        "refId": "Storage"
+      }
+    ],
+    "title": "AVG Completed Jobs $qmsEnvironment",
+    "type": "stat"
+  }
+}

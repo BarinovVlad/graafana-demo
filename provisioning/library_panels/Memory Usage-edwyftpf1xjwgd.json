@@ -1,0 +1,130 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "edwyftpf1xjwgd",
+  "name": "Memory Usage",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 10,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "never",
+          "spanNulls": true,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "line"
+          }
+        },
+        "mappings": [],
+        "max": 100,
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 90
+            }
+          ]
+        },
+        "unit": "percent"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 10,
+      "w": 8,
+      "x": 8,
+      "y": 34
+    },
+    "id": 150,
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "multi",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(100 - ({__name__=~\"node_memory_MemAvailable_bytes\", customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9100$\"} / {__name__=~\"node_memory_MemTotal_bytes\", instanceName=\"$qmsInstanceName\",customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9100$\"})*100,\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\n)",
+        "legendFormat": "Physical: {{instanceShort}}",
+        "range": true,
+        "refId": "Linux - Physical"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(100 - ({__name__=~\"node_memory_SwapFree_bytes\", customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9100$\"} / {__name__=~\"node_memory_SwapTotal_bytes\", customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9100$\"})*100,\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\n)",
+        "hide": false,
+        "instant": false,
+        "legendFormat": "Swap: {{instanceShort}}",
+        "range": true,
+        "refId": "Linux - Swap"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(100 - (windows_os_physical_memory_free_bytes{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9182$\"} / windows_cs_physical_memory_bytes{instanceName=\"$qmsInstanceName\",customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9182$\"})*100,\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\n)",
+        "hide": false,
+        "legendFormat": "Physical: {{instanceShort}}",
+        "range": true,
+        "refId": "Windows"
+      }
+    ],
+    "title": "Memory Usage",
+    "type": "timeseries"
+  }
+}
