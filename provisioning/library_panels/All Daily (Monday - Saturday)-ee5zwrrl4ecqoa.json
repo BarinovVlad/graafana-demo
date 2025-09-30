@@ -86,13 +86,14 @@
           "type": "prometheus"
         },
         "editorMode": "code",
-        "expr": "avg(hms_backup_info_daily_all{instanceName=\"$qmsInstanceName\",backupType=\"daily\"})",
+        "expr": "up",
         "legendFormat": "",
         "range": true,
         "refId": "A"
       }
     ],
-    "title": "All Daily (Monday - Saturday)",
+    "title": "All Daily (Monday - Saturday) demo",
     "type": "stat"
   }
+
 }
