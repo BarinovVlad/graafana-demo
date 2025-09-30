@@ -1,0 +1,257 @@
+{
+  "folderUid": "fel522vsv8flsf",
+  "uid": "adp4wt18m25tsd",
+  "name": "Monthly - Memory Usage",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "fixedColor": "transparent",
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": true,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineStyle": {
+            "fill": "solid"
+          },
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "never",
+          "spanNulls": true,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "line"
+          }
+        },
+        "mappings": [],
+        "max": 100,
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 90
+            }
+          ]
+        },
+        "unit": "percent"
+      },
+      "overrides": [
+        {
+          "matcher": {
+            "id": "byValue",
+            "options": {
+              "op": "gte",
+              "reducer": "allIsNull",
+              "value": 0
+            }
+          },
+          "properties": [
+            {
+              "id": "custom.hideFrom",
+              "value": {
+                "legend": true,
+                "tooltip": false,
+                "viz": false
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/^Physical: (?!AVG).+$/"
+          },
+          "properties": [
+            {
+              "id": "custom.lineStyle",
+              "value": {
+                "dash": [
+                  10,
+                  10
+                ],
+                "fill": "dash"
+              }
+            },
+            {
+              "id": "custom.lineWidth",
+              "value": 0.2
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]-interactive\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#ca2a3d",
+                "mode": "shades"
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]-(scaler|automation)\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#2aca3d",
+                "mode": "shades"
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]2-interactive\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#2a3dca",
+                "mode": "shades"
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]2-(scaler|automation)\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#ffa500",
+                "mode": "shades"
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]3-interactive\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#ca2aca",
+                "mode": "shades"
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]3-(scaler|automation)\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#2acaca",
+                "mode": "shades"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "gridPos": {
+      "h": 17,
+      "w": 16,
+      "x": 0,
+      "y": 20
+    },
+    "id": 8,
+    "interval": "30m",
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "multi",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(\navg by (job) (\n  100 - (node_memory_MemAvailable_bytes{instance=~\"(scaler|interactive|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"} / \n  node_memory_MemTotal_bytes{instance=~\"(scaler|interactive|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"})*100),\n  \"instanceShort\", \"$1-$2\", \"job\", \"^[^-]*-(.*)-([^-]*)-[^-]*$\"\n)\n",
+        "hide": false,
+        "legendFormat": "Physical: AVG {{instanceShort}}",
+        "range": true,
+        "refId": "Physical PERF AVG"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(\n    sum by(instance, job) (100 - (node_memory_MemAvailable_bytes{instance=~\"(scaler|interactive|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"} / \n    node_memory_MemTotal_bytes{instance=~\"(scaler|interactive|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\"})*100),\n  \"instanceShort\", \"$3-$1\", \"instance\", \"^(.*?)\\\\.($qmsCustomer-)?(.*?)\\\\.(.*?)quadient\\\\.cloud:\\\\d+$\"\n)\n",
+        "hide": false,
+        "legendFormat": "Physical: {{instanceShort}}",
+        "range": true,
+        "refId": "Physical PERF"
+      }
+    ],
+    "title": "Memory Usage $qmsEnvironment",
+    "type": "timeseries"
+  }
+}

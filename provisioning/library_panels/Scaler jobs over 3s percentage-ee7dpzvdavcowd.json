@@ -1,0 +1,92 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ee7dpzvdavcowd",
+  "name": "Scaler jobs over 3s percentage",
+  "kind": 1,
+  "type": "piechart",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "fixedColor": "orange",
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          }
+        },
+        "mappings": [],
+        "unit": "percent"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 12,
+      "x": 0,
+      "y": 2
+    },
+    "id": 201,
+    "options": {
+      "displayLabels": [
+        "percent"
+      ],
+      "legend": {
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "pieType": "pie",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "none",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "sum(increase(hms_scaler_jobDuration_3s_total{ workflow=\"PrintPass1\", instanceName=\"$qmsInstanceName\", environment=\"pre2\"}[$__range]))",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "Jobs over 3 seconds",
+        "range": false,
+        "refId": "A"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "sum(increase(scaler_job_runs_total{instanceName=\"$qmsInstanceName\", environment=\"pre2\"}[$__range]))",
+        "hide": false,
+        "instant": false,
+        "legendFormat": "Jobs total",
+        "range": true,
+        "refId": "B"
+      }
+    ],
+    "title": "Scaler jobs over 3s percentage",
+    "type": "piechart"
+  }
+}

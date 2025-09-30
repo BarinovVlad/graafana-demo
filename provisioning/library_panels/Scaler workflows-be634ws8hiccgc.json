@@ -1,0 +1,107 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "be634ws8hiccgc",
+  "name": "Scaler workflows",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "Provides the number of deployed workflows for each workflow type, and for each of the following statuse",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Provides the number of deployed workflows for each workflow type, and for each of the following statuse",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 5,
+          "gradientMode": "opacity",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineStyle": {
+            "fill": "solid"
+          },
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "never",
+          "spanNulls": true,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            }
+          ]
+        },
+        "unit": "short"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 8,
+      "x": 16,
+      "y": 20
+    },
+    "id": 183,
+    "options": {
+      "legend": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "12.0.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(scaler_deployed_workflows_total{instanceName=\"$qmsInstanceName\",instance=~\".*:30600$\", status=\"active\"},\r\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\r\n)\r\n",
+        "interval": "",
+        "legendFormat": "{{instanceShort}}/{{ group }}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Scaler workflows",
+    "type": "timeseries"
+  }
+}

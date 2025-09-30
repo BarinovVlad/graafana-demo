@@ -1,0 +1,120 @@
+{
+  "folderUid": "fel522vsv8flsf",
+  "uid": "del5lrthmc268c",
+  "name": "Monthly Envs - Storage capacity",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "auto",
+          "spanNulls": false,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "text",
+              "value": null
+            }
+          ]
+        },
+        "unit": "bytes"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 8,
+      "x": 16,
+      "y": 63
+    },
+    "id": 112,
+    "options": {
+      "legend": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "displayMode": "table",
+        "placement": "right",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "12.0.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "label_replace(\n    label_replace(\n        avg(node_filesystem_size_bytes{instance=~\"(scaler|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment)).*\", fstype=\"cifs\"}) by (device, instanceName),\n        \"share\", \"$2\", \"device\", \"//(.*)/(.*)\"\n    ),\n  \"environment\", \"$1\", \"instanceName\", \"^[^-]*-(.*)\"\n)",
+        "format": "time_series",
+        "instant": false,
+        "legendFormat": "AVG {{environment}}-{{share}}",
+        "range": true,
+        "refId": "Physical"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "label_replace(\n    label_replace(\n        avg(node_filesystem_size_bytes{instance=~\"(scaler|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment)).*\", fstype=\"nfs\"}) by (device, instanceName),\n        \"share\", \"$2\", \"device\", \".*/(.*)/(.*)\"\n    ),\n  \"environment\", \"$1\", \"instanceName\", \"^[^-]*-(.*)\"\n)",
+        "hide": false,
+        "instant": false,
+        "legendFormat": "AVG {{environment}}-{{share}}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Storage capacity $qmsEnvironment",
+    "type": "timeseries"
+  }
+}

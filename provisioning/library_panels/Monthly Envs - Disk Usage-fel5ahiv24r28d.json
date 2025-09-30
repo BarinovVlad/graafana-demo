@@ -1,0 +1,256 @@
+{
+  "folderUid": "fel522vsv8flsf",
+  "uid": "fel5ahiv24r28d",
+  "name": "Monthly Envs - Disk Usage",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "fixedColor": "transparent",
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": true,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineStyle": {
+            "fill": "solid"
+          },
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "never",
+          "spanNulls": true,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "line"
+          }
+        },
+        "mappings": [],
+        "max": 100,
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 90
+            }
+          ]
+        },
+        "unit": "percent"
+      },
+      "overrides": [
+        {
+          "matcher": {
+            "id": "byValue",
+            "options": {
+              "op": "gte",
+              "reducer": "allIsNull",
+              "value": 0
+            }
+          },
+          "properties": [
+            {
+              "id": "custom.hideFrom",
+              "value": {
+                "legend": true,
+                "tooltip": false,
+                "viz": false
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/^(?!AVG).+$/"
+          },
+          "properties": [
+            {
+              "id": "custom.lineStyle",
+              "value": {
+                "dash": [
+                  0,
+                  10
+                ],
+                "fill": "dot"
+              }
+            },
+            {
+              "id": "custom.lineWidth",
+              "value": 0.5
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]-interactive\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#ca2a3d",
+                "mode": "shades"
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]-(scaler|automation)\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#2aca3d",
+                "mode": "shades"
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]2-interactive\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#2a3dca",
+                "mode": "shades"
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]2-(scaler|automation)\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#ffa500",
+                "mode": "shades"
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]3-interactive\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#ca2aca",
+                "mode": "shades"
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*[^\\d]3-(scaler|automation)\\d*$/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "#2acaca",
+                "mode": "shades"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "gridPos": {
+      "h": 17,
+      "w": 16,
+      "x": 0,
+      "y": 37
+    },
+    "id": 106,
+    "maxDataPoints": 10000,
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "multi",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(\navg by (job) (\n  100 - (sum by(instance, job) (node_filesystem_avail_bytes{instance=~\"(scaler|interactive|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment)).*\",device=~\"/dev/mapper/rootvg.*\"}) / \n  sum by(instance, job) (node_filesystem_size_bytes{instance=~\"(scaler|interactive|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment)).*\",device=~\"/dev/mapper/rootvg.*\"}))*100),\n  \"instanceShort\", \"$1-$2\", \"job\", \"^[^-]*-(.*)-([^-]*)-[^-]*$\"\n)\n",
+        "legendFormat": "AVG {{instanceShort}}",
+        "range": true,
+        "refId": "Physical AVG"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(\n  100 - (sum by(instance) (node_filesystem_avail_bytes{instance=~\"(scaler|interactive|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment)).*\",device=~\"/dev/mapper/rootvg.*\"}) / \n  sum by(instance) (node_filesystem_size_bytes{instance=~\"(scaler|interactive|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment)).*\",device=~\"/dev/mapper/rootvg.*\"}))*100,\n  \"instanceShort\", \"$3-$1\", \"instance\", \"^(.*?)\\\\.($qmsCustomer-)?(.*?)\\\\.(.*?)quadient\\\\.cloud:\\\\d+$\"\n)\n",
+        "hide": false,
+        "legendFormat": "{{instanceShort}}",
+        "range": true,
+        "refId": "Physical"
+      }
+    ],
+    "title": "Disk Usage $qmsEnvironment",
+    "type": "timeseries"
+  }
+}

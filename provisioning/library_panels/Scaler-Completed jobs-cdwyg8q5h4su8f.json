@@ -1,0 +1,144 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "cdwyg8q5h4su8f",
+  "name": "Scaler-Completed jobs",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "Indicates jobs that have been successfully processed.",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Indicates jobs that have been successfully processed.",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "axisSoftMax": 10,
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 10,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "never",
+          "spanNulls": true,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            }
+          ]
+        },
+        "unit": "none"
+      },
+      "overrides": [
+        {
+          "__systemRef": "hideSeriesFrom",
+          "matcher": {
+            "id": "byNames",
+            "options": {
+              "mode": "exclude",
+              "names": [
+                "on_demand",
+                "batch",
+                "system"
+              ],
+              "prefix": "All except:",
+              "readOnly": true
+            }
+          },
+          "properties": [
+            {
+              "id": "custom.hideFrom",
+              "value": {
+                "legend": false,
+                "tooltip": false,
+                "viz": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 8,
+      "x": 8,
+      "y": 68
+    },
+    "id": 162,
+    "interval": "2m",
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "multi",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(sum by(group) (increase(scaler_job_runs_total{instanceName=\"$qmsInstanceName\",instance=~\".*:30600$\", status=\"completed\"}[$__interval])),\r\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\r\n)",
+        "hide": false,
+        "legendFormat": "{{group}}",
+        "range": true,
+        "refId": "Sum per group"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "label_replace(increase(scaler_job_runs_total{instanceName=\"$qmsInstanceName\",instance=~\".*:30600$\", status=\"completed\"}[$__interval]),\r\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\r\n)\r\n ",
+        "instant": false,
+        "legendFormat": "{{instanceShort}}/{{group}}",
+        "range": true,
+        "refId": "Server per group"
+      }
+    ],
+    "title": "Scaler-Completed jobs",
+    "type": "timeseries"
+  }
+}

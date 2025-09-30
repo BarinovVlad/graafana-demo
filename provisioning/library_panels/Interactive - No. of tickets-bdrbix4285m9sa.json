@@ -1,0 +1,143 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "bdrbix4285m9sa",
+  "name": "Interactive - No. of tickets",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "Number of tickets created since Interactive startup.\n",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Number of tickets created since Interactive startup.\n",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "axisSoftMax": 10,
+          "barAlignment": 0,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 2,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "auto",
+          "spanNulls": false,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        }
+      },
+      "overrides": [
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/^(?!Total)/"
+          },
+          "properties": [
+            {
+              "id": "custom.lineStyle",
+              "value": {
+                "dash": [
+                  0,
+                  3,
+                  3
+                ],
+                "fill": "dot"
+              }
+            },
+            {
+              "id": "custom.lineWidth",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 8,
+      "x": 0,
+      "y": 51
+    },
+    "id": 69,
+    "libraryPanel": {
+      "name": "Interactive - No. of tickets",
+      "uid": "bdrbix4285m9sa"
+    },
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(increase(II_CreatedTicketsCount_total{instance=~\"interactive.*.$qmsInstanceName.quadient.cloud:30701\"}[24h]),\n    \"instanceShort\", \"$1\", \"instance\", \"(.*).$qmsInstanceName.quadient.cloud.*\"\n)",
+        "hide": false,
+        "legendFormat": "{{instanceShort}}",
+        "range": true,
+        "refId": "B"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "sum (increase(II_CreatedTicketsCount_total{instance=~\"interactive.*.$qmsInstanceName.quadient.cloud:30701\"}[24h]))",
+        "hide": false,
+        "instant": false,
+        "legendFormat": "Total",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Number of Interactive tickets per 24h",
+    "type": "timeseries"
+  }
+}

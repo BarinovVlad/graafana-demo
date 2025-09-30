@@ -1,0 +1,82 @@
+{
+  "folderUid": "fel522vsv8flsf",
+  "uid": "cdp4wxgp57l6of",
+  "name": "Monthly - Disk Usage (AVG)",
+  "kind": 1,
+  "type": "stat",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "mappings": [],
+        "max": 100,
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 90
+            }
+          ]
+        },
+        "unit": "percent"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 17,
+      "w": 8,
+      "x": 16,
+      "y": 37
+    },
+    "id": 35,
+    "interval": "30m",
+    "options": {
+      "colorMode": "value",
+      "graphMode": "area",
+      "justifyMode": "auto",
+      "orientation": "auto",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "label_replace(\navg by (job) (100 * (1 - (avg_over_time(sum by(instance, job) (node_filesystem_avail_bytes{instance=~\"(scaler|interactive|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\",device=~\"/dev/mapper/rootvg.*\"})[$__range:$__interval]) / avg_over_time(sum by(instance, job) (node_filesystem_size_bytes{instance=~\"(scaler|interactive|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\",device=~\"/dev/mapper/rootvg.*\"})[$__range:$__interval])))),\n  \"instanceShort\", \"$1-$2\", \"job\", \"^[^-]*-(.*)-([^-]*)-[^-]*$\"\n)\n",
+        "format": "time_series",
+        "instant": true,
+        "legendFormat": "AVG {{instanceShort}}",
+        "range": false,
+        "refId": "Physical"
+      }
+    ],
+    "title": "Disk Usage (AVG) $qmsEnvironment",
+    "type": "stat"
+  }
+}
