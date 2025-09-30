@@ -1,0 +1,321 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 186,
+  "links": [],
+  "panels": [
+    {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 66,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "| **Customer:** ${qmsCustomer} | **Environments:** ${qmsEnvironment} | **Delivery Contacts:** ${qmsContacts} | **Timezone:** ${qmsTimezone} |",
+        "mode": "markdown"
+      },
+      "pluginVersion": "11.5.2",
+      "title": "Summary",
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 11,
+      "panels": [],
+      "repeat": "qmsEnvironment",
+      "title": "$qmsEnvironment",
+      "type": "row"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 16,
+        "x": 0,
+        "y": 3
+      },
+      "id": 98,
+      "libraryPanel": {
+        "name": "Monthly - CPU Usage",
+        "uid": "adp4wic0xrtogd"
+      },
+      "title": "CPU Usage $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 8,
+        "x": 16,
+        "y": 3
+      },
+      "id": 100,
+      "libraryPanel": {
+        "name": "Monthly - CPU Usage (AVG)",
+        "uid": "edp4wmlvh4uf4d"
+      },
+      "title": "CPU Usage (AVG) $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 16,
+        "x": 0,
+        "y": 20
+      },
+      "id": 102,
+      "libraryPanel": {
+        "name": "Monthly - Memory Usage",
+        "uid": "adp4wt18m25tsd"
+      },
+      "title": "Memory Usage $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 8,
+        "x": 16,
+        "y": 20
+      },
+      "id": 104,
+      "libraryPanel": {
+        "name": "Monthly - Memory Usage (AVG)",
+        "uid": "adp4wua8l7itce"
+      },
+      "title": "Memory Usage (AVG) $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 16,
+        "x": 0,
+        "y": 37
+      },
+      "id": 106,
+      "libraryPanel": {
+        "name": "Monthly - Disk Usage",
+        "uid": "cdp4wwixpm874c"
+      },
+      "title": "Disk Usage $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 8,
+        "x": 16,
+        "y": 37
+      },
+      "id": 108,
+      "libraryPanel": {
+        "name": "Monthly - Disk Usage (AVG)",
+        "uid": "cdp4wxgp57l6of"
+      },
+      "title": "Disk Usage (AVG) $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 17,
+        "w": 16,
+        "x": 0,
+        "y": 54
+      },
+      "id": 111,
+      "libraryPanel": {
+        "name": "Monthly - Storage Usage",
+        "uid": "cdp4wyi4kxs00c"
+      },
+      "title": "Storage Usage $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 54
+      },
+      "id": 114,
+      "libraryPanel": {
+        "name": "Monthly - Storage Usage (AVG)",
+        "uid": "edp4x0e7zagaoc"
+      },
+      "title": "Storage Usage (AVG) $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 63
+      },
+      "id": 112,
+      "libraryPanel": {
+        "name": "Monthly - Storage capacity",
+        "uid": "ddp4x13itrjeoa"
+      },
+      "title": "Storage capacity $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 9,
+        "w": 16,
+        "x": 0,
+        "y": 71
+      },
+      "id": 116,
+      "libraryPanel": {
+        "name": "Completed Jobs $qmsEnvironment",
+        "uid": "ddsm2ocnqqnlsd"
+      },
+      "title": "Completed Jobs $qmsEnvironment"
+    },
+    {
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 71
+      },
+      "id": 115,
+      "libraryPanel": {
+        "name": "AVG Completed Jobs $qmsEnvironment",
+        "uid": "edsm4btce3vgge"
+      },
+      "title": "AVG Completed Jobs $qmsEnvironment"
+    }
+  ],
+  "preload": false,
+  "refresh": "",
+  "schemaVersion": 40,
+  "tags": [
+    "qms-monthly"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "$__all",
+          "value": "$__all"
+        },
+        "includeAll": true,
+        "label": "Environment",
+        "name": "qmsEnvironment",
+        "options": [
+          {
+            "selected": false,
+            "text": "DEV",
+            "value": "DEV"
+          },
+          {
+            "selected": false,
+            "text": "UAT",
+            "value": "UAT"
+          },
+          {
+            "selected": false,
+            "text": "PREPROD",
+            "value": "PREPROD"
+          },
+          {
+            "selected": false,
+            "text": "PROD",
+            "value": "PROD"
+          }
+        ],
+        "query": "DEV,UAT,PREPROD,PROD",
+        "type": "custom"
+      },
+      {
+        "current": {
+          "text": "l.pritchard@quadient.com,a.polackova@quadient.com",
+          "value": "l.pritchard@quadient.com,a.polackova@quadient.com"
+        },
+        "hide": 2,
+        "name": "qmsContacts",
+        "query": "l.pritchard@quadient.com,a.polackova@quadient.com",
+        "skipUrlSync": true,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "Thanos",
+          "value": "_Xp6nwlMk"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "label": "QMS Datasource",
+        "name": "qmsDatasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "Thanos",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": "generaliuk",
+          "value": "generaliuk"
+        },
+        "hide": 2,
+        "name": "qmsCustomer",
+        "query": "generaliuk",
+        "skipUrlSync": true,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "Europe/London",
+          "value": "Europe/London"
+        },
+        "description": "",
+        "hide": 2,
+        "label": "QMS Timezone",
+        "name": "qmsTimezone",
+        "query": "Europe/London",
+        "skipUrlSync": true,
+        "type": "constant"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1M/M",
+    "to": "now-1M/M"
+  },
+  "timepicker": {},
+  "timezone": "Europe/London",
+  "title": "Generali UK monthly",
+  "uid": "adpr64yrgpqtce",
+  "version": 5,
+  "weekStart": "monday"
+}
