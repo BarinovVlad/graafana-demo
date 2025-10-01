@@ -1,0 +1,52 @@
+{
+  "uid": "go-runtime-dashboard258",
+  "title": "Go Runtime Metrics",
+  "tags": ["prometheus", "go"],
+  "timezone": "browser",
+  "schemaVersion": 30,
+  "version": 1,
+  "refresh": "30s",
+  "panels": [
+     {
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 37
+      },
+      "id": 173,
+      "libraryPanel": {
+        "name": "DB - Daily (Monday - Saturday)",
+        "uid": "fe637geh6fklcd"
+      },
+      "title": "DB - Daily (Monday - Saturday)",
+      "type": "library-panel-ref"
+    },
+    {
+      "type": "graph",
+      "title": "Go GC Pause Count",
+      "id": 1,
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "increase(go_gc_pauses_seconds_count[5m])",
+          "legendFormat": "GC Pauses (5m)",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Heap Allocation (bytes)",
+      "id": 2,
+      "datasource": "prometheus",
+      "targets": [
+        {
+          "expr": "go_memstats_heap_alloc_bytes",
+          "legendFormat": "Heap Alloc",
+          "refId": "B"
+        }
+      ]
+    }
+  ]
+}
