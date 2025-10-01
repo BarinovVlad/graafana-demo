@@ -8,20 +8,20 @@
   "refresh": "30s",
   "panels": [
      {
-      "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 0,
-        "y": 37
-      },
-      "id": 173,
-      "libraryPanel": {
-        "name": "DB - Daily (Monday - Saturday)",
-        "uid": "fe637geh6fklcd"
-      },
-      "title": "DB - Daily (Monday - Saturday)",
-      "type": "library-panel-ref"
-    },
+  "gridPos": {
+    "h": 5,
+    "w": 6,
+    "x": 12,
+    "y": 42
+  },
+  "id": 174,
+  "libraryPanel": {
+    "name": "All Daily (Monday - Saturday) demo",
+    "uid": "ee5zwrrl4ecqoa"
+  },
+  "title": "All Daily (Monday - Saturday) demo",
+  "type": "library-panel-ref"
+},
     {
       "type": "graph",
       "title": "Go GC Pause Count",
