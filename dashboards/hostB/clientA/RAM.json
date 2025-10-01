@@ -21,28 +21,23 @@
   "id": 138,
   "links": [],
   "panels": [
-  {
-  "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
-  "id": 3,
-  "title": "Counter",
-  "type": "stat",
-  "libraryPanel": { "name": "Counter", "uid": "aez4o4a9vgxdse" }
+      {
+  "gridPos": {
+    "h": 5,
+    "w": 6,
+    "x": 12,
+    "y": 42
+  },
+  "id": 174,
+  "libraryPanel": {
+    "name": "All Daily (Monday - Saturday) demo",
+    "uid": "ee5zwrrl4ecqoa"
+  },
+  "title": "All Daily (Monday - Saturday) demo",
+  "type": "library-panel-ref"
 },
-    {
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 1,
-      "libraryPanel": {
-        "name": "Series",
-        "uid": "bez4onojrzcaoc"
-      },
-      "title": "Series",
-      "type": "library-panel-ref"
-    }
+  {
+
   ],
   "preload": false,
   "schemaVersion": 41,
@@ -61,5 +56,6 @@
   "version": 1
 
 }
+
 
 
