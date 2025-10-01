@@ -1,0 +1,25 @@
+{
+  "uid": "test-panel-001",
+  "name": "TEST PANEL",
+  "model": {
+    "title": "Test Panel",
+    "type": "graph",
+    "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+    "id": 1,
+    "targets": [
+      {
+        "expr": "up",
+        "legendFormat": "{{instance}}",
+        "refId": "A",
+        "datasource": {
+          "type": "prometheus"
+        }
+      }
+    ],
+    "datasource": null,
+    "panels": [],
+    "options": {},
+    "timeFrom": null,
+    "timeShift": null
+  }
+}
