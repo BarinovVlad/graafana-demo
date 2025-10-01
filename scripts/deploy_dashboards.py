@@ -32,7 +32,7 @@ def delete_dashboard(grafana_url, api_token, uid):
     if resp.status_code == 200:
         print(f"🗑 Deleted dashboard {uid}")
     elif resp.status_code != 404:
-        print(f"⚠️ Failed to delete dashboard {uid}: {resp.status_code} {resp.text}")
+        print(f" Failed to delete dashboard {uid}: {resp.status_code} {resp.text}")
 
 def delete_folder(grafana_url, api_token, uid):
     headers = {"Authorization": f"Bearer {api_token}"}
@@ -40,18 +40,18 @@ def delete_folder(grafana_url, api_token, uid):
     if resp.status_code == 200:
         print(f"🗑 Deleted folder {uid}")
     elif resp.status_code != 404:
-        print(f"⚠️ Failed to delete folder {uid}: {resp.status_code} {resp.text}")
+        print(f" Failed to delete folder {uid}: {resp.status_code} {resp.text}")
 
 def deploy_dashboard(grafana_url, api_token, folder_uid, dashboard_file):
     with open(dashboard_file, "r", encoding="utf-8") as f:
         try:
             dashboard = json.load(f)
         except json.JSONDecodeError as e:
-            print(f"⚠️ Skipping invalid JSON {dashboard_file}: {e}")
+            print(f" Skipping invalid JSON {dashboard_file}: {e}")
             return None
 
     if "uid" not in dashboard:
-        print(f"❌ Dashboard {dashboard_file} missing 'uid'. Skipping.")
+        print(f" Dashboard {dashboard_file} missing 'uid'. Skipping.")
         return None
 
     headers = {"Authorization": f"Bearer {api_token}", "Content-Type": "application/json"}
@@ -69,7 +69,7 @@ def deploy_dashboard(grafana_url, api_token, folder_uid, dashboard_file):
         requests.delete(f"{grafana_url}/api/dashboards/uid/{uid}", headers=headers)
 
     payload = {"dashboard": dashboard, "folderUid": folder_uid, "overwrite": True}
-    print(f"⬆️ Uploading dashboard: {dashboard_file}")
+    print(f" Uploading dashboard: {dashboard_file}")
     r = requests.post(f"{grafana_url}/api/dashboards/db", headers=headers, json=payload)
     r.raise_for_status()
     return uid
@@ -79,10 +79,10 @@ def ensure_folder(grafana_url, api_token, folder_name):
     headers = {"Authorization": f"Bearer {api_token}"}
     resp = requests.get(f"{grafana_url}/api/folders/{uid}", headers=headers)
     if resp.status_code == 200:
-        print(f"📂 Folder '{folder_name}' exists.")
+        print(f" Folder '{folder_name}' exists.")
         return uid
 
-    print(f"📂 Creating folder '{folder_name}'...")
+    print(f" Creating folder '{folder_name}'...")
     payload = {"uid": uid, "title": folder_name}
     r = requests.post(f"{grafana_url}/api/folders", headers={**headers, "Content-Type": "application/json"}, json=payload)
     r.raise_for_status()
@@ -118,7 +118,7 @@ for target in grafana_targets:
                 local_dashboards.add(uid)
 
     
-    print("\n🔍 Checking for obsolete dashboards/folders...")
+    print("\n Checking for obsolete dashboards/folders...")
     existing_dashboards = list_dashboards(url, token)
     existing_folders = list_folders(url, token)
 
