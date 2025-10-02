@@ -1,0 +1,106 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ae5zx9xsb21ogd",
+  "name": "Automation Jobs per Queue (Completed)",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "auto",
+          "spanNulls": false,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 16,
+      "x": 0,
+      "y": 22
+    },
+    "id": 203,
+    "options": {
+      "legend": {
+        "calcs": [
+          "lastNotNull",
+          "sum"
+        ],
+        "displayMode": "table",
+        "placement": "right",
+        "showLegend": true,
+        "sortBy": "Total",
+        "sortDesc": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "12.0.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "sum by(queue) (increase(qms_automation_job_status_counter{instanceName=\"$qmsInstanceName\",status=\"ok\",queue!~\"G_WatchFolder.*\"}[$__interval]))",
+        "hide": false,
+        "legendFormat": "{{queue}}",
+        "range": true,
+        "refId": "B"
+      }
+    ],
+    "title": "Automation Jobs per Queue (Completed)",
+    "type": "timeseries"
+  }
+}

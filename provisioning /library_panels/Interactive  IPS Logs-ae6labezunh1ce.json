@@ -1,0 +1,51 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ae6labezunh1ce",
+  "name": "Interactive  IPS Logs",
+  "kind": 1,
+  "type": "logs",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "loki"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {},
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 12,
+      "x": 12,
+      "y": 75
+    },
+    "id": 97,
+    "options": {
+      "dedupStrategy": "none",
+      "enableInfiniteScrolling": false,
+      "enableLogDetails": true,
+      "prettifyLogMessage": false,
+      "showCommonLabels": false,
+      "showLabels": false,
+      "showTime": false,
+      "sortOrder": "Descending",
+      "wrapLogMessage": false
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "loki"
+        },
+        "direction": "backward",
+        "editorMode": "code",
+        "expr": "{instance=~\"interactive.*\", job=\"logs_ips\"}",
+        "queryType": "range",
+        "refId": "A"
+      }
+    ],
+    "title": "Interactive  IPS Logs",
+    "type": "logs"
+  }
+}

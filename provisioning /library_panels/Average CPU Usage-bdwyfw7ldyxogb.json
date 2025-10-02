@@ -1,0 +1,122 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "bdwyfw7ldyxogb",
+  "name": "Average CPU Usage",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 10,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "smooth",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "never",
+          "spanNulls": true,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "line"
+          }
+        },
+        "mappings": [],
+        "max": 100,
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 90
+            }
+          ]
+        },
+        "unit": "percent"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 10,
+      "w": 8,
+      "x": 0,
+      "y": 44
+    },
+    "id": 148,
+    "interval": "5m",
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "multi",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(100 - (avg without(instance, cpu, projectName) (irate(node_cpu_seconds_total{mode=\"idle\",customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9100$\"}[$__interval])) * 100),\n    \"instanceShort\", \"$1\", \"job\", \"$qmsInstanceName-(.*)-vm\"\n)",
+        "hide": false,
+        "instant": false,
+        "legendFormat": "{{instanceShort}}",
+        "range": true,
+        "refId": "A"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(100 - (avg without(instance, cpu, projectName, core) (irate(windows_cpu_time_total{mode=\"idle\", customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\", instance=~\".*:9182$\"}[$__interval])) * 100),\n    \"instanceShort\", \"$1\", \"job\", \"$qmsInstanceName-(.*)-vm\"\n)",
+        "hide": false,
+        "instant": false,
+        "legendFormat": "{{instanceShort}}",
+        "range": true,
+        "refId": "Windows"
+      }
+    ],
+    "title": "Average CPU Usage",
+    "type": "timeseries"
+  }
+}

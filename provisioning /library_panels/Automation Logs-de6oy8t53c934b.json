@@ -1,0 +1,49 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "de6oy8t53c934b",
+  "name": "Automation Logs",
+  "kind": 1,
+  "type": "logs",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "loki"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {},
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 13,
+      "w": 24,
+      "x": 0,
+      "y": 9
+    },
+    "id": 207,
+    "options": {
+      "dedupStrategy": "none",
+      "enableLogDetails": true,
+      "prettifyLogMessage": false,
+      "showCommonLabels": false,
+      "showLabels": false,
+      "showTime": false,
+      "sortOrder": "Descending",
+      "wrapLogMessage": false
+    },
+    "pluginVersion": "11.3.0",
+    "targets": [
+      {
+        "datasource": {
+          "type": "loki"
+        },
+        "editorMode": "code",
+        "expr": "{job=\"automationlogs\"}",
+        "queryType": "range",
+        "refId": "A"
+      }
+    ],
+    "title": "Automation Logs",
+    "type": "logs"
+  }
+}
