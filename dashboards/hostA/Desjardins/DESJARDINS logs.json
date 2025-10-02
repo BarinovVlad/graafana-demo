@@ -1,0 +1,241 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 312,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 89,
+      "panels": [],
+      "title": "Logs",
+      "type": "row"
+    },
+    {
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 199,
+      "libraryPanel": {
+        "name": "Scaler Logs",
+        "uid": "ee6kykat442yod"
+      },
+      "title": "Scaler Logs",
+      "type": "library-panel-ref"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 100,
+      "libraryPanel": {
+        "name": "Scaler ICM Logs",
+        "uid": "fe6la98e26j28c"
+      },
+      "title": "Scaler ICM Logs",
+      "type": "library-panel-ref"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 99,
+      "libraryPanel": {
+        "name": "Scaler IPS Logs",
+        "uid": "ee6la9watowlce"
+      },
+      "title": "Scaler IPS Logs",
+      "type": "library-panel-ref"
+    },
+    {
+      "gridPos": {
+        "h": 13,
+        "w": 24,
+        "x": 0,
+        "y": 24
+      },
+      "id": 93,
+      "libraryPanel": {
+        "name": "Interactive Logs",
+        "uid": "de6laakvv7r40e"
+      },
+      "title": "Interactive Logs",
+      "type": "library-panel-ref"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 37
+      },
+      "id": 101,
+      "libraryPanel": {
+        "name": "Interactive ICM Logs",
+        "uid": "ee6lab0t8wohsa"
+      },
+      "title": "Interactive ICM Logs",
+      "type": "library-panel-ref"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 37
+      },
+      "id": 97,
+      "libraryPanel": {
+        "name": "Interactive  IPS Logs",
+        "uid": "ae6labezunh1ce"
+      },
+      "title": "Interactive  IPS Logs",
+      "type": "library-panel-ref"
+    }
+  ],
+  "preload": false,
+  "refresh": "",
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "desjardins-predev",
+          "value": "desjardins-predev"
+        },
+        "description": "",
+        "label": "QMS Instance name",
+        "name": "qmsInstanceName",
+        "options": [
+          {
+            "selected": true,
+            "text": "desjardins-predev",
+            "value": "desjardins-predev"
+          },
+          {
+            "selected": false,
+            "text": "desjardins-dev",
+            "value": "desjardins-dev"
+          },
+          {
+            "selected": false,
+            "text": "desjardins-staging",
+            "value": "desjardins-staging"
+          },
+          {
+            "selected": false,
+            "text": "desjardins-cerif",
+            "value": "desjardins-cerif"
+          },
+          {
+            "selected": false,
+            "text": "desjardins-prod",
+            "value": "desjardins-prod"
+          }
+        ],
+        "query": "desjardins-predev,desjardins-dev,desjardins-staging,desjardins-cerif,desjardins-prod",
+        "type": "custom"
+      },
+      {
+        "current": {
+          "text": "Thanos",
+          "value": "_Xp6nwlMk"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "label": "QMS Datasource",
+        "name": "qmsDatasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "Thanos",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": "Loki-DESJARDINS-DEV",
+          "value": "fewu2b9zr6pz4f"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "label": "Loki Instance",
+        "name": "lokiInstance",
+        "options": [],
+        "query": "loki",
+        "refresh": 1,
+        "regex": "/^Loki-${qmsInstanceName:text}$/i",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": ".quadient.cloud",
+          "value": ".quadient.cloud"
+        },
+        "hide": 2,
+        "name": "qmsDomainSuffix",
+        "query": ".quadient.cloud",
+        "skipUrlSync": true,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "DESJARDINS",
+          "value": "DESJARDINS"
+        },
+        "hide": 2,
+        "name": "qmsCustomerName",
+        "options": [
+          {
+            "selected": true,
+            "text": "DESJARDINS",
+            "value": "DESJARDINS"
+          }
+        ],
+        "query": "DESJARDINS",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "America/Toronto",
+  "title": "DESJARDINS logs",
+  "uid": "a903dac9-7f62-448f-a847-df4bd69a22e8",
+  "version": 3
+}

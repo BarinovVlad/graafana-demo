@@ -1,0 +1,3453 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 244,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 1
+          },
+          "id": 198,
+          "libraryPanel": {
+            "name": "Linux VM Overview",
+            "uid": "b417f9c5-da7c-44d9-b4b3-89511e1306c8"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 9,
+            "w": 24,
+            "x": 0,
+            "y": 597
+          },
+          "id": 167,
+          "libraryPanel": {
+            "name": "Inspire heartbeat",
+            "uid": "da8a3ac2-d83f-4703-b760-81aa246f5df5"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 15,
+            "x": 0,
+            "y": 606
+          },
+          "id": 168,
+          "libraryPanel": {
+            "name": "RHEL security updates",
+            "uid": "be601y0u0kxs0f"
+          },
+          "title": ""
+        },
+        {
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 14,
+            "w": 9,
+            "x": 15,
+            "y": 606
+          },
+          "id": 87,
+          "options": {
+            "alertInstanceLabelFilter": "instance=~\"scaler0.aware-prod.quadient.cloud:30600|scaler1.aware-prod.quadient.cloud:30600|scaler2.aware-prod.quadient.cloud:30600|interactive0.aware-prod.quadient.cloud:30701|interactive1.aware-prod.quadient.cloud:30701|monitoring.aware-prod.quadient.cloud:9100\"",
+            "alertName": "",
+            "dashboardAlerts": false,
+            "datasource": "-- Grafana --",
+            "folder": {
+              "title": "PROD",
+              "uid": "VHE0l737z"
+            },
+            "groupBy": [],
+            "groupMode": "default",
+            "maxItems": 20,
+            "sortOrder": 4,
+            "stateFilter": {
+              "error": true,
+              "firing": true,
+              "noData": true,
+              "normal": true,
+              "pending": true
+            },
+            "viewMode": "list"
+          },
+          "pluginVersion": "11.3.0",
+          "title": "Alerts",
+          "type": "alertlist"
+        },
+        {
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 0,
+            "y": 614
+          },
+          "id": 171,
+          "libraryPanel": {
+            "name": "Number of requests over 30m ",
+            "uid": "be634qzvsepdsb"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 5,
+            "y": 614
+          },
+          "id": 170,
+          "libraryPanel": {
+            "name": "Number of requests over 3s ",
+            "uid": "de634qkkvsw00d"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 10,
+            "y": 614
+          },
+          "id": 172,
+          "libraryPanel": {
+            "name": "Audit Logs",
+            "uid": "ce634rf1p7tvkc"
+          },
+          "title": ""
+        }
+      ],
+      "title": "Availability",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 129,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 2
+          },
+          "id": 176,
+          "libraryPanel": {
+            "name": "Daily VM/Disk Azure backup",
+            "uid": "de637uyb4d98ge"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 2
+          },
+          "id": 177,
+          "libraryPanel": {
+            "name": "Azure VM/Disks backup health",
+            "uid": "ae637vchimcqob"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 0,
+            "y": 397
+          },
+          "id": 173,
+          "libraryPanel": {
+            "name": "DB - Daily (Monday - Saturday)",
+            "uid": "fe637geh6fklcd"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 6,
+            "y": 397
+          },
+          "id": 134,
+          "libraryPanel": {
+            "name": "DB - Weekly (4 Sundays)",
+            "uid": "ce637grpnkb28c"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 12,
+            "y": 397
+          },
+          "id": 174,
+          "libraryPanel": {
+            "name": "All Daily (Monday - Saturday)",
+            "uid": "ee5zwrrl4ecqoa"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 5,
+            "w": 6,
+            "x": 18,
+            "y": 397
+          },
+          "id": 175,
+          "libraryPanel": {
+            "name": "All Weekly (4 Sundays)",
+            "uid": "ae5zwt87ie58gc"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 402
+          },
+          "id": 201,
+          "libraryPanel": {
+            "name": "All Daily (Monday - Saturday)",
+            "uid": "ee5zwrrl4ecqoa"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 402
+          },
+          "id": 202,
+          "libraryPanel": {
+            "name": "Weekly (4 Sundays)",
+            "uid": "ee5zy6hy08tmod"
+          },
+          "title": ""
+        }
+      ],
+      "title": "Backups Detail",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 2
+      },
+      "id": 200,
+      "panels": [],
+      "title": "Splunk Forwarder Monitor",
+      "type": "row"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 3
+      },
+      "id": 203,
+      "libraryPanel": {
+        "name": "Splunk heartbeat",
+        "uid": "be5zyyr8ojz0gd"
+      },
+      "title": ""
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 3
+      },
+      "id": 204,
+      "libraryPanel": {
+        "name": "Splunk heartbeat percentage",
+        "uid": "ce5zyzzz0lfy8a"
+      },
+      "title": ""
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "id": 20,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 10,
+            "w": 8,
+            "x": 0,
+            "y": 12
+          },
+          "id": 152,
+          "libraryPanel": {
+            "name": "CPU Usage ",
+            "uid": "edwyfrnbscruoc"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 10,
+            "w": 8,
+            "x": 8,
+            "y": 12
+          },
+          "id": 150,
+          "libraryPanel": {
+            "name": "Memory Usage",
+            "uid": "edwyftpf1xjwgd"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 33,
+            "w": 8,
+            "x": 16,
+            "y": 12
+          },
+          "id": 154,
+          "libraryPanel": {
+            "name": "DiskSpace usage",
+            "uid": "fdwyfvi5tor28d"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 10,
+            "w": 8,
+            "x": 0,
+            "y": 212
+          },
+          "id": 148,
+          "libraryPanel": {
+            "name": "Average CPU Usage",
+            "uid": "bdwyfw7ldyxogb"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 10,
+            "w": 8,
+            "x": 8,
+            "y": 212
+          },
+          "id": 156,
+          "libraryPanel": {
+            "name": "File Shares usage",
+            "uid": "bdwyfwozp0etcf"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 13,
+            "w": 16,
+            "x": 0,
+            "y": 222
+          },
+          "id": 158,
+          "libraryPanel": {
+            "name": "Network Traffic",
+            "uid": "ddwyfx20egikga"
+          },
+          "title": ""
+        }
+      ],
+      "title": "Resources",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 205,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 13
+          },
+          "id": 206,
+          "libraryPanel": {
+            "name": "Number of requests over 3s ",
+            "uid": "de634qkkvsw00d"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 13
+          },
+          "id": 207,
+          "libraryPanel": {
+            "name": "Request Count",
+            "uid": "ae6p20b3viznke"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 188
+          },
+          "id": 208,
+          "libraryPanel": {
+            "name": "SUCCESSFUL - Average Request Time",
+            "uid": "be7h4gsw159fkc"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 188
+          },
+          "id": 209,
+          "libraryPanel": {
+            "name": "FAILED - Average Request Time",
+            "uid": "ae7h4h2xmy3ggc"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 196
+          },
+          "id": 210,
+          "libraryPanel": {
+            "name": "Number of requests over 3s - Detail",
+            "uid": "ee7h4hhj82yo0d"
+          },
+          "title": ""
+        }
+      ],
+      "title": "Application Gateway",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      },
+      "id": 54,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 14
+          },
+          "id": 160,
+          "libraryPanel": {
+            "name": "Scaler-Failed jobs",
+            "uid": "bdwygbyn55vk0f"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 14
+          },
+          "id": 162,
+          "libraryPanel": {
+            "name": "Scaler-Completed jobs",
+            "uid": "cdwyg8q5h4su8f"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 14
+          },
+          "id": 178,
+          "libraryPanel": {
+            "name": "Canceled jobs",
+            "uid": "be634tsewaku8c"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 165
+          },
+          "id": 179,
+          "libraryPanel": {
+            "name": "Scaler Jobs per Workflow (Completed)",
+            "uid": "ddwygvmg0voxsb"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 165
+          },
+          "id": 180,
+          "libraryPanel": {
+            "name": "Scaler Jobs per Workflow (Failed)",
+            "uid": "adwygw1z45j40d"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 173
+          },
+          "id": 181,
+          "libraryPanel": {
+            "name": "Processing jobs",
+            "uid": "de634vwlabf9cd"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 173
+          },
+          "id": 182,
+          "libraryPanel": {
+            "name": "Average IPS Queue Waiting Time",
+            "uid": "ae634wfqnamm8b"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 173
+          },
+          "id": 183,
+          "libraryPanel": {
+            "name": "Scaler workflows",
+            "uid": "be634ws8hiccgc"
+          },
+          "title": ""
+        }
+      ],
+      "title": "Scalers",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "id": 67,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 15
+          },
+          "id": 184,
+          "libraryPanel": {
+            "name": "Number of tickets",
+            "uid": "ae5zxgqtghczkf"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 15
+          },
+          "id": 185,
+          "libraryPanel": {
+            "name": "IPS call errors",
+            "uid": "ce5zxhpc7yq68d"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 15
+          },
+          "id": 186,
+          "libraryPanel": {
+            "name": "Interactive requests & errors",
+            "uid": "ae5zxihqoehhcb"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 0,
+            "y": 150
+          },
+          "id": 187,
+          "libraryPanel": {
+            "name": "Number of users",
+            "uid": "ae5zxjiligtmof"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 8,
+            "y": 150
+          },
+          "id": 188,
+          "libraryPanel": {
+            "name": "Drafts and Tickets",
+            "uid": "ae5zxk7jnyhhcb"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 8,
+            "x": 16,
+            "y": 150
+          },
+          "id": 189,
+          "libraryPanel": {
+            "name": "Connections",
+            "uid": "ee5zxktdg0lc0f"
+          },
+          "title": ""
+        }
+      ],
+      "title": "Interactives",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 32,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 0,
+            "y": 16
+          },
+          "id": 36,
+          "libraryPanel": {
+            "name": "Scaler heap used",
+            "uid": "adzki8ejoum80b"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 6,
+            "y": 16
+          },
+          "id": 34,
+          "libraryPanel": {
+            "name": "Scaler start time",
+            "uid": "fdzkj0a3krtvkf"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 12,
+            "y": 16
+          },
+          "id": 38,
+          "libraryPanel": {
+            "name": "JVM Heap Scaler",
+            "uid": "cdzkmgpx3lk3ke"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 18,
+            "y": 16
+          },
+          "id": 40,
+          "libraryPanel": {
+            "name": "Scaler thread states",
+            "uid": "fdzkmg404o4cgd"
+          },
+          "title": ""
+        }
+      ],
+      "title": "Scaler JVM",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 61,
+      "panels": [
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 0,
+            "y": 17
+          },
+          "id": 190,
+          "libraryPanel": {
+            "name": "Interactive heap used",
+            "uid": "de6351688b0n4e"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 6,
+            "y": 17
+          },
+          "id": 191,
+          "libraryPanel": {
+            "name": "Interactive start time",
+            "uid": "be6351hc4jthcd"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 12,
+            "y": 17
+          },
+          "id": 196,
+          "libraryPanel": {
+            "name": "JVM Heap Interactive",
+            "uid": "ce63jb0t6ddkwe"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 7,
+            "w": 6,
+            "x": 18,
+            "y": 17
+          },
+          "id": 197,
+          "libraryPanel": {
+            "name": "Interactive thread states",
+            "uid": "ee63k1lfazchsa"
+          },
+          "title": ""
+        }
+      ],
+      "title": "Interactive JVM",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 89,
+      "panels": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 15,
+            "w": 24,
+            "x": 0,
+            "y": 18
+          },
+          "id": 212,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Descending",
+            "wrapLogMessage": false
+          },
+          "pluginVersion": "11.3.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "${lokiInstance}"
+              },
+              "editorMode": "builder",
+              "expr": "{job=\"scalerlogs\"}",
+              "maxLines": 5000,
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Scaler Logs",
+          "type": "logs"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {},
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 58
+          },
+          "id": 100,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Descending",
+            "wrapLogMessage": false
+          },
+          "pluginVersion": "11.3.0",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "${lokiInstance}"
+              },
+              "editorMode": "code",
+              "expr": "{instance=~\"scaler2.$qmsInstanceName$qmsDomainSuffix|scaler1.$qmsInstanceName$qmsDomainSuffix|scaler0.$qmsInstanceName$qmsDomainSuffix\", job=\"icmlogs\"}",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Scaler ICM Logs",
+          "type": "logs"
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 58
+          },
+          "id": 99,
+          "libraryPanel": {
+            "name": "Scaler IPS Logs",
+            "uid": "ee6la9watowlce"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 13,
+            "w": 24,
+            "x": 0,
+            "y": 66
+          },
+          "id": 93,
+          "libraryPanel": {
+            "name": "Interactive Logs",
+            "uid": "de6laakvv7r40e"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 79
+          },
+          "id": 101,
+          "libraryPanel": {
+            "name": "Interactive ICM Logs",
+            "uid": "ee6lab0t8wohsa"
+          },
+          "title": ""
+        },
+        {
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 79
+          },
+          "id": 97,
+          "libraryPanel": {
+            "name": "Interactive  IPS Logs",
+            "uid": "ae6labezunh1ce"
+          },
+          "title": ""
+        }
+      ],
+      "title": "Logs",
+      "type": "row"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 213,
+      "panels": [],
+      "title": "Row title",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${lokiInstance}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 100,
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 19,
+        "x": 0,
+        "y": 19
+      },
+      "id": 199,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "editorMode": "builder",
+          "expr": "{job=\"scalerlogs\"} |= `HealthMonitor` | pattern `<_> heap.memory.used/total=<heap_memory>%,`",
+          "maxLines": 5000,
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Heap memory usage",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "kvp",
+            "keepTime": true,
+            "replace": true,
+            "source": "labels"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "-": true,
+              "00": true,
+              "01": true,
+              "02": true,
+              "03": true,
+              "04": true,
+              "05": true,
+              "06": true,
+              "069-05": true,
+              "07": true,
+              "070-05": true,
+              "071-05": true,
+              "072-05": true,
+              "073-05": true,
+              "074-05": true,
+              "075-05": true,
+              "076-05": true,
+              "077-05": true,
+              "078-05": true,
+              "079-05": true,
+              "08": true,
+              "080-05": true,
+              "081-05": true,
+              "082-05": true,
+              "083-05": true,
+              "084-05": true,
+              "085-05": true,
+              "086-05": true,
+              "087-05": true,
+              "088-05": true,
+              "089-05": true,
+              "09": true,
+              "090-05": true,
+              "091-05": true,
+              "092-05": true,
+              "093-05": true,
+              "094-05": true,
+              "095-05": true,
+              "096-05": true,
+              "097-05": true,
+              "098-05": true,
+              "099-05": true,
+              "10": true,
+              "100-05": true,
+              "101-05": true,
+              "102-05": true,
+              "103-05": true,
+              "104-05": true,
+              "105-05": true,
+              "106-05": true,
+              "107-05": true,
+              "108-05": true,
+              "109-05": true,
+              "11": true,
+              "110-05": true,
+              "111-05": true,
+              "112-05": true,
+              "113-05": true,
+              "114-05": true,
+              "115-05": true,
+              "116-05": true,
+              "117-05": true,
+              "118-05": true,
+              "119-05": true,
+              "12": true,
+              "120-05": true,
+              "121-05": true,
+              "122-05": true,
+              "123-05": true,
+              "124-05": true,
+              "125-05": true,
+              "126-05": true,
+              "127-05": true,
+              "128-05": true,
+              "129-05": true,
+              "13": true,
+              "130-05": true,
+              "131-05": true,
+              "14": true,
+              "141-05": true,
+              "142-05": true,
+              "143-05": true,
+              "144-05": true,
+              "145-05": true,
+              "146-05": true,
+              "147-05": true,
+              "148-05": true,
+              "149-05": true,
+              "15": true,
+              "150-05": true,
+              "155-05": true,
+              "156-05": true,
+              "157-05": true,
+              "158-05": true,
+              "159-05": true,
+              "16": true,
+              "160-05": true,
+              "161-05": true,
+              "162-05": true,
+              "163-05": true,
+              "164-05": true,
+              "165-05": true,
+              "17": true,
+              "18": true,
+              "19": true,
+              "20": true,
+              "2025-01-24T00": true,
+              "2025-01-24T01": true,
+              "21": true,
+              "22": true,
+              "23": true,
+              "24": true,
+              "25": true,
+              "26": true,
+              "27": true,
+              "28": true,
+              "29": true,
+              "30": true,
+              "31": true,
+              "32": true,
+              "33": true,
+              "34": true,
+              "341-05": true,
+              "342-05": true,
+              "343-05": true,
+              "344-05": true,
+              "345-05": true,
+              "346-05": true,
+              "347-05": true,
+              "348-05": true,
+              "349-05": true,
+              "35": true,
+              "350-05": true,
+              "351-05": true,
+              "352-05": true,
+              "353-05": true,
+              "354-05": true,
+              "355-05": true,
+              "356-05": true,
+              "357-05": true,
+              "358-05": true,
+              "359-05": true,
+              "36": true,
+              "360-05": true,
+              "361-05": true,
+              "362-05": true,
+              "363-05": true,
+              "364-05": true,
+              "365-05": true,
+              "366-05": true,
+              "367-05": true,
+              "368-05": true,
+              "369-05": true,
+              "37": true,
+              "370-05": true,
+              "371-05": true,
+              "372-05": true,
+              "373-05": true,
+              "374-05": true,
+              "375-05": true,
+              "376-05": true,
+              "377-05": true,
+              "378-05": true,
+              "379-05": true,
+              "38": true,
+              "380-05": true,
+              "381-05": true,
+              "382-05": true,
+              "383-05": true,
+              "384-05": true,
+              "385-05": true,
+              "386-05": true,
+              "387-05": true,
+              "388-05": true,
+              "389-05": true,
+              "39": true,
+              "390-05": true,
+              "391-05": true,
+              "392-05": true,
+              "393-05": true,
+              "394-05": true,
+              "395-05": true,
+              "396-05": true,
+              "397-05": true,
+              "398-05": true,
+              "399-05": true,
+              "40": true,
+              "400-05": true,
+              "401-05": true,
+              "402-05": true,
+              "403-05": true,
+              "404-05": true,
+              "405-05": true,
+              "406-05": true,
+              "407-05": true,
+              "408-05": true,
+              "409-05": true,
+              "41": true,
+              "410-05": true,
+              "411-05": true,
+              "412-05": true,
+              "413-05": true,
+              "414-05": true,
+              "415-05": true,
+              "416-05": true,
+              "42": true,
+              "43": true,
+              "44": true,
+              "45": true,
+              "453-05": true,
+              "454-05": true,
+              "455-05": true,
+              "456-05": true,
+              "457-05": true,
+              "458-05": true,
+              "459-05": true,
+              "46": true,
+              "460-05": true,
+              "461-05": true,
+              "462-05": true,
+              "463-05": true,
+              "464-05": true,
+              "465-05": true,
+              "466-05": true,
+              "467-05": true,
+              "468-05": true,
+              "469-05": true,
+              "470-05": true,
+              "471-05": true,
+              "472-05": true,
+              "473-05": true,
+              "474-05": true,
+              "475-05": true,
+              "476-05": true,
+              "477-05": true,
+              "48": true,
+              "49": true,
+              "50": true,
+              "51": true,
+              "52": true,
+              "53": true,
+              "54": true,
+              "55": true,
+              "550-05": true,
+              "551-05": true,
+              "552-05": true,
+              "553-05": true,
+              "554-05": true,
+              "555-05": true,
+              "556-05": true,
+              "557-05": true,
+              "558-05": true,
+              "559-05": true,
+              "56": true,
+              "560-05": true,
+              "561-05": true,
+              "562-05": true,
+              "563-05": true,
+              "564-05": true,
+              "565-05": true,
+              "566-05": true,
+              "567-05": true,
+              "568-05": true,
+              "569-05": true,
+              "57": true,
+              "570-05": true,
+              "571-05": true,
+              "574-05": true,
+              "575-05": true,
+              "576-05": true,
+              "577-05": true,
+              "578-05": true,
+              "579-05": true,
+              "58": true,
+              "580-05": true,
+              "581-05": true,
+              "582-05": true,
+              "583-05": true,
+              "584-05": true,
+              "585-05": true,
+              "586-05": true,
+              "587-05": true,
+              "588-05": true,
+              "589-05": true,
+              "59": true,
+              "590-05": true,
+              "591-05": true,
+              "592-05": true,
+              "593-05": true,
+              "594-05": true,
+              "595-05": true,
+              "596-05": true,
+              "597-05": true,
+              "598-05": true,
+              "599-05": true,
+              "600-05": true,
+              "601-05": true,
+              "602-05": true,
+              "603-05": true,
+              "604-05": true,
+              "605-05": true,
+              "606-05": true,
+              "607-05": true,
+              "608-05": true,
+              "609-05": true,
+              "610-05": true,
+              "611-05": true,
+              "612-05": true,
+              "613-05": true,
+              "614-05": true,
+              "615-05": true,
+              "616-05": true,
+              "617-05": true,
+              "618-05": true,
+              "619-05": true,
+              "620-05": true,
+              "621-05": true,
+              "622-05": true,
+              "623-05": true,
+              "624-05": true,
+              "625-05": true,
+              "626-05": true,
+              "627-05": true,
+              "628-05": true,
+              "716-05": true,
+              "717-05": true,
+              "718-05": true,
+              "719-05": true,
+              "720-05": true,
+              "721-05": true,
+              "722-05": true,
+              "723-05": true,
+              "724-05": true,
+              "725-05": true,
+              "726-05": true,
+              "727-05": true,
+              "728-05": true,
+              "729-05": true,
+              "730-05": true,
+              "731-05": true,
+              "732-05": true,
+              "733-05": true,
+              "734-05": true,
+              "735-05": true,
+              "736-05": true,
+              "737-05": true,
+              "738-05": true,
+              "739-05": true,
+              "740-05": true,
+              "741-05": true,
+              "742-05": true,
+              "743-05": true,
+              "744-05": true,
+              "745-05": true,
+              "746-05": true,
+              "747-05": true,
+              "748-05": true,
+              "749-05": true,
+              "750-05": true,
+              "751-05": true,
+              "752-05": true,
+              "753-05": true,
+              "754-05": true,
+              "755-05": true,
+              "756-05": true,
+              "757-05": true,
+              "758-05": true,
+              "759-05": true,
+              "760-05": true,
+              "761-05": true,
+              "762-05": true,
+              "763-05": true,
+              "764-05": true,
+              "765-05": true,
+              "766-05": true,
+              "767-05": true,
+              "768-05": true,
+              "769-05": true,
+              "770-05": true,
+              "771-05": true,
+              "772-05": true,
+              "773-05": true,
+              "774-05": true,
+              "775-05": true,
+              "776-05": true,
+              "777-05": true,
+              "778-05": true,
+              "779-05": true,
+              "780-05": true,
+              "781-05": true,
+              "782-05": true,
+              "783-05": true,
+              "784-05": true,
+              "785-05": true,
+              "786-05": true,
+              "787-05": true,
+              "788-05": true,
+              "789-05": true,
+              "790-05": true,
+              "791-05": true,
+              "792-05": true,
+              "793-05": true,
+              "794-05": true,
+              "795-05": true,
+              "796-05": true,
+              "797-05": true,
+              "798-05": true,
+              "799-05": true,
+              "800-05": true,
+              "801-05": true,
+              "802-05": true,
+              "803-05": true,
+              "804-05": true,
+              "805-05": true,
+              "806-05": true,
+              "807-05": true,
+              "808-05": true,
+              "809-05": true,
+              "810-05": true,
+              "811-05": true,
+              "812-05": true,
+              "813-05": true,
+              "814-05": true,
+              "INFO": true,
+              "Line": true,
+              "[10.40.3.4]": true,
+              "[10.40.3.5]": true,
+              "[10.40.3.6]": true,
+              "[10.40.3.7]": true,
+              "[10.40.3.8]": true,
+              "[5.3.6]": true,
+              "[Scaler-bbbf336b-hzl-cluster-3bddf8b]": true,
+              "[hz._hzInstance_1_Scaler-bbbf336b-hzl-cluster-3bddf8b.HealthMonitor]": true,
+              "client.connection.count": true,
+              "clientEndpoint.count": true,
+              "cluster.timeDiff": true,
+              "com.hazelcast.internal.diagnostics.HealthMonitor": true,
+              "connection.active.count": true,
+              "connection.count": true,
+              "detected_level": true,
+              "event.q.size": true,
+              "executor.q.async.size": true,
+              "executor.q.client.blocking.size": true,
+              "executor.q.client.query.size": true,
+              "executor.q.client.size": true,
+              "executor.q.cluster.size": true,
+              "executor.q.io.size": true,
+              "executor.q.mapLoad.size": true,
+              "executor.q.mapLoadAllKeys.size": true,
+              "executor.q.operations.size": true,
+              "executor.q.priorityOperation.size": true,
+              "executor.q.query.size": true,
+              "executor.q.response.size": true,
+              "executor.q.scheduled.size": true,
+              "executor.q.system.size": true,
+              "filename": true,
+              "heap.memory.free": true,
+              "heap.memory.max": true,
+              "heap.memory.total": true,
+              "heap.memory.used": true,
+              "heap.memory.used/max": true,
+              "id": true,
+              "instance": true,
+              "job": true,
+              "labelTypes": true,
+              "labels": true,
+              "load.process": true,
+              "load.system": true,
+              "load.systemAverage": true,
+              "major.gc.count": true,
+              "major.gc.time": true,
+              "minor.gc.count": true,
+              "minor.gc.time": true,
+              "operations.completed.count": true,
+              "operations.pending.invocations.count": true,
+              "operations.pending.invocations.percentage": true,
+              "operations.running.count": true,
+              "physical.memory.free": true,
+              "physical.memory.total": true,
+              "processors": true,
+              "proxy.count": true,
+              "service_name": true,
+              "swap.space.free": true,
+              "swap.space.total": true,
+              "thread.count": true,
+              "thread.peakCount": true,
+              "tsNs": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "-": 17,
+              "00": 96,
+              "01": 95,
+              "02": 94,
+              "03": 93,
+              "04": 92,
+              "05": 91,
+              "06": 90,
+              "07": 89,
+              "08": 88,
+              "2025-01-23T23": 112,
+              "2025-01-24T00": 97,
+              "239-05": 121,
+              "240-05": 120,
+              "241-05": 119,
+              "242-05": 118,
+              "243-05": 117,
+              "244-05": 116,
+              "245-05": 115,
+              "246-05": 114,
+              "247-05": 113,
+              "248-05": 111,
+              "249-05": 110,
+              "250-05": 109,
+              "251-05": 108,
+              "252-05": 107,
+              "253-05": 106,
+              "254-05": 105,
+              "255-05": 104,
+              "256-05": 103,
+              "257-05": 102,
+              "258-05": 101,
+              "259-05": 100,
+              "260-05": 99,
+              "261-05": 98,
+              "453-05": 87,
+              "454-05": 86,
+              "455-05": 85,
+              "456-05": 84,
+              "457-05": 83,
+              "458-05": 82,
+              "459-05": 81,
+              "460-05": 80,
+              "461-05": 79,
+              "462-05": 78,
+              "463-05": 77,
+              "464-05": 76,
+              "465-05": 75,
+              "466-05": 74,
+              "467-05": 73,
+              "468-05": 72,
+              "469-05": 71,
+              "470-05": 70,
+              "471-05": 69,
+              "472-05": 68,
+              "473-05": 67,
+              "474-05": 66,
+              "475-05": 65,
+              "476-05": 64,
+              "477-05": 63,
+              "53": 4,
+              "54": 5,
+              "55": 6,
+              "56": 7,
+              "57": 8,
+              "58": 9,
+              "59": 10,
+              "614-05": 166,
+              "615-05": 165,
+              "616-05": 164,
+              "617-05": 163,
+              "618-05": 162,
+              "619-05": 161,
+              "620-05": 160,
+              "621-05": 159,
+              "622-05": 158,
+              "623-05": 157,
+              "624-05": 156,
+              "625-05": 155,
+              "626-05": 154,
+              "627-05": 153,
+              "628-05": 152,
+              "629-05": 151,
+              "630-05": 150,
+              "631-05": 149,
+              "632-05": 148,
+              "633-05": 147,
+              "634-05": 146,
+              "635-05": 145,
+              "636-05": 144,
+              "637-05": 143,
+              "638-05": 142,
+              "639-05": 141,
+              "640-05": 140,
+              "641-05": 139,
+              "642-05": 138,
+              "643-05": 137,
+              "644-05": 136,
+              "645-05": 135,
+              "646-05": 134,
+              "647-05": 133,
+              "648-05": 132,
+              "649-05": 131,
+              "650-05": 130,
+              "651-05": 129,
+              "652-05": 128,
+              "653-05": 127,
+              "654-05": 126,
+              "655-05": 125,
+              "656-05": 124,
+              "657-05": 123,
+              "962-05": 195,
+              "963-05": 194,
+              "964-05": 193,
+              "965-05": 192,
+              "966-05": 191,
+              "967-05": 190,
+              "968-05": 189,
+              "969-05": 188,
+              "970-05": 187,
+              "971-05": 186,
+              "972-05": 185,
+              "973-05": 184,
+              "974-05": 183,
+              "975-05": 182,
+              "976-05": 181,
+              "977-05": 180,
+              "978-05": 179,
+              "979-05": 178,
+              "980-05": 177,
+              "981-05": 176,
+              "982-05": 175,
+              "983-05": 174,
+              "984-05": 173,
+              "985-05": 172,
+              "986-05": 171,
+              "987-05": 170,
+              "988-05": 169,
+              "INFO": 16,
+              "Line": 12,
+              "Time": 0,
+              "[10.40.3.4]": 196,
+              "[10.40.3.5]": 168,
+              "[10.40.3.6]": 167,
+              "[10.40.3.7]": 122,
+              "[10.40.3.8]": 18,
+              "[5.3.6]": 20,
+              "[Scaler-bbbf336b-hzl-cluster-3bddf8b]": 19,
+              "[hz._hzInstance_1_Scaler-bbbf336b-hzl-cluster-3bddf8b.HealthMonitor]": 197,
+              "client.connection.count": 61,
+              "clientEndpoint.count": 59,
+              "cluster.timeDiff": 38,
+              "com.hazelcast.internal.diagnostics.HealthMonitor": 198,
+              "connection.active.count": 60,
+              "connection.count": 62,
+              "event.q.size": 39,
+              "executor.q.async.size": 40,
+              "executor.q.client.blocking.size": 43,
+              "executor.q.client.query.size": 42,
+              "executor.q.client.size": 41,
+              "executor.q.cluster.size": 53,
+              "executor.q.io.size": 46,
+              "executor.q.mapLoad.size": 51,
+              "executor.q.mapLoadAllKeys.size": 52,
+              "executor.q.operations.size": 48,
+              "executor.q.priorityOperation.size": 49,
+              "executor.q.query.size": 44,
+              "executor.q.response.size": 54,
+              "executor.q.scheduled.size": 45,
+              "executor.q.system.size": 47,
+              "heap.memory.free": 27,
+              "heap.memory.max": 29,
+              "heap.memory.total": 28,
+              "heap.memory.used": 26,
+              "heap.memory.used/max": 30,
+              "heap.memory.used/total": 3,
+              "id": 15,
+              "labelTypes": 14,
+              "labels": 11,
+              "load.process": 33,
+              "load.system": 34,
+              "load.systemAverage": 35,
+              "major.gc.count": 1,
+              "major.gc.time": 2,
+              "minor.gc.count": 31,
+              "minor.gc.time": 32,
+              "operations.completed.count": 50,
+              "operations.pending.invocations.count": 57,
+              "operations.pending.invocations.percentage": 56,
+              "operations.running.count": 55,
+              "physical.memory.free": 23,
+              "physical.memory.total": 22,
+              "processors": 21,
+              "proxy.count": 58,
+              "swap.space.free": 25,
+              "swap.space.total": 24,
+              "thread.count": 36,
+              "thread.peakCount": 37,
+              "tsNs": 13
+            },
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "number",
+                "targetField": "heap_memory"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${lokiInstance}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 5,
+        "x": 19,
+        "y": 19
+      },
+      "id": 218,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "editorMode": "builder",
+          "expr": "{job=\"scalerlogs\"} |= `HealthMonitor` | pattern `<_> heap.memory.used/total=<heap_memory>%,`",
+          "maxLines": 5000,
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Heap memory usage",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "kvp",
+            "keepTime": true,
+            "replace": true,
+            "source": "labels"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "-": true,
+              "00": true,
+              "01": true,
+              "02": true,
+              "03": true,
+              "04": true,
+              "05": true,
+              "06": true,
+              "069-05": true,
+              "07": true,
+              "070-05": true,
+              "071-05": true,
+              "072-05": true,
+              "073-05": true,
+              "074-05": true,
+              "075-05": true,
+              "076-05": true,
+              "077-05": true,
+              "078-05": true,
+              "079-05": true,
+              "08": true,
+              "080-05": true,
+              "081-05": true,
+              "082-05": true,
+              "083-05": true,
+              "084-05": true,
+              "085-05": true,
+              "086-05": true,
+              "087-05": true,
+              "088-05": true,
+              "089-05": true,
+              "09": true,
+              "090-05": true,
+              "091-05": true,
+              "092-05": true,
+              "093-05": true,
+              "094-05": true,
+              "095-05": true,
+              "096-05": true,
+              "097-05": true,
+              "098-05": true,
+              "099-05": true,
+              "10": true,
+              "100-05": true,
+              "101-05": true,
+              "102-05": true,
+              "103-05": true,
+              "104-05": true,
+              "105-05": true,
+              "106-05": true,
+              "107-05": true,
+              "108-05": true,
+              "109-05": true,
+              "11": true,
+              "110-05": true,
+              "111-05": true,
+              "112-05": true,
+              "113-05": true,
+              "114-05": true,
+              "115-05": true,
+              "116-05": true,
+              "117-05": true,
+              "118-05": true,
+              "119-05": true,
+              "12": true,
+              "120-05": true,
+              "121-05": true,
+              "122-05": true,
+              "123-05": true,
+              "124-05": true,
+              "125-05": true,
+              "126-05": true,
+              "127-05": true,
+              "128-05": true,
+              "129-05": true,
+              "13": true,
+              "130-05": true,
+              "131-05": true,
+              "14": true,
+              "141-05": true,
+              "142-05": true,
+              "143-05": true,
+              "144-05": true,
+              "145-05": true,
+              "146-05": true,
+              "147-05": true,
+              "148-05": true,
+              "149-05": true,
+              "15": true,
+              "150-05": true,
+              "155-05": true,
+              "156-05": true,
+              "157-05": true,
+              "158-05": true,
+              "159-05": true,
+              "16": true,
+              "160-05": true,
+              "161-05": true,
+              "162-05": true,
+              "163-05": true,
+              "164-05": true,
+              "165-05": true,
+              "17": true,
+              "18": true,
+              "19": true,
+              "20": true,
+              "2025-01-24T00": true,
+              "2025-01-24T01": true,
+              "21": true,
+              "22": true,
+              "23": true,
+              "24": true,
+              "25": true,
+              "26": true,
+              "27": true,
+              "28": true,
+              "29": true,
+              "30": true,
+              "31": true,
+              "32": true,
+              "33": true,
+              "34": true,
+              "341-05": true,
+              "342-05": true,
+              "343-05": true,
+              "344-05": true,
+              "345-05": true,
+              "346-05": true,
+              "347-05": true,
+              "348-05": true,
+              "349-05": true,
+              "35": true,
+              "350-05": true,
+              "351-05": true,
+              "352-05": true,
+              "353-05": true,
+              "354-05": true,
+              "355-05": true,
+              "356-05": true,
+              "357-05": true,
+              "358-05": true,
+              "359-05": true,
+              "36": true,
+              "360-05": true,
+              "361-05": true,
+              "362-05": true,
+              "363-05": true,
+              "364-05": true,
+              "365-05": true,
+              "366-05": true,
+              "367-05": true,
+              "368-05": true,
+              "369-05": true,
+              "37": true,
+              "370-05": true,
+              "371-05": true,
+              "372-05": true,
+              "373-05": true,
+              "374-05": true,
+              "375-05": true,
+              "376-05": true,
+              "377-05": true,
+              "378-05": true,
+              "379-05": true,
+              "38": true,
+              "380-05": true,
+              "381-05": true,
+              "382-05": true,
+              "383-05": true,
+              "384-05": true,
+              "385-05": true,
+              "386-05": true,
+              "387-05": true,
+              "388-05": true,
+              "389-05": true,
+              "39": true,
+              "390-05": true,
+              "391-05": true,
+              "392-05": true,
+              "393-05": true,
+              "394-05": true,
+              "395-05": true,
+              "396-05": true,
+              "397-05": true,
+              "398-05": true,
+              "399-05": true,
+              "40": true,
+              "400-05": true,
+              "401-05": true,
+              "402-05": true,
+              "403-05": true,
+              "404-05": true,
+              "405-05": true,
+              "406-05": true,
+              "407-05": true,
+              "408-05": true,
+              "409-05": true,
+              "41": true,
+              "410-05": true,
+              "411-05": true,
+              "412-05": true,
+              "413-05": true,
+              "414-05": true,
+              "415-05": true,
+              "416-05": true,
+              "42": true,
+              "43": true,
+              "44": true,
+              "45": true,
+              "453-05": true,
+              "454-05": true,
+              "455-05": true,
+              "456-05": true,
+              "457-05": true,
+              "458-05": true,
+              "459-05": true,
+              "46": true,
+              "460-05": true,
+              "461-05": true,
+              "462-05": true,
+              "463-05": true,
+              "464-05": true,
+              "465-05": true,
+              "466-05": true,
+              "467-05": true,
+              "468-05": true,
+              "469-05": true,
+              "470-05": true,
+              "471-05": true,
+              "472-05": true,
+              "473-05": true,
+              "474-05": true,
+              "475-05": true,
+              "476-05": true,
+              "477-05": true,
+              "48": true,
+              "49": true,
+              "50": true,
+              "51": true,
+              "52": true,
+              "53": true,
+              "54": true,
+              "55": true,
+              "550-05": true,
+              "551-05": true,
+              "552-05": true,
+              "553-05": true,
+              "554-05": true,
+              "555-05": true,
+              "556-05": true,
+              "557-05": true,
+              "558-05": true,
+              "559-05": true,
+              "56": true,
+              "560-05": true,
+              "561-05": true,
+              "562-05": true,
+              "563-05": true,
+              "564-05": true,
+              "565-05": true,
+              "566-05": true,
+              "567-05": true,
+              "568-05": true,
+              "569-05": true,
+              "57": true,
+              "570-05": true,
+              "571-05": true,
+              "574-05": true,
+              "575-05": true,
+              "576-05": true,
+              "577-05": true,
+              "578-05": true,
+              "579-05": true,
+              "58": true,
+              "580-05": true,
+              "581-05": true,
+              "582-05": true,
+              "583-05": true,
+              "584-05": true,
+              "585-05": true,
+              "586-05": true,
+              "587-05": true,
+              "588-05": true,
+              "589-05": true,
+              "59": true,
+              "590-05": true,
+              "591-05": true,
+              "592-05": true,
+              "593-05": true,
+              "594-05": true,
+              "595-05": true,
+              "596-05": true,
+              "597-05": true,
+              "598-05": true,
+              "599-05": true,
+              "600-05": true,
+              "601-05": true,
+              "602-05": true,
+              "603-05": true,
+              "604-05": true,
+              "605-05": true,
+              "606-05": true,
+              "607-05": true,
+              "608-05": true,
+              "609-05": true,
+              "610-05": true,
+              "611-05": true,
+              "612-05": true,
+              "613-05": true,
+              "614-05": true,
+              "615-05": true,
+              "616-05": true,
+              "617-05": true,
+              "618-05": true,
+              "619-05": true,
+              "620-05": true,
+              "621-05": true,
+              "622-05": true,
+              "623-05": true,
+              "624-05": true,
+              "625-05": true,
+              "626-05": true,
+              "627-05": true,
+              "628-05": true,
+              "716-05": true,
+              "717-05": true,
+              "718-05": true,
+              "719-05": true,
+              "720-05": true,
+              "721-05": true,
+              "722-05": true,
+              "723-05": true,
+              "724-05": true,
+              "725-05": true,
+              "726-05": true,
+              "727-05": true,
+              "728-05": true,
+              "729-05": true,
+              "730-05": true,
+              "731-05": true,
+              "732-05": true,
+              "733-05": true,
+              "734-05": true,
+              "735-05": true,
+              "736-05": true,
+              "737-05": true,
+              "738-05": true,
+              "739-05": true,
+              "740-05": true,
+              "741-05": true,
+              "742-05": true,
+              "743-05": true,
+              "744-05": true,
+              "745-05": true,
+              "746-05": true,
+              "747-05": true,
+              "748-05": true,
+              "749-05": true,
+              "750-05": true,
+              "751-05": true,
+              "752-05": true,
+              "753-05": true,
+              "754-05": true,
+              "755-05": true,
+              "756-05": true,
+              "757-05": true,
+              "758-05": true,
+              "759-05": true,
+              "760-05": true,
+              "761-05": true,
+              "762-05": true,
+              "763-05": true,
+              "764-05": true,
+              "765-05": true,
+              "766-05": true,
+              "767-05": true,
+              "768-05": true,
+              "769-05": true,
+              "770-05": true,
+              "771-05": true,
+              "772-05": true,
+              "773-05": true,
+              "774-05": true,
+              "775-05": true,
+              "776-05": true,
+              "777-05": true,
+              "778-05": true,
+              "779-05": true,
+              "780-05": true,
+              "781-05": true,
+              "782-05": true,
+              "783-05": true,
+              "784-05": true,
+              "785-05": true,
+              "786-05": true,
+              "787-05": true,
+              "788-05": true,
+              "789-05": true,
+              "790-05": true,
+              "791-05": true,
+              "792-05": true,
+              "793-05": true,
+              "794-05": true,
+              "795-05": true,
+              "796-05": true,
+              "797-05": true,
+              "798-05": true,
+              "799-05": true,
+              "800-05": true,
+              "801-05": true,
+              "802-05": true,
+              "803-05": true,
+              "804-05": true,
+              "805-05": true,
+              "806-05": true,
+              "807-05": true,
+              "808-05": true,
+              "809-05": true,
+              "810-05": true,
+              "811-05": true,
+              "812-05": true,
+              "813-05": true,
+              "814-05": true,
+              "INFO": true,
+              "Line": true,
+              "[10.40.3.4]": true,
+              "[10.40.3.5]": true,
+              "[10.40.3.6]": true,
+              "[10.40.3.7]": true,
+              "[10.40.3.8]": true,
+              "[5.3.6]": true,
+              "[Scaler-bbbf336b-hzl-cluster-3bddf8b]": true,
+              "[hz._hzInstance_1_Scaler-bbbf336b-hzl-cluster-3bddf8b.HealthMonitor]": true,
+              "client.connection.count": true,
+              "clientEndpoint.count": true,
+              "cluster.timeDiff": true,
+              "com.hazelcast.internal.diagnostics.HealthMonitor": true,
+              "connection.active.count": true,
+              "connection.count": true,
+              "detected_level": true,
+              "event.q.size": true,
+              "executor.q.async.size": true,
+              "executor.q.client.blocking.size": true,
+              "executor.q.client.query.size": true,
+              "executor.q.client.size": true,
+              "executor.q.cluster.size": true,
+              "executor.q.io.size": true,
+              "executor.q.mapLoad.size": true,
+              "executor.q.mapLoadAllKeys.size": true,
+              "executor.q.operations.size": true,
+              "executor.q.priorityOperation.size": true,
+              "executor.q.query.size": true,
+              "executor.q.response.size": true,
+              "executor.q.scheduled.size": true,
+              "executor.q.system.size": true,
+              "filename": true,
+              "heap.memory.free": true,
+              "heap.memory.max": true,
+              "heap.memory.total": true,
+              "heap.memory.used": true,
+              "heap.memory.used/max": true,
+              "id": true,
+              "instance": true,
+              "job": true,
+              "labelTypes": true,
+              "labels": true,
+              "load.process": true,
+              "load.system": true,
+              "load.systemAverage": true,
+              "major.gc.count": true,
+              "major.gc.time": true,
+              "minor.gc.count": true,
+              "minor.gc.time": true,
+              "operations.completed.count": true,
+              "operations.pending.invocations.count": true,
+              "operations.pending.invocations.percentage": true,
+              "operations.running.count": true,
+              "physical.memory.free": true,
+              "physical.memory.total": true,
+              "processors": true,
+              "proxy.count": true,
+              "service_name": true,
+              "swap.space.free": true,
+              "swap.space.total": true,
+              "thread.count": true,
+              "thread.peakCount": true,
+              "tsNs": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "-": 17,
+              "00": 96,
+              "01": 95,
+              "02": 94,
+              "03": 93,
+              "04": 92,
+              "05": 91,
+              "06": 90,
+              "07": 89,
+              "08": 88,
+              "2025-01-23T23": 112,
+              "2025-01-24T00": 97,
+              "239-05": 121,
+              "240-05": 120,
+              "241-05": 119,
+              "242-05": 118,
+              "243-05": 117,
+              "244-05": 116,
+              "245-05": 115,
+              "246-05": 114,
+              "247-05": 113,
+              "248-05": 111,
+              "249-05": 110,
+              "250-05": 109,
+              "251-05": 108,
+              "252-05": 107,
+              "253-05": 106,
+              "254-05": 105,
+              "255-05": 104,
+              "256-05": 103,
+              "257-05": 102,
+              "258-05": 101,
+              "259-05": 100,
+              "260-05": 99,
+              "261-05": 98,
+              "453-05": 87,
+              "454-05": 86,
+              "455-05": 85,
+              "456-05": 84,
+              "457-05": 83,
+              "458-05": 82,
+              "459-05": 81,
+              "460-05": 80,
+              "461-05": 79,
+              "462-05": 78,
+              "463-05": 77,
+              "464-05": 76,
+              "465-05": 75,
+              "466-05": 74,
+              "467-05": 73,
+              "468-05": 72,
+              "469-05": 71,
+              "470-05": 70,
+              "471-05": 69,
+              "472-05": 68,
+              "473-05": 67,
+              "474-05": 66,
+              "475-05": 65,
+              "476-05": 64,
+              "477-05": 63,
+              "53": 4,
+              "54": 5,
+              "55": 6,
+              "56": 7,
+              "57": 8,
+              "58": 9,
+              "59": 10,
+              "614-05": 166,
+              "615-05": 165,
+              "616-05": 164,
+              "617-05": 163,
+              "618-05": 162,
+              "619-05": 161,
+              "620-05": 160,
+              "621-05": 159,
+              "622-05": 158,
+              "623-05": 157,
+              "624-05": 156,
+              "625-05": 155,
+              "626-05": 154,
+              "627-05": 153,
+              "628-05": 152,
+              "629-05": 151,
+              "630-05": 150,
+              "631-05": 149,
+              "632-05": 148,
+              "633-05": 147,
+              "634-05": 146,
+              "635-05": 145,
+              "636-05": 144,
+              "637-05": 143,
+              "638-05": 142,
+              "639-05": 141,
+              "640-05": 140,
+              "641-05": 139,
+              "642-05": 138,
+              "643-05": 137,
+              "644-05": 136,
+              "645-05": 135,
+              "646-05": 134,
+              "647-05": 133,
+              "648-05": 132,
+              "649-05": 131,
+              "650-05": 130,
+              "651-05": 129,
+              "652-05": 128,
+              "653-05": 127,
+              "654-05": 126,
+              "655-05": 125,
+              "656-05": 124,
+              "657-05": 123,
+              "962-05": 195,
+              "963-05": 194,
+              "964-05": 193,
+              "965-05": 192,
+              "966-05": 191,
+              "967-05": 190,
+              "968-05": 189,
+              "969-05": 188,
+              "970-05": 187,
+              "971-05": 186,
+              "972-05": 185,
+              "973-05": 184,
+              "974-05": 183,
+              "975-05": 182,
+              "976-05": 181,
+              "977-05": 180,
+              "978-05": 179,
+              "979-05": 178,
+              "980-05": 177,
+              "981-05": 176,
+              "982-05": 175,
+              "983-05": 174,
+              "984-05": 173,
+              "985-05": 172,
+              "986-05": 171,
+              "987-05": 170,
+              "988-05": 169,
+              "INFO": 16,
+              "Line": 12,
+              "Time": 0,
+              "[10.40.3.4]": 196,
+              "[10.40.3.5]": 168,
+              "[10.40.3.6]": 167,
+              "[10.40.3.7]": 122,
+              "[10.40.3.8]": 18,
+              "[5.3.6]": 20,
+              "[Scaler-bbbf336b-hzl-cluster-3bddf8b]": 19,
+              "[hz._hzInstance_1_Scaler-bbbf336b-hzl-cluster-3bddf8b.HealthMonitor]": 197,
+              "client.connection.count": 61,
+              "clientEndpoint.count": 59,
+              "cluster.timeDiff": 38,
+              "com.hazelcast.internal.diagnostics.HealthMonitor": 198,
+              "connection.active.count": 60,
+              "connection.count": 62,
+              "event.q.size": 39,
+              "executor.q.async.size": 40,
+              "executor.q.client.blocking.size": 43,
+              "executor.q.client.query.size": 42,
+              "executor.q.client.size": 41,
+              "executor.q.cluster.size": 53,
+              "executor.q.io.size": 46,
+              "executor.q.mapLoad.size": 51,
+              "executor.q.mapLoadAllKeys.size": 52,
+              "executor.q.operations.size": 48,
+              "executor.q.priorityOperation.size": 49,
+              "executor.q.query.size": 44,
+              "executor.q.response.size": 54,
+              "executor.q.scheduled.size": 45,
+              "executor.q.system.size": 47,
+              "heap.memory.free": 27,
+              "heap.memory.max": 29,
+              "heap.memory.total": 28,
+              "heap.memory.used": 26,
+              "heap.memory.used/max": 30,
+              "heap.memory.used/total": 3,
+              "id": 15,
+              "labelTypes": 14,
+              "labels": 11,
+              "load.process": 33,
+              "load.system": 34,
+              "load.systemAverage": 35,
+              "major.gc.count": 1,
+              "major.gc.time": 2,
+              "minor.gc.count": 31,
+              "minor.gc.time": 32,
+              "operations.completed.count": 50,
+              "operations.pending.invocations.count": 57,
+              "operations.pending.invocations.percentage": 56,
+              "operations.running.count": 55,
+              "physical.memory.free": 23,
+              "physical.memory.total": 22,
+              "processors": 21,
+              "proxy.count": 58,
+              "swap.space.free": 25,
+              "swap.space.total": 24,
+              "thread.count": 36,
+              "thread.peakCount": 37,
+              "tsNs": 13
+            },
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "number",
+                "targetField": "heap_memory"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${lokiInstance}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 28
+      },
+      "id": 214,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "editorMode": "code",
+          "expr": "{job=\"scalerlogs\"} |= `HealthMonitor` | pattern `<_>, minor.gc.time=<minor_time>ms`",
+          "maxLines": 5000,
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Minor gc time",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "kvp",
+            "keepTime": true,
+            "replace": true,
+            "source": "labels"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "detected_level": true,
+              "filename": true,
+              "instance": true,
+              "job": true,
+              "service_name": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "number",
+                "targetField": "minor_count"
+              },
+              {
+                "destinationType": "number",
+                "targetField": "minor_time"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${lokiInstance}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 28
+      },
+      "id": 215,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "editorMode": "code",
+          "expr": "{job=\"scalerlogs\"} |= `HealthMonitor` |= `gc.count` | pattern `<_>, minor.gc.count=<minor_count>,`",
+          "maxLines": 5000,
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Minor gc count",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "kvp",
+            "keepTime": true,
+            "replace": true,
+            "source": "labels"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "detected_level": true,
+              "filename": true,
+              "instance": true,
+              "job": true,
+              "service_name": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "number",
+                "targetField": "minor_count"
+              },
+              {
+                "destinationType": "number",
+                "targetField": "minor_count"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${lokiInstance}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "%"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 36
+      },
+      "id": 220,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "editorMode": "code",
+          "expr": "{job=\"scalerlogs\"} |= `HealthMonitor` | pattern `<_> load.system=<load_system>%`",
+          "maxLines": 5000,
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Load system",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "kvp",
+            "keepTime": true,
+            "replace": true,
+            "source": "labels"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "detected_level": true,
+              "filename": true,
+              "instance": true,
+              "job": true,
+              "labels": true,
+              "service_name": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "number",
+                "targetField": "load_system"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${lokiInstance}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "%"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 36
+      },
+      "id": 217,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "editorMode": "code",
+          "expr": "{job=\"scalerlogs\"} |= `HealthMonitor` | pattern `<_> load.process=<load_process>%`",
+          "maxLines": 5000,
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Load process",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "kvp",
+            "keepTime": true,
+            "replace": true,
+            "source": "labels"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "detected_level": true,
+              "filename": true,
+              "instance": true,
+              "job": true,
+              "service_name": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "number",
+                "targetField": "load_process"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${lokiInstance}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "G"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 44
+      },
+      "id": 216,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "11.5.2",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${lokiInstance}"
+          },
+          "editorMode": "code",
+          "expr": "{job=\"scalerlogs\"} |= `HealthMonitor` | pattern `<_> physical.memory.free=<physical_memory_free>G,`",
+          "maxLines": 5000,
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Physical memory free",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "kvp",
+            "keepTime": true,
+            "replace": true,
+            "source": "labels"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "detected_level": true,
+              "filename": true,
+              "instance": true,
+              "job": true,
+              "service_name": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "number",
+                "targetField": "minor_count"
+              },
+              {
+                "destinationType": "number",
+                "targetField": "physical_memory_free"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ],
+      "type": "timeseries"
+    }
+  ],
+  "preload": true,
+  "refresh": "",
+  "schemaVersion": 40,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "text": "fmr-prod",
+          "value": "fmr-prod"
+        },
+        "description": "",
+        "label": "QMS Instance name",
+        "name": "qmsInstanceName",
+        "options": [
+          {
+            "selected": false,
+            "text": "fmr-dev",
+            "value": "fmr-dev"
+          },
+          {
+            "selected": true,
+            "text": "fmr-prod",
+            "value": "fmr-prod"
+          },
+          {
+            "selected": false,
+            "text": "fmr-qa",
+            "value": "fmr-qa"
+          }
+        ],
+        "query": "fmr-dev, fmr-prod, fmr-qa",
+        "type": "custom"
+      },
+      {
+        "current": {
+          "text": "Thanos US",
+          "value": "f7afb3ec-6bdf-4964-93e2-2f62e458b7b8"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "label": "QMS Datasource",
+        "name": "qmsDatasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "Thanos US",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": "Loki-FMR-PROD",
+          "value": "e2e2a76a-a1cb-4a2e-89fc-22c4dcbafd38"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "label": "Loki Instance",
+        "name": "lokiInstance",
+        "options": [],
+        "query": "loki",
+        "refresh": 1,
+        "regex": "/^Loki-${qmsInstanceName:text}$/i",
+        "type": "datasource"
+      },
+      {
+        "current": {
+          "text": ".quadient.cloud",
+          "value": ".quadient.cloud"
+        },
+        "hide": 2,
+        "name": "qmsDomainSuffix",
+        "query": ".quadient.cloud",
+        "skipUrlSync": true,
+        "type": "constant"
+      },
+      {
+        "current": {
+          "text": "Fidelity",
+          "value": "Fidelity"
+        },
+        "hide": 2,
+        "name": "qmsCustomerName",
+        "options": [
+          {
+            "selected": true,
+            "text": "Fidelity",
+            "value": "Fidelity"
+          }
+        ],
+        "query": "Fidelity",
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "America/New_York",
+  "title": "Fidelity LOGS",
+  "uid": "ce9uwe2228q2of",
+  "version": 31,
+  "weekStart": ""
+}
