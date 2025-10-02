@@ -8,6 +8,22 @@
   "refresh": "30s",
   "panels": [
     {
+  "uid": "fe637geh6fklcd",
+  "name": "DB - Daily (Monday - Saturday)",
+  "model": {
+    "title": "DB - Daily (Monday - Saturday)",
+    "type": "graph",
+    "id": 1,
+    "targets": [
+      {
+        "expr": "up",
+        "refId": "A",
+        "datasource": { "type": "prometheus" }
+      }
+    ]
+  }
+},
+    {
       "type": "stat",
       "title": "Query Log Enabled",
       "id": 1,
