@@ -1,0 +1,52 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ee6kykat442yod",
+  "name": "Scaler Logs",
+  "kind": 1,
+  "type": "logs",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "loki"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {},
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 15,
+      "w": 24,
+      "x": 0,
+      "y": 39
+    },
+    "id": 199,
+    "options": {
+      "dedupStrategy": "none",
+      "enableInfiniteScrolling": true,
+      "enableLogDetails": true,
+      "prettifyLogMessage": false,
+      "showCommonLabels": false,
+      "showLabels": true,
+      "showTime": false,
+      "sortOrder": "Ascending",
+      "wrapLogMessage": true
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "loki"
+        },
+        "direction": "forward",
+        "editorMode": "code",
+        "expr": "{job=\"logs_scaler\"} != `CachedIcmWorkflowDao: Workflow` != `DistributedMasterCheckRoutine` != `net.gmc.nuc.engine.log.Log4jJobLogger`",
+        "maxLines": 5000,
+        "queryType": "range",
+        "refId": "A"
+      }
+    ],
+    "title": "Scaler Logs",
+    "type": "logs"
+  }
+}

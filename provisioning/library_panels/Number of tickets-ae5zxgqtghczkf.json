@@ -1,0 +1,126 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ae5zxgqtghczkf",
+  "name": "Number of tickets",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "Number of tickets created since Interactive startup.\n",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Number of tickets created since Interactive startup.\n",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "axisSoftMax": 10,
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "auto",
+          "spanNulls": false,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 8,
+      "x": 0,
+      "y": 93
+    },
+    "id": 184,
+    "interval": "5m",
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "12.0.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "disableTextWrap": false,
+        "editorMode": "code",
+        "expr": "sum by (job) (label_replace(sum by(job,instance) (\r\n    increase(II_CreatedTicketsCount_total{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\"}[$__interval])),\r\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\r\n))\r\n",
+        "fullMetaSearch": false,
+        "hide": false,
+        "includeNullMetadata": true,
+        "legendFormat": "Sum of tickets",
+        "range": true,
+        "refId": "Avg",
+        "useBackend": false
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "disableTextWrap": false,
+        "editorMode": "code",
+        "expr": "label_replace(sum by(job,instance) (\r\n    increase(II_CreatedTicketsCount_total{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\"}[$__interval])),\r\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\r\n)\r\n",
+        "fullMetaSearch": false,
+        "hide": false,
+        "includeNullMetadata": true,
+        "legendFormat": "{{instanceShort}}",
+        "range": true,
+        "refId": "Node",
+        "useBackend": false
+      }
+    ],
+    "title": "Number of tickets",
+    "type": "timeseries"
+  }
+}

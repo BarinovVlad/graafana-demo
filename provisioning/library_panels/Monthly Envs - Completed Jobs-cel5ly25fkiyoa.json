@@ -1,0 +1,105 @@
+{
+  "folderUid": "fel522vsv8flsf",
+  "uid": "cel5ly25fkiyoa",
+  "name": "Monthly Envs - Completed Jobs",
+  "kind": 1,
+  "type": "barchart",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "fixedColor": "transparent",
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "fillOpacity": 82,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "lineWidth": 3,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 90
+            }
+          ]
+        },
+        "unit": "none"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 9,
+      "w": 16,
+      "x": 0,
+      "y": 71
+    },
+    "id": 115,
+    "interval": "1d",
+    "options": {
+      "barRadius": 0,
+      "barWidth": 1,
+      "fullHighlight": false,
+      "groupWidth": 1,
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "orientation": "auto",
+      "showValue": "never",
+      "stacking": "none",
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "single",
+        "sort": "none"
+      },
+      "xTickLabelRotation": 0,
+      "xTickLabelSpacing": -200
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "last_over_time(sum by(group, instanceName) (increase(scaler_job_runs_total{instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment)).*\", status=\"completed\"}[24h]))[1d:1d])",
+        "hide": false,
+        "legendFormat": "{{instanceName}}: {{group}}",
+        "range": true,
+        "refId": "Storage"
+      }
+    ],
+    "title": "Completed Jobs $qmsEnvironment",
+    "type": "barchart"
+  }
+}

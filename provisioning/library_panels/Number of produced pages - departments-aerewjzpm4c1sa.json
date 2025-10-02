@@ -1,0 +1,79 @@
+{
+  "folderUid": "cee49wppjp2iob",
+  "uid": "aerewjzpm4c1sa",
+  "name": "Number of produced pages - departments",
+  "kind": 1,
+  "type": "stat",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "decimals": 0,
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 6,
+      "w": 10,
+      "x": 0,
+      "y": 31
+    },
+    "id": 201,
+    "options": {
+      "colorMode": "value",
+      "graphMode": "area",
+      "justifyMode": "auto",
+      "orientation": "horizontal",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "text": {
+        "titleSize": 12,
+        "valueSize": 12
+      },
+      "textMode": "value_and_name",
+      "wideLayout": true
+    },
+    "pluginVersion": "12.0.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "sum by (icm_department, ips_page_size, ips_engine) (increase(qms_wfd_page_total{instanceName=\"$qmsInstanceName\"}[$__range]))",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "{{icm_department}}: {{ips_engine}}/{{ips_page_size}} ",
+        "range": false,
+        "refId": "B"
+      }
+    ],
+    "title": "Number of produced pages - departments",
+    "type": "stat"
+  }
+}
