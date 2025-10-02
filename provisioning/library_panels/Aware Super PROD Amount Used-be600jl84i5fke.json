@@ -1,0 +1,74 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "be600jl84i5fke",
+  "name": "Aware Super PROD Amount Used",
+  "kind": 1,
+  "type": "stat",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            }
+          ]
+        },
+        "unit": "short"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 10,
+      "w": 12,
+      "x": 12,
+      "y": 2
+    },
+    "id": 2,
+    "libraryPanel": {
+      "name": "Aware Super PROD Amount Used",
+      "uid": "be600jl84i5fke"
+    },
+    "options": {
+      "colorMode": "background",
+      "graphMode": "none",
+      "justifyMode": "auto",
+      "orientation": "auto",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.3.0",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "hms_quadient_cloud_license_info_report{counterType=\"amountUsed\", metricName!=\"entitlementexpirationdays\", companyName=\"awaresuper\", entitlementName=\"AWARE SUPER - PRODUCTION ENVIRONMENT - upgraded\"} > 0",
+        "instant": false,
+        "legendFormat": "{{ metricName }}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Aware Super PROD Amount Used",
+    "type": "stat"
+  }
+}

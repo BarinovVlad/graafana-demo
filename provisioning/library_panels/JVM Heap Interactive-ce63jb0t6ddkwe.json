@@ -1,0 +1,110 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ce63jb0t6ddkwe",
+  "name": "JVM Heap Interactive",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 10,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "never",
+          "spanNulls": true,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "max": 1,
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        },
+        "unit": "percentunit"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 7,
+      "w": 6,
+      "x": 12,
+      "y": 132
+    },
+    "id": 196,
+    "options": {
+      "legend": {
+        "calcs": [
+          "lastNotNull",
+          "max"
+        ],
+        "displayMode": "table",
+        "placement": "right",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "multi",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(\n    jvm_memory_bytes_used{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:30701$\", area=\"heap\"}\n    /\n    jvm_memory_bytes_max{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:30701$\", area=\"heap\"},\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\n)",
+        "legendFormat": "{{instanceShort}}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "JVM Heap Interactive",
+    "type": "timeseries"
+  }
+}

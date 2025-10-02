@@ -1,0 +1,118 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ee5zz5qrbhlvkc",
+  "name": "Emergency Content Promotion Process",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "auto",
+          "spanNulls": false,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 12,
+      "x": 12,
+      "y": 40
+    },
+    "id": 12,
+    "libraryPanel": {
+      "name": "Emergency Content Promotion Process",
+      "uid": "ee5zz5qrbhlvkc"
+    },
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.3.0",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "rate(default_jenkins_builds_failed_build_count_total{jenkins_job=\"process_emergencyContentPromotionHomeserve-dev\"}[5m])",
+        "legendFormat": "Failed jobs",
+        "range": true,
+        "refId": "A"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "rate(default_jenkins_builds_success_build_count_total{jenkins_job=\"process_emergencyContentPromotionHomeserve-dev\"}[5m])",
+        "hide": false,
+        "legendFormat": "Successful jobs",
+        "range": true,
+        "refId": "B"
+      }
+    ],
+    "title": "Emergency Content Promotion Process",
+    "type": "timeseries"
+  }
+}

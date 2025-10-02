@@ -1,0 +1,113 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ae637vchimcqob",
+  "name": "Azure VM/Disks backup health",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "grafana-azure-monitor-datasource"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 0,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "auto",
+          "spanNulls": false,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "dark-red",
+              "value": null
+            },
+            {
+              "color": "green",
+              "value": 1
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 9,
+      "w": 12,
+      "x": 12,
+      "y": 33
+    },
+    "id": 177,
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "azureLogAnalytics": {
+          "dashboardTime": false,
+          "query": "",
+          "resources": [
+            "/subscriptions/6b7f3c14-d3a0-4dd2-9990-d079120c95ad/resourceGroups/hmsrg-aware-hub-nonprod/providers/Microsoft.RecoveryServices/vaults/rsv-aware-nonprod"
+          ]
+        },
+        "azureMonitor": {
+          "allowedTimeGrainsMs": [],
+          "timeGrain": "auto"
+        },
+        "datasource": {
+          "type": "grafana-azure-monitor-datasource"
+        },
+        "hide": false,
+        "queryType": "Azure Monitor",
+        "refId": "A"
+      }
+    ],
+    "title": "Azure VM/Disks backup health",
+    "type": "timeseries"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ce634rf1p7tvkc",
+  "name": "Audit Logs",
+  "kind": 1,
+  "type": "stat",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "mappings": [
+          {
+            "options": {
+              "1": {
+                "color": "green",
+                "index": 0,
+                "text": "OK"
+              }
+            },
+            "type": "value"
+          },
+          {
+            "options": {
+              "from": 0,
+              "result": {
+                "color": "dark-red",
+                "index": 1,
+                "text": "KO"
+              },
+              "to": 0.99999999999
+            },
+            "type": "range"
+          }
+        ],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "dark-red",
+              "value": null
+            },
+            {
+              "color": "green",
+              "value": 1
+            }
+          ]
+        }
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 3,
+      "w": 5,
+      "x": 10,
+      "y": 34
+    },
+    "id": 172,
+    "options": {
+      "colorMode": "value",
+      "graphMode": "none",
+      "justifyMode": "auto",
+      "orientation": "auto",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "avg(hms_audit_status{instanceName=\"$qmsInstanceName\"})",
+        "legendFormat": "__auto",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Audit Logs",
+    "type": "stat"
+  }
+}
