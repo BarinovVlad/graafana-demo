@@ -145,7 +145,7 @@ def deploy_library_panels():
                 print(f"Skip delete '{name}' uid={uid}: in use ({len(connections)} connections).")
                 continue
             delete_panel(url, token, uid, name)
- print(f"===== Finished **test moj tut sync*** for {url}: {created} created, {updated} updated, {deleted} deleted, {skipped} skipped =====")
+
 
 if __name__ == "__main__":
     deploy_library_panels()
