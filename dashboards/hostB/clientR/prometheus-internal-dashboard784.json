@@ -22,21 +22,20 @@
   "title": "Test Panel",
   "type": "library-panel-ref"
 },
-    {
-  "uid": "fe637geh6fklcd",
-  "name": "DB - Daily (Monday - Saturday)",
-  "model": {
-    "title": "DB - Daily (Monday - Saturday)",
-    "type": "graph",
-    "id": 1,
-    "targets": [
-      {
-        "expr": "up",
-        "refId": "A",
-        "datasource": { "type": "prometheus" }
-      }
-    ]
-  }
+  {
+  "gridPos": {
+    "h": 5,
+    "w": 6,
+    "x": 12,
+    "y": 42
+  },
+  "id": 174,
+  "libraryPanel": {
+    "name": "All Daily (Monday - Saturday)",
+    "uid": "ee5zwrrl4ecqoa"
+  },
+  "title": "All Daily (Monday - Saturday)",
+  "type": "library-panel-ref"
 },
     {
       "type": "stat",
