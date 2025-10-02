@@ -47,7 +47,6 @@ def update_panel(url, token, uid, name, model, version):
         resp = requests.patch(f"{url}/api/library-elements/{uid}", headers=get_headers(token), json=payload, timeout=30)
 
         if resp.status_code == 412:
-            
             print(f"Version mismatch for {uid}; refetching...")
             fresh = fetch_panel(url, token, uid)
             if fresh:
@@ -110,7 +109,7 @@ def deploy_library_panels():
 
         local_uids = []
 
-        
+        # Upload or update panels from local files
         for json_file in BASE_FOLDER.glob("*.json"):
             with open(json_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
@@ -134,16 +133,20 @@ def deploy_library_panels():
             else:
                 create_panel(url, token, uid, name, model)
 
-   
+        # Delete panels not present locally
         remote_panels = get_remote_panels(url, token)
         to_delete = [p for p in remote_panels if p["uid"] not in local_uids]
 
         for panel in to_delete:
             uid, name = panel["uid"], panel.get("name", panel["uid"])
             connections = get_connections(url, token, uid)
+
             if connections:
-                print(f"Skip delete '{name}' uid={uid}: in use ({len(connections)} connections).")
-                continue
+                dashboards = [c.get("title", "unknown") for c in connections]
+                raise RuntimeError(
+                    f"Cannot delete panel '{name}' uid={uid}: it is still used in dashboards {dashboards}"
+                )
+
             delete_panel(url, token, uid, name)
 
 
