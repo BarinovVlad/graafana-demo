@@ -1,0 +1,52 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ee6la9watowlce",
+  "name": "Scaler IPS Logs",
+  "kind": 1,
+  "type": "logs",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "loki"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {},
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 12,
+      "x": 12,
+      "y": 54
+    },
+    "id": 99,
+    "options": {
+      "dedupStrategy": "none",
+      "enableInfiniteScrolling": true,
+      "enableLogDetails": true,
+      "prettifyLogMessage": false,
+      "showCommonLabels": true,
+      "showLabels": true,
+      "showTime": false,
+      "sortOrder": "Descending",
+      "wrapLogMessage": false
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "loki"
+        },
+        "direction": "backward",
+        "editorMode": "builder",
+        "expr": "{instance=~\"(scaler|inspire).*\", job=\"logs_ips\"}",
+        "maxLines": 2000,
+        "queryType": "range",
+        "refId": "A"
+      }
+    ],
+    "title": "Scaler IPS Logs",
+    "type": "logs"
+  }
+}

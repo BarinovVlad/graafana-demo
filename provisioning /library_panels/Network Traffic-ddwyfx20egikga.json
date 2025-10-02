@@ -1,0 +1,178 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ddwyfx20egikga",
+  "name": "Network Traffic",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "Basic network info per interface",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Basic network info per interface",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 40,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "never",
+          "spanNulls": true,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "off"
+          }
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        },
+        "unit": "bytes"
+      },
+      "overrides": [
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*trans.*/"
+          },
+          "properties": [
+            {
+              "id": "custom.transform",
+              "value": "negative-Y"
+            },
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "yellow",
+                "mode": "fixed"
+              }
+            }
+          ]
+        },
+        {
+          "matcher": {
+            "id": "byRegexp",
+            "options": "/.*recv.*/"
+          },
+          "properties": [
+            {
+              "id": "color",
+              "value": {
+                "fixedColor": "green",
+                "mode": "fixed"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "gridPos": {
+      "h": 13,
+      "w": 16,
+      "x": 0,
+      "y": 54
+    },
+    "id": 158,
+    "interval": "2m",
+    "options": {
+      "legend": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "displayMode": "table",
+        "placement": "right",
+        "showLegend": true,
+        "sortBy": "Last *",
+        "sortDesc": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "single",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(rate(node_network_receive_bytes_total{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9100$\"}[$__interval]),\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\n)",
+        "legendFormat": "{{instanceShort}} recv {{device}}",
+        "range": true,
+        "refId": "Linux-received"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(rate(node_network_transmit_bytes_total{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9100$\"}[$__interval]),\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\n)",
+        "hide": false,
+        "legendFormat": "{{instanceShort}} trans {{device}}",
+        "range": true,
+        "refId": "Linux-transmited"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(rate(windows_net_bytes_received_total{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9182$\"}[$__interval]),\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\n)",
+        "hide": false,
+        "legendFormat": "{{instanceShort}} recv {{device}}",
+        "range": true,
+        "refId": "Windows-received"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "label_replace(rate(windows_net_bytes_sent_total{customerName=\"$qmsCustomerName\",instanceName=\"$qmsInstanceName\",instance=~\".*:9182$\"}[$__interval]),\n    \"instanceShort\", \"$1\", \"instance\", \"^([^.]+).*\"\n)",
+        "hide": false,
+        "legendFormat": "{{instanceShort}} trans {{device}}",
+        "range": true,
+        "refId": "B"
+      }
+    ],
+    "title": "Network Traffic",
+    "type": "timeseries"
+  }
+}

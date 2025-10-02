@@ -1,0 +1,108 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "de634vwlabf9cd",
+  "name": "Processing jobs",
+  "kind": 1,
+  "type": "timeseries",
+  "description": "Provides the number of all the jobs that are currently being processed.\nUse this metric to create custom alerts about the number of currently processed jobs that is rapidly growing. That could indicate issues, for example, with jobs being stuck in a loop in the Script workflow module.",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "Provides the number of all the jobs that are currently being processed.\nUse this metric to create custom alerts about the number of currently processed jobs that is rapidly growing. That could indicate issues, for example, with jobs being stuck in a loop in the Script workflow module.",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "palette-classic"
+        },
+        "custom": {
+          "axisBorderShow": false,
+          "axisCenteredZero": false,
+          "axisColorMode": "text",
+          "axisLabel": "",
+          "axisPlacement": "auto",
+          "axisSoftMax": 10,
+          "barAlignment": 0,
+          "barWidthFactor": 0.6,
+          "drawStyle": "line",
+          "fillOpacity": 10,
+          "gradientMode": "none",
+          "hideFrom": {
+            "legend": false,
+            "tooltip": false,
+            "viz": false
+          },
+          "insertNulls": false,
+          "lineInterpolation": "linear",
+          "lineWidth": 1,
+          "pointSize": 5,
+          "scaleDistribution": {
+            "type": "linear"
+          },
+          "showPoints": "never",
+          "spanNulls": true,
+          "stacking": {
+            "group": "A",
+            "mode": "none"
+          },
+          "thresholdsStyle": {
+            "mode": "line"
+          }
+        },
+        "mappings": [],
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 150
+            }
+          ]
+        },
+        "unit": "none"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 8,
+      "x": 0,
+      "y": 84
+    },
+    "id": 181,
+    "interval": "2m",
+    "options": {
+      "legend": {
+        "calcs": [],
+        "displayMode": "list",
+        "placement": "bottom",
+        "showLegend": true
+      },
+      "tooltip": {
+        "hideZeros": false,
+        "mode": "multi",
+        "sort": "none"
+      }
+    },
+    "pluginVersion": "11.6.1",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "expr": "sum by(group) (increase(scaler_processing_jobs_total{instance=~\"scaler.*.$qmsInstanceName$qmsDomainSuffix:30600\"}[$__interval]))",
+        "legendFormat": "{{group}}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Processing jobs",
+    "type": "timeseries"
+  }
+}

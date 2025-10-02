@@ -1,0 +1,92 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "be634j1dbooaoa",
+  "name": "Server's Availability",
+  "kind": 1,
+  "type": "stat",
+  "description": "NOTE: The monitoring server needs to be ON to show Automation traffic lights properly. \n",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "NOTE: The monitoring server needs to be ON to show Automation traffic lights properly. \n",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "fixed"
+        },
+        "mappings": [
+          {
+            "options": {
+              "0": {
+                "color": "dark-red",
+                "index": 0,
+                "text": "Off"
+              },
+              "1": {
+                "color": "dark-green",
+                "index": 1,
+                "text": "On"
+              }
+            },
+            "type": "value"
+          }
+        ],
+        "min": 10,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            }
+          ]
+        },
+        "unit": "bool_on_off"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 8,
+      "w": 8,
+      "x": 0,
+      "y": 16
+    },
+    "id": 205,
+    "options": {
+      "colorMode": "background",
+      "graphMode": "none",
+      "justifyMode": "center",
+      "orientation": "auto",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.3.0",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "up{job=~\".*vm\", instanceName=\"$qmsInstanceName\",}",
+        "format": "time_series",
+        "instant": false,
+        "legendFormat": "{{ instance }}",
+        "range": true,
+        "refId": "A"
+      }
+    ],
+    "title": "Server's Availability",
+    "type": "stat"
+  }
+}

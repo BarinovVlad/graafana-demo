@@ -1,0 +1,95 @@
+{
+  "folderUid": "fel522vsv8flsf",
+  "uid": "edp4x0e7zagaoc",
+  "name": "Monthly - Storage Usage (AVG)",
+  "kind": 1,
+  "type": "stat",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "prometheus"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "mappings": [],
+        "max": 100,
+        "min": 0,
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 90
+            }
+          ]
+        },
+        "unit": "percent"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 9,
+      "w": 8,
+      "x": 16,
+      "y": 54
+    },
+    "id": 32,
+    "interval": "30m",
+    "options": {
+      "colorMode": "value",
+      "graphMode": "area",
+      "justifyMode": "auto",
+      "orientation": "auto",
+      "percentChangeColorMode": "standard",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "",
+        "values": false
+      },
+      "showPercentChange": false,
+      "textMode": "auto",
+      "wideLayout": true
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "avg_over_time(label_replace(\n    label_replace(\n        100 - avg(node_filesystem_avail_bytes{instance=~\"(scaler|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\", fstype=\"cifs\"} * 100 / node_filesystem_size_bytes{instance=~\"(scaler|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\", fstype=\"cifs\"}) by (device, instanceName),\n        \"share\", \"$2\", \"device\", \"//(.*)/(.*)\"\n    ),\n  \"environment\", \"$1\", \"instanceName\", \"^[^-]*-(.*)\"\n)[$__range:$__interval])",
+        "format": "time_series",
+        "instant": true,
+        "legendFormat": "AVG {{environment}}-{{share}}",
+        "range": false,
+        "refId": "Physical"
+      },
+      {
+        "datasource": {
+          "type": "prometheus"
+        },
+        "editorMode": "code",
+        "exemplar": false,
+        "expr": "avg_over_time(label_replace(\n    label_replace(\n        100 - avg(node_filesystem_avail_bytes{instance=~\"(scaler|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\", fstype=\"nfs\"} * 100 / node_filesystem_size_bytes{instance=~\"(scaler|automation|designer).*:9100\", instanceName=~\"$qmsCustomer-(?i:($qmsEnvironment))\", fstype=\"nfs\"}) by (device, instanceName),\n        \"share\", \"$2\", \"device\", \".*/(.*)/(.*)\"\n    ),\n  \"environment\", \"$1\", \"instanceName\", \"^[^-]*-(.*)\"\n)[$__range:$__interval])",
+        "hide": false,
+        "instant": true,
+        "legendFormat": "AVG {{environment}}-{{share}}",
+        "range": false,
+        "refId": "A"
+      }
+    ],
+    "title": "Storage Usage (AVG) $qmsEnvironment",
+    "type": "stat"
+  }
+}

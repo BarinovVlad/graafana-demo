@@ -1,0 +1,109 @@
+{
+  "folderUid": "bdp4wd4yy07i8b",
+  "uid": "ee7h4hhj82yo0d",
+  "name": "Number of requests over 3s - Detail",
+  "kind": 1,
+  "type": "table",
+  "description": "",
+  "model": {
+    "datasource": {
+      "type": "grafana-azure-monitor-datasource"
+    },
+    "description": "",
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "custom": {
+          "align": "left",
+          "cellOptions": {
+            "type": "auto"
+          },
+          "inspect": false
+        },
+        "mappings": [],
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+            {
+              "color": "green",
+              "value": null
+            },
+            {
+              "color": "red",
+              "value": 80
+            }
+          ]
+        }
+      },
+      "overrides": [
+        {
+          "matcher": {
+            "id": "byName",
+            "options": "RequestType"
+          },
+          "properties": [
+            {
+              "id": "custom.width",
+              "value": 116
+            }
+          ]
+        }
+      ]
+    },
+    "gridPos": {
+      "h": 7,
+      "w": 24,
+      "x": 0,
+      "y": 93
+    },
+    "id": 217,
+    "options": {
+      "cellHeight": "sm",
+      "footer": {
+        "countRows": false,
+        "fields": "",
+        "reducer": [
+          "sum"
+        ],
+        "show": false
+      },
+      "showHeader": true,
+      "sortBy": []
+    },
+    "pluginVersion": "11.5.2",
+    "targets": [
+      {
+        "azureLogAnalytics": {
+          "dashboardTime": false,
+          "query": "AzureDiagnostics\r\n| where ResourceType == \"APPLICATIONGATEWAYS\"\r\n    and OperationName == \"ApplicationGatewayAccess\"\r\n    and (httpMethod_s == \"POST\" or httpMethod_s == \"GET\")\r\n    and requestUri_s startswith \"/rest/api/\"\r\n    and not(\r\n        requestUri_s == \"/rest/api/submit-job/COPPRINT\" or\r\n        requestUri_s == \"/rest/api/submit-job/COPPRINTPHASE2\" or\r\n        requestUri_s == \"/rest/api/submit-job/COPPRINTPHASE3\"\r\n    )\r\n    and timeTaken_d > 3 // Filter entries with timeTaken_d greater than 3 seconds\r\n    and TimeGenerated >= $__timeFrom() and TimeGenerated <= $__timeTo()\r\n| project TimeStamp = timeStamp_t, TimeTaken = timeTaken_d, RequestType = httpMethod_s, RequestEndpoint = requestUri_s, RequestStatus = httpStatus_d, ClientIP = clientIP_s, RecievedBytes = receivedBytes_d, SendBytes = sentBytes_d, ClientResponseTime = clientResponseTime_d, ServerResponseLatency = serverResponseLatency_s\r\n\r\n",
+          "resources": [
+            "/subscriptions/ea549d66-7b11-4554-879a-55742d7f76a7/resourceGroups/hmsrg-fmr-hub-nonprod/providers/Microsoft.Network/applicationGateways/appgw-fmr-nonprod"
+          ],
+          "resultFormat": "table"
+        },
+        "azureMonitor": {
+          "allowedTimeGrainsMs": [],
+          "dimensionFilters": [],
+          "metricNamespace": "microsoft.network/applicationgateways",
+          "resources": [
+            {
+              "resourceGroup": "hmsrg-fmr-hub-nonprod",
+              "resourceName": "appgw-fmr-nonprod"
+            }
+          ],
+          "timeGrain": "auto"
+        },
+        "datasource": {
+          "type": "grafana-azure-monitor-datasource"
+        },
+        "queryType": "Azure Log Analytics",
+        "refId": "A",
+        "subscription": "ea549d66-7b11-4554-879a-55742d7f76a7"
+      }
+    ],
+    "title": "Number of requests over 3s - Detail",
+    "type": "table"
+  }
+}
