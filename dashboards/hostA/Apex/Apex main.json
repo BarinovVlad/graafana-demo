@@ -21,21 +21,7 @@
   "id": 228,
   "links": [],
   "panels": [
-    {
-  "gridPos": {
-    "h": 8,
-    "w": 12,
-    "x": 0,
-    "y": 0
-  },
-  "id": 1,
-  "libraryPanel": {
-    "name": "Test Panel",
-    "uid": "test-panel-001"
-  },
-  "title": "Test Panel",
-  "type": "library-panel-ref"
-},
+   
     {
       "collapsed": false,
       "gridPos": {
@@ -979,3 +965,4 @@
   "weekStart": ""
 
 }
+
