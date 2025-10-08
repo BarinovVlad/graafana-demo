@@ -6,15 +6,10 @@ from pathlib import Path
 # === CONFIG ===
 GRAFANA_TARGETS = [
     {
-        "folder": "hostA",
-        "url": "http://localhost:3000",
-        "token": os.environ.get("GRAFANA_API_TOKEN"),
-    },
-    {
         "folder": "hostB",
         "url": "http://localhost:3001",
         "token": os.environ.get("GRAFANA_API_TOKENV_2"),
-    },
+    }
 ]
 
 BASE_DIR = Path("dashboards")
