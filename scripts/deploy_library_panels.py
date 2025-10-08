@@ -5,7 +5,6 @@ from pathlib import Path
 
 
 GRAFANA_TARGETS = [
-    {"url": os.environ.get("GRAFANA_HOST_A", "http://localhost:3000"), "token": os.environ.get("GRAFANA_API_TOKEN")},
     {"url": os.environ.get("GRAFANA_HOST_B", "http://localhost:3001"), "token": os.environ.get("GRAFANA_API_TOKENV_2")}
 ]
 
