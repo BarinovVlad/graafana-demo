@@ -57,7 +57,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "blue",
                 "value": null
               },
               {
@@ -1990,4 +1990,5 @@
   "uid": "YcnmiEWSz",
   "version": 38,
   "weekStart": ""
+
 }
