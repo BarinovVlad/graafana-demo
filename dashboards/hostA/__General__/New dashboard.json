@@ -1,0 +1,148 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 288,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "buttonGroup": {
+          "orientation": "center",
+          "size": "md"
+        },
+        "elements": [
+          {
+            "id": "data",
+            "labelWidth": 10,
+            "rows": 10,
+            "section": "",
+            "showIf": "",
+            "title": "Data",
+            "tooltip": "",
+            "type": "textarea",
+            "uid": "f89408e4-4bf3-46c0-a347-ecdb24f46b08",
+            "unit": "",
+            "value": ""
+          },
+          {
+            "hidden": false,
+            "id": "aaa",
+            "labelWidth": 10,
+            "section": "",
+            "title": "aaa",
+            "tooltip": "",
+            "type": "string",
+            "uid": "d2bb6345-2cd7-4452-829c-d2f331e555b9",
+            "unit": "",
+            "value": ""
+          }
+        ],
+        "initial": {
+          "code": "console.log(data, response, initial, elements);\n\nreturn;\n\n/**\n * Data Source\n * Requires form elements to be defined\n */\nconst dataQuery = toDataQueryResponse(response);\nconsole.log(dataQuery);",
+          "contentType": "application/json",
+          "getPayload": "return {\n  rawSql: '',\n  format: 'table',\n}",
+          "highlight": false,
+          "highlightColor": "red",
+          "method": "GET",
+          "url": "https://fa-hms-management.azurewebsites.net/api/GetBackupConfigs"
+        },
+        "layout": {
+          "orientation": "horizontal",
+          "padding": 10,
+          "variant": "single"
+        },
+        "reset": {
+          "backgroundColor": "purple",
+          "foregroundColor": "yellow",
+          "icon": "process",
+          "text": "Reset",
+          "variant": "hidden"
+        },
+        "resetAction": {
+          "code": "console.log(data, response, initial, elements);",
+          "mode": "initial"
+        },
+        "saveDefault": {
+          "icon": "save",
+          "text": "Save Default",
+          "variant": "hidden"
+        },
+        "submit": {
+          "backgroundColor": "purple",
+          "foregroundColor": "yellow",
+          "icon": "cloud-upload",
+          "text": "Submit",
+          "variant": "primary"
+        },
+        "update": {
+          "code": "if (response && response.ok) {\n  notifySuccess(['Update', 'Values updated successfully.']);\n  locationService.reload();\n} else {\n  notifyError(['Update', 'An error occured updating values.']);\n}",
+          "confirm": false,
+          "contentType": "application/json",
+          "getPayload": "const payload = {};\n\nelements.forEach((element) => {\n  if (!element.value) {\n    return;\n  }\n\n  payload[element.id] = element.value;\n})\n\nreturn payload;\n\n/**\n * Data Source payload\n */ \nreturn {\n  rawSql: '',\n  format: 'table',\n};",
+          "method": "-",
+          "payloadMode": "all"
+        }
+      },
+      "pluginVersion": "3.2.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "New panel",
+      "type": "volkovlabs-form-panel"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "utc",
+  "title": "New dashboard",
+  "uid": "25369061-1b1f-4d79-898a-4d35da1a3e54",
+  "version": 1
+}
